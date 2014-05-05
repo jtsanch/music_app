@@ -9,7 +9,8 @@ exports.show = function(req, res) {
 exports.edit = function(req, res) {
 	var user_id = req.params.id;
 	res.render('users/edit',{
-		title: 'Edit Profile'
+		title: 'Edit Profile',
+		user : user
 	});
 }
 
