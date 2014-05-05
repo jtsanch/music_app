@@ -1,9 +1,31 @@
-var express = require('express');
-var router = express.Router();
+exports.show = function(req, res) {
+	var user_id = req.params.id;
 
-/* GET users listing. */
-router.get('/', function(req, res) {
-  res.send('respond with a resource');
-});
+    res.render('users/show', {
+        title: "User name"
+    });
+}
 
-module.exports = router;
+exports.edit = function(req, res) {
+	var user_id = req.params.id;
+	res.render('users/edit',{
+		title: 'Edit Profile'
+	});
+}
+
+exports.login = function(req, res) {
+	var user_id = req.params.id;
+
+	res.render('users/login',{
+		title: 'Login'
+	});
+
+}
+
+exports.register = function(req, res){
+	var user_id = req.params.id;
+
+	res.render('users/register',{
+		title: 'Register'
+	});
+}

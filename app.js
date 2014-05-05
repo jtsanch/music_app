@@ -4,15 +4,19 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var exphbs  = require('express3-handlebars');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var practice = require('./routes/practice_session');
 
 var app = express();
 
 // view engine setup
+// view engine setup
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'handlebars');
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -21,8 +25,18 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+//home page
+app.get('/', routes.index);
+
+//user navigation pages
+app.get('/users/:id', users.show);
+app.get('/users/:id/edit', users.edit);
+app.get('/users/login', users.login);
+app.get('/users/register', users.register);
+
+//practice session pages
+app.get('/practice/:id/:musician_id', practice.show);
+app.get('/practice/new', practice.new);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
