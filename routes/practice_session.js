@@ -2,7 +2,6 @@ exports.show = function(req, res) {
 
     var practice_id = req.params.practice_id;
     var musician_id = req.params.musician_id;
-
     res.render('practice/show', {
         title: "Practice session title"
     });
