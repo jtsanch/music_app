@@ -9,6 +9,7 @@ var exphbs  = require('express3-handlebars');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var practice = require('./routes/practice_session');
+var about = require('./routes/about');
 
 var app = express();
 
@@ -27,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //home page
 app.get('/', routes.index);
+
+//about page
+app.get('/about', about.view);
 
 //user navigation pages
 app.get('/users/:id', users.show);

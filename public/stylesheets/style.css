@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.body-container {
+	padding-top: 10px;
+}
+
+#about:hover {
+	color: white;
+	background: #B6FFDD;
+}
