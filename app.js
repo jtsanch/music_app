@@ -35,7 +35,7 @@ app.get('/users/login', users.login);
 app.get('/users/register', users.register);
 
 //practice session pages
-app.get('/practice/:id/:musician_id', practice.show);
+app.get('/practice/:critiquer_id/:musician_id', practice.show);
 app.get('/practice/new', practice.new);
 
 /// catch 404 and forwarding to error handler
