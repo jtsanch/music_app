@@ -1,8 +1,9 @@
 exports.show = function(req, res) {
 	var user_id = req.params.id;
 
-    res.render('users/show', {
-        title: "User name"
+    res.render('users/users', {
+        title: "User name",
+        user_id: user_id
     });
 }
 
@@ -29,4 +30,8 @@ exports.register = function(req, res){
 	res.render('users/register',{
 		title: 'Register'
 	});
+}
+
+exports.index = function(req, res){
+	res.render('index', {title:"Musique"});
 }

@@ -35,8 +35,8 @@ app.get('/about', about.view);
 //user navigation pages
 app.get('/users/:id', users.show);
 app.get('/users/:id/edit', users.edit);
-app.get('/users/login', users.login);
-app.get('/users/register', users.register);
+app.get('/login', users.login);
+app.get('/register', users.register);
 
 //practice session pages
 app.get('/practice/:critiquer_id/:musician_id', practice.show);
