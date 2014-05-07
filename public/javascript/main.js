@@ -8,14 +8,14 @@
 $(document).ready(function() {
     login_user();
   
-  $("#logout").on("click", function(){
-    logout();
-  });
+    $("#logout").on("click", function(){
+      logout();
+    });
 
 });
 
 function logout(){
-   fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+   fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
    auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error){
 
@@ -38,7 +38,7 @@ function logout(){
 function login_user(){
     $("body").hide();
     if (!window.localStorage["user_id"]){
-       fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+       fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
           if (error) {
             // an error occurred while attempting login

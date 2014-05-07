@@ -1,4 +1,3 @@
-var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 
 exports.show = function(req, res) {
 

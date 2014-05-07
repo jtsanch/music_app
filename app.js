@@ -15,6 +15,7 @@ var about = require('./routes/about');
 var help = require('./routes/help');
 
 var app = express();
+app.locals.Firebase = Firebase;
 
 // view engine setup
 // view engine setup

@@ -23,6 +23,7 @@ $(document).ready(function() {
           var password = $("#reg_password").val();
           auth.createUser(email, password, function(error, user){
             if(!error){
+              var now = new Date().getTime();
               fb_instance.child('users').child(user.id).set({user_name: email, created_at: now});
               auth.login('password',{
                 email: email,
