@@ -20,10 +20,11 @@ $(document).ready(function() {
       if($("#reg_password").val() == $("#reg_password_conf").val()){
           var email = $("#reg_email").val();
           var password = $("#reg_password").val();
+          var username = $("#reg_userName").val();
           auth.createUser(email, password, function(error, user){
             if(!error){
               var now = new Date().getTime();
-              fb_instance.child('users').child(user.id).set({user_name: email, created_at: now, user_id: user.id});
+              fb_instance.child('users').child(user.id).set({user_name: username, email: email, created_at: now, user_id: user.id});
               auth.login('password',{
                 email: email,
                 password: password,

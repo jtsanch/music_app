@@ -41,7 +41,7 @@ function logout(){
 }
 
 function login_user(){
-    $("body").hide();
+    $(".container").hide();
     if (!window.localStorage["user_id"]){
        fb_instance = new Firebase("https://makikofp3.firebaseio.com");
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
@@ -76,7 +76,8 @@ function login_user(){
 
 function begin_app(){
    $("#username").text(current_user); 
-   $("body").show();
+   $("#logging_in").hide();
+   $(".container").show();
 }
 
 })();
