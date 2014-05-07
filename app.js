@@ -10,6 +10,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var practice = require('./routes/practice_session');
 var about = require('./routes/about');
+var help = require('./routes/help');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.get('/', routes.index);
 
 //about page
 app.get('/about', about.view);
+app.get('/help', help.view);
 
 //user navigation pages
 app.get('/users/:id', users.show);
