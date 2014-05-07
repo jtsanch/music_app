@@ -21,10 +21,9 @@ $(document).ready(function() {
           console.log("in here");
           var email = $("#reg_email").val();
           var password = $("#reg_password").val();
-          var now = new Date().getTime();
           auth.createUser(email, password, function(error, user){
             if(!error){
-              fb_instance.child('users').child(user.id).set({user_name: email, last_login: now, created_at: now});
+              fb_instance.child('users').child(user.id).set({user_name: email, created_at: now});
               auth.login('password',{
                 email: email,
                 password: password,
@@ -45,11 +44,13 @@ function initialize_app(){
      auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
         if (error) {
           // an error occurred while attempting login
-
+          console.log("messed up");
         } else if (user) {
-          console.log(user.id);
+          var now = new Date().getTime();
 
-          var redirect = "http://localhost:3000/users/"+user.id;
+          fb_instance.child('online_users').child(user.id).set({user_id: user.id});
+          fb_instance.child('users').child(user.id).update({last_login: now});
+          var redirect = "http://localhost:3000/home";
           window.location.replace(redirect);
 
         } else {

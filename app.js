@@ -8,7 +8,11 @@ var exphbs  = require('express3-handlebars');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var practice = require('./routes/practice_session');
+var Firebase = require('firebase');
+//var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
+var fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
 var about = require('./routes/about');
+var help = require('./routes/help');
 
 var app = express();
 
@@ -30,12 +34,13 @@ app.get('/', routes.index);
 
 //about page
 app.get('/about', about.view);
+app.get('/help', help.view);
 
 //user navigation pages
 app.get('/users/:id', users.show);
-app.get('/users/:id/edit', users.edit);
 app.get('/login', users.login);
 app.get('/register', users.register);
+app.get('/home', users.home);
 
 //practice session pages
 app.get('/practice/:critiquer_id/:musician_id', practice.show);
@@ -76,3 +81,4 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 app.listen(3000);
+console.log("listening now");

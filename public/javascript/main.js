@@ -1,58 +1,75 @@
 (function() {
 
   var fb_instance;
+  var online_users;
+  var current_user;
   var auth;
 
 $(document).ready(function() {
-    initialize_app();
+    login_user();
+  
+  $("#logout").on("click", function(){
+    logout();
+  });
 
-    $("#login_user").on("click", function() {
-      var email = $("#login_email").val();
-      var password = $("#login_password").val();
-      auth.login('password', {
-        email: email,
-        password: password,
-        rememberMe: true
-      });
-    });
+});
 
-    $("#register_user").on("click", function() {
-      if($("#reg_password").val() == $("#reg_password_conf").val()){
-          console.log("in here");
-          var email = $("#reg_email").val();
-          var password = $("#reg_password").val();
-          var now = new Date().getTime();
-          auth.createUser(email, password, function(error, user){
-            if(!error){
-              fb_instance.child('users').child(user.id).set({user_name: email, last_login: now, created_at: now});
-              auth.login('password',{
-                email: email,
-                password: password,
-                rememberMe: true
-              });
-            } else {
-              alert(error);
-            }
-          });
-      } else {
-        alert("Passwords do not match!");
-      }
-    });
-})
+function logout(){
+   fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+   auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
+    if (error){
 
-function initialize_app(){
-     fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
-     auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
-        if (error) {
-          // an error occurred while attempting login
+    }else if (user){
 
-        } else if (user) {
-          console.log(user.uid);
-          window.location.replace("http://localhost:3000/");
+    }else{
+      //logout
+             //user is has logged out
+          window.localStorage.removeItem("user_id");
+          window.localStorage.removeItem("user_name");
+          fb_instance.child('online_users').child(1).set(null);
+          console.log("here");
+          window.location.replace("/login");
+    }
 
+   });
+   auth.logout();  
+}
+
+function login_user(){
+    $("body").hide();
+    if (!window.localStorage["user_id"]){
+       fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+       auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
+          if (error) {
+            // an error occurred while attempting login
+
+          } else if (user) {
+            //user is logged in
+          fb_instance.child('users').child(user.id).on('value',function(snapshot){
+              if(snapshot.val()){
+                current_user = snapshot.val().user_name;
+                window.localStorage.setItem("user_id", snapshot.val().id);
+                window.localStorage.setItem("user_name", current_user);
+                begin_app();
+              }else{
+                //error, logout
+                logout();
+              }
+            });
         } else {
-          //user is not logged in
+          //logged out
         }
       });
-  }
+     }else{
+      current_user = window.localStorage["user_name"];
+      begin_app();
+     } 
+
+    }
+
+function begin_app(){
+   $("#username").text(current_user); 
+   $("body").show();
+}
+
 })();

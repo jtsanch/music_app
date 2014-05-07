@@ -7,16 +7,7 @@ exports.show = function(req, res) {
     });
 }
 
-exports.edit = function(req, res) {
-	var user_id = req.params.id;
-	res.render('users/edit',{
-		title: 'Edit Profile',
-		user : user
-	});
-}
-
 exports.login = function(req, res) {
-	var user_id = req.params.id;
 
 	res.render('users/login',{
 		title: 'Login'
@@ -30,6 +21,13 @@ exports.register = function(req, res){
 	res.render('users/register',{
 		title: 'Register'
 	});
+}
+
+exports.home = function(req, res){
+
+    res.render('users/home',{
+        title: 'Home'
+    });
 }
 
 exports.index = function(req, res){

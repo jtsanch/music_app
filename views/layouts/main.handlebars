@@ -7,6 +7,7 @@
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" href='/stylesheets/style.css'>
+    <link rel="stylesheet" href='/stylesheets/main.css'>
     <script src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
     <script src='/javascripts/jquery-1.11.0.min.js'></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>   
@@ -14,9 +15,13 @@
     <script src='/javascripts/adapter.js'></script>
     <script src='/javascripts/socket.io.js'></script>
     <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
+    <script type='text/javascript'
+        src='https://cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js'>
+</script>
 </head>
 <body>
-        <!--Top Navbar-->
+
+    <!--Top Navbar-->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -27,17 +32,16 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li id="about">
+                <li class="tab">
                     <a href="/about">About</a>
                 </li>
-                <li>
-                    <a href="https://www.google.com/">google</a>
+                <li class="tab">
+                    <a href="/help">Help</a>
                 </li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#">Login</a>
+                <li id="login">
+                    <a href="/login">Login</a>
                 </li>
             </ul>
         </div>  
