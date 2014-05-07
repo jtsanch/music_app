@@ -3,19 +3,27 @@
   var fb_instance;
   var online_users;
   var current_user;
+  var current_id;
   var auth;
 
 $(document).ready(function() {
+    initPage();
     login_user();
   
   $("#logout").on("click", function(){
     logout();
+    window.location.replace("/login");
   });
 
 });
 
+function initPage(){
+  $("#login").hide();
+  $("#logout").show();
+}
+
 function logout(){
-   fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+   fb_instance = new Firebase("https://makikofp3.firebaseio.com");
    auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error){
 
@@ -23,12 +31,9 @@ function logout(){
 
     }else{
       //logout
-             //user is has logged out
+        fb_instance.child("online_users").child(current_id).remove();
           window.localStorage.removeItem("user_id");
           window.localStorage.removeItem("user_name");
-          fb_instance.child('online_users').child(1).set(null);
-          console.log("here");
-          window.location.replace("/login");
     }
 
    });
@@ -38,7 +43,7 @@ function logout(){
 function login_user(){
     $("body").hide();
     if (!window.localStorage["user_id"]){
-       fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+       fb_instance = new Firebase("https://makikofp3.firebaseio.com");
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
           if (error) {
             // an error occurred while attempting login
@@ -48,7 +53,8 @@ function login_user(){
           fb_instance.child('users').child(user.id).on('value',function(snapshot){
               if(snapshot.val()){
                 current_user = snapshot.val().user_name;
-                window.localStorage.setItem("user_id", snapshot.val().id);
+                current_id = snapshot.val().user_id;
+                window.localStorage.setItem("user_id", current_id);
                 window.localStorage.setItem("user_name", current_user);
                 begin_app();
               }else{
@@ -62,6 +68,7 @@ function login_user(){
       });
      }else{
       current_user = window.localStorage["user_name"];
+      current_id = window.localStorage["user_id"];
       begin_app();
      } 
 

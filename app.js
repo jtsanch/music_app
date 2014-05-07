@@ -11,7 +11,7 @@ var users = require('./routes/users');
 var practice = require('./routes/practice_session');
 var Firebase = require('firebase');
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
-var fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 var about = require('./routes/about');
 var help = require('./routes/help');
 
