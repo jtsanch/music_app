@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+.body-container {
+	padding-top: 10px;
+}
+
+.tab:hover {
+	color: white;
+	background: #B6FFDD;
+}
+
+.side-nav {
+	padding-top: 30px;
+	width: 120px;
+}

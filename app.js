@@ -12,6 +12,8 @@ var practice = require('./routes/practice_session');
 var Firebase = require('firebase');
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
 var fb_instance = new Firebase("https://makikofp3.firebaseIO.com");
+var about = require('./routes/about');
+var help = require('./routes/help');
 
 var app = express();
 
@@ -30,6 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //home page
 app.get('/', routes.index);
+
+//about page
+app.get('/about', about.view);
+app.get('/help', help.view);
 
 //user navigation pages
 app.get('/users/:id', users.show);

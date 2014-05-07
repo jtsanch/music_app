@@ -1,1 +1,36 @@
-Test test
+<div class="container">
+	<div class="jumbotron">
+		<h2>Welcome to SoundBoard</h2>
+		<h4>SoundBoard allows you to...</h4>
+		<h4>Don't have an account?</h4>
+		<a class="btn btn-lg btn-primary" href="/register" role="button">Join now</a>
+	</div>
+	<h2>Who's online?</h3>
+	{{#each onlineUsers}}
+		<!-- <div class="row">
+	  		<div class="col-xs-6 col-md-3">
+	    		<a href="{{profile}}" class="thumbnail">
+	    			<h5>{{name}}</h5>
+	    			<h5>Instrument:</h5><h5>{{instrument}}</h5>
+	      			<img src="/images/{{image}}">
+	    		</a>
+		  	</div>
+		</div> -->
+
+		<div class="row">
+		  <div class="col-sm-6 col-md-4">
+		    <a href="{{profile}}" class="thumbnail">
+		      <img src="/images/{{image}}">
+		      <div class="caption">
+		        <h3>{{name}}</h3>
+		        <p><h5>My instrument:</h5>{{instrument}}</p>
+		        <!-- <p>
+		        	<a href="#" class="btn btn-default" role="button">Invite to watch you rehearse</a> 
+		        	<a href="#" class="btn btn-default" role="button">Request to watch rehearsal</a>
+		        </p> -->
+		      </div>
+		    </a>
+		  </div>
+		</div>
+	{{/each}}
+</div>
