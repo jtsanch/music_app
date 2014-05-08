@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
   var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 
@@ -20,8 +19,7 @@ $(document).ready(function(){
   function start_conversation(){
     
     var id, call;
-    var peer = new Peer(current_user.peer_id, 
-                { key: '2lu517mph5btke29', debug: 3 });
+    var peer = new Peer({key: '2lu517mph5btke29'});
      
     if(if_musician == "true"){
       //we need to await the call
@@ -35,35 +33,32 @@ $(document).ready(function(){
         peer.on('call', function(call){
           call.answer(window.localStream);
           call.on('stream', function(stream){
-            $("their-video").prop('src', URL.createObjectURL(stream));
+
+            $("#their-video").prop('src', URL.createObjectURL(stream));
+         
           });
         });
       });
      } else {
-        //we are the critiquer and need to make the call
-        practice_session.child('musician_id').on('value',function(snapshot){
-          if(snapshot.val()){
-            fb_instance.child('users').child(snapshot.val()).on('value', function(snapshot){
-              if(snapshot.val()){
-                var musician = snapshot.val();
-                call = peer.call(musician.peer_id, window.localStream);
+      //we are the critiquer and need to make the call
+      practice_session.child('musician_peer_id').on('value',function(snapshot){
+        if(snapshot.val()){
+          var musician_peer_id = snapshot.val();
+          call = peer.call(musician_peer_id, window.localStream);
 
-                //call your musician friend and establish the connection
-                call.on('stream', function(stream){
-                  $("their-video").prop('src', URL.createObjectURL(stream));
-                });
+          //call your musician friend and establish the connection
+          call.on('stream', function(stream){
+              $("#their-video").prop('src', URL.createObjectURL(stream));
+          });
 
-              } else {
-                //display error
-
-              }
-            });
           } else {
             //display error
+
           }
       });
 
     }
+
     peer.on('error', function(err){
       alert(err.message);
     });
@@ -82,8 +77,6 @@ $(document).ready(function(){
 
     frames = []; // clear existing frames;
     startTime = Date.now();
-
-    toggleActivateRecordButton();
 
     function drawVideoFrame_(time) {
       rafId = requestAnimationFrame(drawVideoFrame_);
@@ -185,7 +178,7 @@ $(document).ready(function(){
     practice_session.child('critiques').push({text:text, sent: now});
 
   }
-  3
+  
   navigator.getUserMedia({audio: true, video: true}, function(stream){
       // Set your video displays
       $( '#my-video').prop('src', URL.createObjectURL(stream));
