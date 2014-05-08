@@ -83,7 +83,7 @@ $(document).ready(function(){
     frames = []; // clear existing frames;
     startTime = Date.now();
 
-    toggleActivateRecordButton();
+ //   toggleActivateRecordButton();
 
     function drawVideoFrame_(time) {
       rafId = requestAnimationFrame(drawVideoFrame_);

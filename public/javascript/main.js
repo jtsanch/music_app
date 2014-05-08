@@ -73,7 +73,7 @@ function initPage(){
 
 function show_invite_prompt(session_id, caller_name){
   $("#caller_name").text(caller_name);
-  $("#incoming_call").fadeIn();
+  $("#incoming_call").modal('show');
   //end receving call prompt here
   $("#invite_accepted").on("click", function(){
         var redirect = "/practice_session/"+session_id+"/false";
@@ -101,7 +101,6 @@ function login_user(){
     $("container").hide();
     if (!window.localStorage["user"]){
        fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
-
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
           if (error) {
             // an error occurred while attempting login
