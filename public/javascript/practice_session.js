@@ -23,6 +23,10 @@ $(document).ready(function(){
      
     if(if_musician == "true"){
       //we need to await the call
+      $("#start_session").on("click", function(snapshot){
+        practice_session.child('session_start').set(new Date().getTime());
+        
+      });
       peer.on('open', function(peer_id){
 
         practice_session.child("musician_peer_id").set(peer_id);
@@ -40,6 +44,10 @@ $(document).ready(function(){
         });
       });
      } else {
+      practice_session.child('session_start').on('value', function(snapshot){
+        //button has been pressed
+
+      });
       //we are the critiquer and need to make the call
       practice_session.child('musician_peer_id').on('value',function(snapshot){
         if(snapshot.val()){
