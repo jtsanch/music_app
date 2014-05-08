@@ -62,6 +62,7 @@ function logout(){
 function login_user(){
     if (!window.localStorage["user"]){
        fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
+
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
          console.log(user);
           if (error) {
@@ -69,13 +70,15 @@ function login_user(){
 
           } else if (user) {
             //user is logged in
-                window.localStorage.setItem("user", JSON.stringify(user));
+             fb_instance.child("users").child(user.id).on("value", function(snapshot){
+                window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
                 current_user = JSON.parse(window.localStorage["user"]);
-                begin_app();
-              }else{
-                //error, logout
-                logout();
-              }
+                begin_app(); 
+             });
+            }else{
+              //error, logout
+              logout();
+            }
         });
      }else{
       current_user = JSON.parse(window.localStorage["user"]);
