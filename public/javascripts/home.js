@@ -26,7 +26,7 @@ function logout(){
 
    auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error){
-
+      console.log("error");
     }else if (user){
 
     }else{
@@ -47,7 +47,7 @@ function login_user(){
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
           if (error) {
             // an error occurred while attempting login
-
+            console.log("error lolz");
           } else if (user) {
             //user is logged in
           fb_instance.child('users').child(user.id).on('value',function(snapshot){
@@ -64,6 +64,7 @@ function login_user(){
             });
         } else {
           //logged out
+          console.log("error in logout");
         }
       });
      }else{

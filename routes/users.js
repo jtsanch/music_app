@@ -42,17 +42,21 @@ exports.home = function(req, res){
     var Firebase = req.app.locals.Firebase;
     var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
     fb_instance.child('online_users').once('value', function(userSnap) {
-        for (user in userSnap.val()){
+        for (var i = 0; i<userSnap.length; i++){
+            var user = userSnap[i];
             fb_instance.child('users/'+user).once('value', function(mediaSnap) {
                 onlineUsers.push(mediaSnap.val());
                 console.log(mediaSnap.val());
             });
+            if (i===userSnap.length-1){
+                console.log("rendering");
+                console.log(onlineUsers);
+                res.render('users/home',{
+                    title: 'Home',
+                    onlineUsers: onlineUsers
+                });
+            }
         }
-        
-        res.render('users/home',{
-            title: 'Home',
-            onlineUsers: onlineUsers
-        });
     });
 }
 
