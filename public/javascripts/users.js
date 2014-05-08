@@ -42,7 +42,7 @@ $(document).ready(function() {
 
 function initialize_app(){
      $("#logout").hide();
-     fb_instance = new Firebase("https://makikofp3.firebaseio.com/");
+     fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
      auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
         if (error) {
           // an error occurred while attempting login
