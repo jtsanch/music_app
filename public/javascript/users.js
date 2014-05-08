@@ -28,7 +28,7 @@ $(document).ready(function() {
             if(!error){
               var now = new Date().getTime();
               var peer_id = Math.random().toString(36).substring(7);;
-              fb_instance.child('users').child(user.id).set({user_name: email, created_at: now, peer_id: peer_id });
+              fb_instance.child('users').child(user.id).set({user_id:user.id, user_name: email, created_at: now, peer_id: peer_id });
               auth.login('password',{
                 email: email,
                 password: password,

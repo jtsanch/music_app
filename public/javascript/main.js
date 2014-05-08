@@ -81,6 +81,7 @@ function login_user(){
             }
         });
      }else{
+      auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {});
       current_user = JSON.parse(window.localStorage["user"]);
       begin_app();
      } 
