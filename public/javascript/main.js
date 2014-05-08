@@ -19,7 +19,7 @@ $(document).ready(function() {
       if(current_user){
         var request_id = current_id;
         var invited_id = $("#clicked_user").val();
-
+//Make sure to ping the clicked_user
         var pushRef = fb_instance.child("practice_sessions").push();
         pushRef.set({musician_id: request_id, critiquer_id: invited_id});
         var redirect = "/practice/" + pushRef.name() + "/false";
