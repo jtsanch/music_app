@@ -9,7 +9,7 @@ $(document).ready(function() {
         password: password,
         rememberMe: true
       });
-      var redirect = "http://localhost:3000/home";
+      var redirect = window.location.href.split(".com")[0]+".com/home";
       window.location.replace(redirect);
     });
 
@@ -49,10 +49,10 @@ $(document).ready(function() {
           if(snapshot.val()){
             var session = fb_instance.child("practice_sessions").child(snapshot.val()+1);
             session.child('users').put({musician_id: musician_id, critiquer_id: current_user.id});
-            var redirect = "http://localhost:3000/practice_session/" + snapshot.val() + "/false";
+            var redirect = window.location.href.split(".com")[0]+".com/practice_session/"+snapshot.val()+1+"/false";
             window.location.replace(redirect);
           } else {
-            var redirect = "http://localhost:3000/error";
+            var redirect = window.location.href.split(".com")[0]+".com/error"+;
             window.location.replace(redirect);
           }
         });
