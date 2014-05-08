@@ -92,10 +92,6 @@ $(document).ready(function(){
     cancelAnimationFrame(rafId);
     
     endTime = Date.now();
-    $('#stop-me').disabled = true;
-    document.title = ORIGINAL_DOC_TITLE;
-
-    toggleActivateRecordButton();
 
     begin_critique_session();
        
@@ -112,8 +108,6 @@ $(document).ready(function(){
         pratice_session.child('critique_video_time').put($("#critique_video").currentTime);
       });
 
-      render_critique();
-
     } else {
 
         document.getElementById("#critique_video").addEventListener('loadedmetadata', function() {
@@ -123,10 +117,10 @@ $(document).ready(function(){
             this.currentTime = snapshot.val(); 
             $("#critique_video").play();
           });
-          render_critique();
         }, false);
-
     }
+
+    render_critique();
   }
 
   $("#critique_text").onkeyup = function(e){

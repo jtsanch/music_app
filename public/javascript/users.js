@@ -47,9 +47,9 @@ $(document).ready(function() {
         var musician_id = $("#musician_id");
         fb_instance.child("practice_sessions").child("count").on("value", function(snapshot){
           if(snapshot.val()){
-            var session = fb_instance.child("practice_sessions").child(snapshot.val());
+            var session = fb_instance.child("practice_sessions").child(snapshot.val()+1);
             session.child('users').put({musician_id: musician_id, critiquer_id: current_user.id});
-            var redirect = "http://localhost:3000/practice_session/" + musician_id + "/false";
+            var redirect = "http://localhost:3000/practice_session/" + snapshot.val() + "/false";
             window.location.replace(redirect);
           } else {
             var redirect = "http://localhost:3000/error";
