@@ -1,11 +1,10 @@
-
 exports.show = function(req, res) {
 	var Firebase = req.app.locals.Firebase;
 	var fb_instance = new req.app.Firebase("https://sizzling-fire-6665.firebaseio.com");
 
-	var user_id = req.params.id;
+	var critiquer_id = req.params.critiquer_id;
 	var user = fb_instance.child('users').child(user_id);
-
+	
 	user.on('value', function(snapshot){
 		if(snapshot.val()){
 			res.render('users/show', {

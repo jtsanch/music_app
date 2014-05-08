@@ -16,7 +16,7 @@ var help = require('./routes/help');
 
 var app = express();
 app.locals.Firebase = Firebase;
-
+9
 // view engine setup
 // view engine setup
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -44,7 +44,7 @@ app.get('/register', users.register);
 app.get('/home', users.home);
 
 //practice session pages
-app.get('/practice/:critiquer_id/:musician_id', practice.show);
+app.get('/practice/:critiquer_id', practice.show);
 app.get('/practice/new', practice.new);
 
 /// catch 404 and forwarding to error handler

@@ -1,5 +1,6 @@
 
 exports.show = function(req, res) {
+    var fb_instance = new req.app.Firebase("https://sizzling-fire-6665.firebaseio.com");
 
 	var critiquer_id    = req.params.critiquer_id;
     var musician_id     = req.params.musician_id;
