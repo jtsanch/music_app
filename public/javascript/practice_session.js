@@ -38,7 +38,7 @@ $(document).ready(function(){
       });
      } else {
         //we are the critiquer and need to make the call
-        practice_session.child('musician_id').on('value',function(){
+        practice_session.child('musician_id').on('value',function(snapshot){
           if(snapshot.val()){
             fb_instance.child('users').child(snapshot.val()).on('value', function(snapshot){
               if(snapshot.val()){
