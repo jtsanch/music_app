@@ -1,3 +1,4 @@
+//used only for login/register pages
 $(document).ready(function() {
     
     /* Login page js */
@@ -43,25 +44,6 @@ $(document).ready(function() {
       }
     });
     /* end Register Page js */
-
-    if(current_user){
-      /* begin Profile Page js */
-      $("#call_user").on("click", function() {
-        var musician_id = $("#musician_id");
-        fb_instance.child("practice_sessions").child("count").on("value", function(snapshot){
-          if(snapshot.val()){
-            var session = fb_instance.child("practice_sessions").child(snapshot.val()+1);
-            session.child('users').put({musician_id: musician_id, critiquer_id: current_user.id});
-            var redirect = "/practice_session/" + snapshot.val() + "/false";
-            window.location.replace(redirect);
-          } else {
-            var redirect = "/error";
-            window.location.replace(redirect);
-          }
-        });
-        fb_instance.child("practice_sessions");
-      }); 
-
 
     }
 });

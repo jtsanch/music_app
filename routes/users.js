@@ -1,8 +1,8 @@
 exports.show = function(req, res) {
 	var Firebase = req.app.locals.Firebase;
-	var fb_instance = new req.app.Firebase("https://sizzling-fire-6665.firebaseio.com");
+	var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 
-	var critiquer_id = req.params.critiquer_id;
+	var user_id = req.params.id;
 	var user = fb_instance.child('users').child(user_id);
 	
 	user.on('value', function(snapshot){
@@ -57,8 +57,6 @@ exports.home = function(req, res){
     {
         if ( count==lengthUser)
         {
-            console.log("rendering");
-            console.log(onlineUsers);
             res.render('users/home',{
                 title: 'Home',
                 onlineUsers: onlineUsers

@@ -1,22 +1,73 @@
-(function() {
+  (function() {
 
-  var fb_instance;
+  var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
   var online_users;
   var current_user;
+  var current_id;
   var auth;
 
 $(document).ready(function() {
+    initPage();
     login_user();
   
     $("#logout").on("click", function(){
       logout();
     });
-    if(current_user){ 
-      fb_instance.child("users").child(current_user).child('ping').on('child_changed', function(snapshot){
+
+     /* begin Profile Page js */
+    $("#invite_asM").on("click", function() {
+      if(current_user){
+        var request_id = current_id;
+        var invited_id = $("#clicked_user").val();
+
+        var pushRef = fb_instance.child("practice_sessions").push();
+        pushRef.set({musician_id: request_id, critiquer_id: invited_id});
+        var redirect = "/practice/" + pushRef.name() + "/false";
+        window.location.replace(redirect);
+      }
+    });
+  //      var redirect = "/practice_session/" + snapshot.val() + "/false";
+  //      window.location.replace(redirect);
+      //   fb_instance.child("practice_sessions").child("count").on("value", function(snapshot){
+      //     if(snapshot.val()){
+      //       var session = fb_instance.child("practice_sessions").child(snapshot.val()+1);
+      //       //need to eventually change to have critiquers able to invite too
+      //       session.child('users').put({musician_id: request_id, critiquer_id: invited_id});
+      //       var redirect = "/practice_session/" + snapshot.val() + "/false";
+      //       window.location.replace(redirect);
+      //     } else {
+      //       var redirect = "/error";
+      //       window.location.replace(redirect);
+      //     }
+      //   });
+      //   fb_instance.child("practice_sessions");
+      // } else{
+      //   console.log("error with inviting");
+      // }
+
+    $("#profile_link").on("click", function(){
+      var user_id = $("#clicked_user").val();
+      window.location.replace("/users/"+user_id);
+    });
+
+    //If there is a user, and if this user is being pinged, display the invite prompt
+    if(current_id){ 
+      fb_instance.child("users").child(current_id).child('ping').on('child_changed', function(snapshot){
         show_invite_prompt();
       });
     }
 });
+
+function initPage(){
+  $("#login").hide();
+  $("#logout").show();
+
+  $(".user_thumbs").on("click", function(){
+    //set hidden user id
+    var user_id = $(this).attr('id');
+    $("#clicked_user").val(user_id);
+  });
+}
 
 function show_invite_prompt(){
   //toggle receiving call prompt here
@@ -29,17 +80,17 @@ function show_invite_prompt(){
       .on('value', function(snapshot){
         if(snapshot.val()){
           var session_id = snapshot.val();
-          var redirect = "http://localhost:3000/practice_session/"+session_id+"/false";
+          var redirect = "/practice_session/"+session_id+"/false";
           window.location.replace(redirect);
         } else {
-          var redirect = "http://localhost:3000/error";
+          var redirect = "/error";
           window.location.replace(redirect);
         }
       });
   });
 }
+
 function logout(){
-   fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
    auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error){
       
@@ -51,7 +102,6 @@ function logout(){
           window.localStorage.removeItem("user_id");
           window.localStorage.removeItem("user_name");
           fb_instance.child('online_users').child(1).set(null);
-          console.log("here");
           window.location.replace("/login");
     }
 
@@ -60,7 +110,7 @@ function logout(){
 }
 
 function login_user(){
-    $("body").hide();
+    $("container").hide();
     if (!window.localStorage["user_id"]){
        fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
@@ -72,6 +122,7 @@ function login_user(){
           fb_instance.child('users').child(user.id).on('value',function(snapshot){
               if(snapshot.val()){
                 current_user = snapshot.val().user_name;
+                current_id = snapshot.val().user_id;
                 window.localStorage.setItem("user_id", snapshot.val().id);
                 window.localStorage.setItem("user_name", current_user);
                 begin_app();
@@ -86,6 +137,7 @@ function login_user(){
       });
      }else{
       current_user = window.localStorage["user_name"];
+      current_id = window.localStorage["user_id"];
       begin_app();
      } 
 
@@ -93,7 +145,9 @@ function login_user(){
 
 function begin_app(){
    $("#username").text(current_user); 
-   $("body").show();
+   $("#logging_in").hide();
+   $(".container").show();
 }
 
 })();
+
