@@ -23,24 +23,27 @@ $(document).ready(function(){
     var peer = new Peer(current_user.peer_id, 
                 { key: '2lu517mph5btke29', debug: 3 });
      
-    if(if_musician){
+    if(if_musician == "true"){
       //we need to await the call
       peer.on('open', function(peer_id){
 
-        practice_session.child("musician_peer_id").put(peer_id);
+        practice_session.child("musician_peer_id").set(peer_id);
 
-        practice_session.child("musician_id").put(current_id);
+        practice_session.child("musician_id").set(current_user.id);
 
         //await the call from the crtiquer. Just chill out in the window
         peer.on('call', function(call){
           call.answer(window.localStream);
+          call.on('stream', function(stream){
+            $("their-video").prop('src', URL.createObjectURL(stream));
+          });
         });
       });
      } else {
         //we are the critiquer and need to make the call
-        practice_session.child('musician_id').on('value',function(){
+        practice_session.child('musician_id').on('value',function(snapshot){
           if(snapshot.val()){
-            fb_instance.child('users').child(snapshot.val()).on('value', function(){
+            fb_instance.child('users').child(snapshot.val()).on('value', function(snapshot){
               if(snapshot.val()){
                 var musician = snapshot.val();
                 call = peer.call(musician.peer_id, window.localStream);
@@ -60,7 +63,6 @@ $(document).ready(function(){
           }
       });
 
-      $("#")
     }
     peer.on('error', function(err){
       alert(err.message);
@@ -111,7 +113,7 @@ $(document).ready(function(){
     url = window.URL.createObjectURL(webmBlob);
     $("#critique_video").src = url;      
 
-    if(if_musician){
+    if(if_musician != "false"){
       
       $("#critique_video").on('timeupdate', function(){
         pratice_session.child('critique_video_time').put($("#critique_video").currentTime);

@@ -8,7 +8,19 @@
         <h4>SoundBoard allows you to connect with other fellow musicians to critique each other's music online! Click on an online user to get started.</h4>
     </div>
 
-    <div class="pop-up">
+<h2>Welcome back <span id="username"></span>!</h2>
+<input type="hidden" id="clicked_user">
+
+<h2>Who's online?</h3>
+{{#each onlineUsers}}
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+          <div class="caption thumbnail">
+            <a href="#" class="user_thumbs" id="{{id}}" data-toggle="modal" data-target="#profile_view">
+            <h3>{{user_name}}</h3>
+            <h5>My instrument: {{instrument}}</h5></a>
+          </div>
+      </div>
     </div>
 
   <h2>Welcome back <span id="username"></span>!</h2>

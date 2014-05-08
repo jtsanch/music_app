@@ -13,7 +13,6 @@ var Firebase = require('firebase');
 var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 var about = require('./routes/about');
 var help = require('./routes/help');
-var playback = require('./routes/playback');
 
 var app = express();
 app.locals.Firebase = Firebase;
@@ -46,9 +45,6 @@ app.get('/home', users.home);
 
 //practice session pages
 app.get('/practice/:session_id/:if_musician', practice.show);
-
-//playback session
-app.get('/playback', playback.view);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
