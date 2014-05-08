@@ -7,6 +7,8 @@ $(document).ready(function(){
   var session_id  = $("#session_id");
   var if_musician = $("#if_musician");
   
+  var practice_session = fb_instance.child('practice_sessions').child(session_id);
+
   var canvas = document.createElement('canvas'); // offscreen canvas.
   var rafId = null;
   var startTime = null;
@@ -24,24 +26,29 @@ $(document).ready(function(){
     if(if_musician){
       //we need to await the call
       peer.on('open', function(peer_id){
-        fb_instance.child('practice_sessions').child("musician_peer_id").put(peer_id);
 
-        var practice = fb_instance.child('practice_sessions').child(conversation_id);
-        practice.child("musician_id").put(current_id);
+        practice_session.child("musician_peer_id").put(peer_id);
+
+        practice_session.child("musician_id").put(current_id);
+
+        //await the call from the crtiquer. Just chill out in the window
         peer.on('call', function(call){
           call.answer(window.localStream);
         });
       } else {
         //we are the critiquer and need to make the call
-        fb_instance.child('practice_sessions').child('musician_id').on('value',function(){
+        practice_session.child('musician_id').on('value',function(){
           if(snapshot.val()){
             fb_instance.child('users').child(snapshot.val()).on('value', function(){
               if(snapshot.val()){
                 var musician = snapshot.val();
                 call = peer.call(musician.peer_id, window.localStream);
+
+                //call your musician friend and establish the connection
                 call.on('stream', function(stream){
                   $("their-video").prop('src', URL.createObjectURL(stream));
                 });
+
               } else {
                 //display error
 
@@ -81,7 +88,9 @@ $(document).ready(function(){
   } 
 
   function stop_recording() {
+
     cancelAnimationFrame(rafId);
+    
     endTime = Date.now();
     $('#stop-me').disabled = true;
     document.title = ORIGINAL_DOC_TITLE;
@@ -89,10 +98,6 @@ $(document).ready(function(){
     toggleActivateRecordButton();
 
     begin_critique_session();
-
-    console.log('frames captured: ' + frames.length + ' => ' +
-                ((endTime - startTime) / 1000) + 's video');
-
        
   }
 
@@ -102,23 +107,75 @@ $(document).ready(function(){
     $("#critique_video").src = url;      
 
     if(if_musician){
-      $("#critique_video").src = 
+      
+      $("#critique_video").on('timeupdate', function(){
+        pratice_session.child('critique_video_time').put($("#critique_video").currentTime);
+      });
+
       render_critique();
+
     } else {
+
         document.getElementById("#critique_video").addEventListener('loadedmetadata', function() {
-          fb_instance.child('practice_sessions').child(session_id).child('critique_video_time').on('child_changed', function(snapshot){
+        
+        //Only the musician can control the video      
+        practice_session.child('critique_video_time').on('child_changed', function(snapshot){
             this.currentTime = snapshot.val(); 
             $("#critique_video").play();
           });
           render_critique();
         }, false);
+
+    }
+  }
+
+  $("#critique_text").onkeyup = function(e){
+    e = e || event;
+    if ( e.keyCode === 13 && !e.ctrlKey){
+      var now = new Date().getTime();
+      var text = $("#critique_text");
+      add_critique_item(now, text);
     }
   }
 
   function render_critique(){
-    //set up firebase listeners for critique
+    //create dictionary of [sent time of critique] -> text of critique
+    var critiques;
+    practice_session.child('critiques').on('value', function(snapshot()){
+      if(snapshot.val()){
+        for(var critique in snapshot.val()){
+          critiques[critique.sent_at] = critique.text;
+          add_critique_item(critique.sent_at, critique.text);
+        }
+      }
+    });
 
-    //
+    setInterval( function(){
+      if( critiques[$("#critique_video").currentTime] ){
+        var scroll_to = $("#"+crtiques[$("#critique_video").currentTime]);
+        scroll_to.className = active_critique;
+        $("#critiques").animate({
+          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+        });
+      }
+    },1000);
+
+
+  }
+
+  //render the critique item in the list
+  function add_critique_item( sent_at, text){
+  
+    $("#critiques").append("<li id='"+sent_at+"'>"+text+"<br\>"+
+      sent_at +"</li>");
+
+  }
+  //add a new critique item during critique session
+  function add_critique( text ){
+
+    var now = new Date().getTime();
+    practice_session.child('critiques').push({text:text, sent: now});
+
   }
   navigator.getUserMedia({audio: true, video: true}, function(stream){
       // Set your video displays
