@@ -5,15 +5,31 @@
 <div class="container">
     <div class="jumbotron">
         <h2>Welcome to SoundBoard</h2>
-        <h4>SoundBoard allows you to...</h4>
-        <h4>Don't have an account?</h4>
-        <a class="btn btn-lg btn-primary" href="/register" role="button">Join now</a>
+        <h4>SoundBoard allows you to connect with other fellow musicians to critique each other's music online! Click on an online user to get started.</h4>
     </div>
 
 <h2>Welcome back <span id="username"></span>!</h2>
 
     <h2>Who's online?</h3>
     {{#each onlineUsers}}
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+              <div class="caption">
+                <a href="users/{{user_id}}" class="thumbnail">
+                <h3>{{user_name}}</h3>
+                <h5>My instrument: {{instrument}}</h5>
+                <a href="#" class="btn btn-default" role="button">Invite to watch you rehearse</a> 
+                <a href="#" class="btn btn-default" role="button">Request to watch rehearsal</a>
+                </a>
+              </div>
+          </div>
+        </div>
+    {{/each}}
+</div>
+
+<script type='text/javascript'
+        src='https://cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js'>
+</script>
         <!-- <div class="row">
             <div class="col-xs-6 col-md-3">
                 <a href="{{profile}}" class="thumbnail">
@@ -23,27 +39,4 @@
                 </a>
             </div>
         </div> -->
-
-        <div class="row">
-          <div class="col-sm-6 col-md-4">
-            <a href="{{profile}}" class="thumbnail">
-              <img src="/images/{{image}}">
-              <div class="caption">
-                <h3>{{name}}</h3>
-                <p><h5>My instrument:</h5>{{instrument}}</p>
-                <!-- <p>
-                    <a href="#" class="btn btn-default" role="button">Invite to watch you rehearse</a> 
-                    <a href="#" class="btn btn-default" role="button">Request to watch rehearsal</a>
-                </p> -->
-              </div>
-            </a>
-          </div>
-        </div>
-    {{/each}}
-</div>
-
-<script type='text/javascript'
-        src='https://cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js'>
-</script>
-
 
