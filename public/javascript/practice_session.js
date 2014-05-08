@@ -40,7 +40,7 @@ $(document).ready(function(){
         //we are the critiquer and need to make the call
         practice_session.child('musician_id').on('value',function(){
           if(snapshot.val()){
-            fb_instance.child('users').child(snapshot.val()).on('value', function(){
+            fb_instance.child('users').child(snapshot.val()).on('value', function(snapshot){
               if(snapshot.val()){
                 var musician = snapshot.val();
                 call = peer.call(musician.peer_id, window.localStream);
