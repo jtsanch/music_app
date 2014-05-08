@@ -76,7 +76,7 @@ function show_invite_prompt(session_id, caller_name){
   $("#incoming_call").modal('show');
   //end receving call prompt here
   $("#invite_accepted").on("click", function(){
-        var redirect = "/practice_session/"+session_id+"/false";
+        var redirect = "/practice/"+session_id+"/false";
         window.location.replace(redirect);
   });
 }
