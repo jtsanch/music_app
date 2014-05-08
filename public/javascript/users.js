@@ -13,7 +13,7 @@ $(document).ready(function() {
       fb_instance.child('online_users').child(user.id).set({user_id: user.id});
       fb_instance.child('users').child(user.id).update({active_time: now});
       var redirect = "/home";
-      window.location.replace(redirect);
+  //    window.location.replace(redirect);
     });
 
     /* end Login Page js */
