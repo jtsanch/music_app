@@ -1,14 +1,14 @@
 $(document).ready(function(){
-  
-  var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
-
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-  var session_id  = $("#session_id");
-  var if_musician = $("#if_musician");
+  var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
+
+  var session_id  = $("#session_id").val();
+  var if_musician = $("#if_musician").val();
   
   var practice_session = fb_instance.child('practice_sessions').child(session_id);
-
+  
+  //recording elements
   var canvas = document.createElement('canvas'); // offscreen canvas.
   var rafId = null;
   var startTime = null;
@@ -35,7 +35,8 @@ $(document).ready(function(){
         peer.on('call', function(call){
           call.answer(window.localStream);
         });
-      } else {
+      });
+     } else {
         //we are the critiquer and need to make the call
         practice_session.child('musician_id').on('value',function(){
           if(snapshot.val()){
@@ -58,13 +59,21 @@ $(document).ready(function(){
             //display error
           }
       });
+
+      $("#")
     }
     peer.on('error', function(err){
       alert(err.message);
     });
+
   }
 
+  //called upon the button being clicked
   function start_recording(){
+    
+    $("#begin_recording").hide();
+    $("#end_recording").show();
+
     var ctx = canvas.getContext('2d');
     var CANVAS_HEIGHT = canvas.height;
     var CANVAS_WIDTH = canvas.width;
@@ -118,24 +127,27 @@ $(document).ready(function(){
             $("#critique_video").play();
           });
         }, false);
+
+        $("#critique_text").onkeyup = function(e){
+          e = e || event;
+          if ( e.keyCode === 13 && !e.ctrlKey){
+            var now = new Date().getTime();
+            var text = $("#critique_text");
+            add_critique_item(now, text);
+          }
+        }
+        $(".critique_rating").on("click",function(){
+          add_critique(""+$(this).id);
+        });
     }
 
     render_critique();
   }
 
-  $("#critique_text").onkeyup = function(e){
-    e = e || event;
-    if ( e.keyCode === 13 && !e.ctrlKey){
-      var now = new Date().getTime();
-      var text = $("#critique_text");
-      add_critique_item(now, text);
-    }
-  }
-
   function render_critique(){
     //create dictionary of [sent time of critique] -> text of critique
     var critiques;
-    practice_session.child('critiques').on('value', function(snapshot()){
+    practice_session.child('critiques').on('value', function(snapshot){
       if(snapshot.val()){
         for(var critique in snapshot.val()){
           critiques[critique.sent_at] = critique.text;
@@ -171,12 +183,13 @@ $(document).ready(function(){
     practice_session.child('critiques').push({text:text, sent: now});
 
   }
+  3
   navigator.getUserMedia({audio: true, video: true}, function(stream){
       // Set your video displays
       $( '#my-video').prop('src', URL.createObjectURL(stream));
       window.localStream = stream;
       start_conversation();
-    }, function(){ alert("Camera disabled."); }); 
-  }
+  }, function(){ alert("Camera disabled."); }); 
+  
 
 });

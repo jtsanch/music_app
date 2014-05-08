@@ -16,7 +16,7 @@ var help = require('./routes/help');
 
 var app = express();
 app.locals.Firebase = Firebase;
-9
+
 // view engine setup
 // view engine setup
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -29,7 +29,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //home page
 app.get('/', routes.index);

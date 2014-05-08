@@ -99,9 +99,9 @@ function logout(){
     }else{
       //logout
              //user is has logged out
+          fb_instance.child("online_users").child(current_id).remove();
           window.localStorage.removeItem("user_id");
           window.localStorage.removeItem("user_name");
-          fb_instance.child('online_users').child(1).set(null);
           window.location.replace("/login");
     }
 
