@@ -27,9 +27,9 @@ $(document).ready(function(){
       //we need to await the call
       peer.on('open', function(peer_id){
 
-        practice_session.child("musician_peer_id").put(peer_id);
+        practice_session.child("musician_peer_id").set(peer_id);
 
-        practice_session.child("musician_id").put(current_id);
+        practice_session.child("musician_id").set(current_user.id);
 
         //await the call from the crtiquer. Just chill out in the window
         peer.on('call', function(call){

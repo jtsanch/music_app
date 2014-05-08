@@ -55,7 +55,7 @@ $(document).ready(function() {
             var redirect = window.location.href.split(".com")[0]+".com/practice_session/"+snapshot.val()+1+"/false";
             window.location.replace(redirect);
           } else {
-            var redirect = window.location.href.split(".com")[0]+".com/error"+;
+            var redirect = window.location.href.split(".com")[0]+".com/error";
             window.location.replace(redirect);
           }
         });
