@@ -101,7 +101,6 @@ function login_user(){
     $("container").hide();
     if (!window.localStorage["user"]){
        fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
-
        auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
           if (error) {
             // an error occurred while attempting login

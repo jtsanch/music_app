@@ -3,21 +3,23 @@ $(document).ready(function() {
     
   auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error) {
-      // an error occurred while attempting login
+      console.log('error');
     } else if (user) {
       //user is logged in, redirect
+      console.log('logging in');
       var now = new Date().getTime();
       fb_instance.child('online_users').child(user.id).set({user_id: user.id});
       fb_instance.child('users').child(user.id).update({active_time: now});
       var redirect = "/home";
       window.location.replace(redirect);
     } else {
-      //logged out
+      console.log('llogeged out');
     }
   });
 
     /* Login page js */
     $("#login_user").on("click", function() {
+      console.log('in here');
       var email = $("#login_email").val();
       var password = $("#login_password").val();
       auth.login('password', {
@@ -25,11 +27,6 @@ $(document).ready(function() {
         password: password,
         rememberMe: true
       });
-      // var now = new Date().getTime();
-      // fb_instance.child('online_users').child(user.id).set({user_id: user.id});
-      // fb_instance.child('users').child(user.id).update({active_time: now});
-      // var redirect = "/home";
-      // window.location.replace(redirect);
     });
 
     /* end Login Page js */
@@ -45,6 +42,7 @@ $(document).ready(function() {
             if(!error){
               var now = new Date().getTime();
               var peer_id = Math.random().toString(36).substring(7);;
+      
               fb_instance.child('users').child(user.user.id).set({
                   user_name: email, 
                   created_at: now, 
