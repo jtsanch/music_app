@@ -44,8 +44,7 @@ app.get('/register', users.register);
 app.get('/home', users.home);
 
 //practice session pages
-app.get('/practice/:critiquer_id', practice.show);
-app.get('/practice/new', practice.new);
+app.get('/practice/:session_id/:if_musician', practice.show);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
