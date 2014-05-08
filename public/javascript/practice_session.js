@@ -23,7 +23,7 @@ $(document).ready(function(){
     var peer = new Peer(current_user.peer_id, 
                 { key: '2lu517mph5btke29', debug: 3 });
      
-    if(if_musician){
+    if(if_musician != "false"){
       //we need to await the call
       peer.on('open', function(peer_id){
 
