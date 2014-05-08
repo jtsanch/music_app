@@ -1,20 +1,8 @@
 <script>
 	var critiquer_id = {{critiquer_id}};
 	var musician_id  = {{musician_id}};
-	var started = {{is_recording}}
-
-	function toggle(button) {
-     	switch(button.value) {
-          case "Start rehearsal":
-               button.value = "Stop rehearsal";
-               //update fb, start recording and switch critiquer's interface
-               break;
-          case "Stop rehearsal":
-          	   //update fb is_recording value, start recording and switch critiquer's interface
-               button.value = "Start rehearsal";
-               break;
-     	}
-	}
+	var practice_start = {{practice_start}}
+	var practice_end = {{practice_end}}
 </script>
 <script src='/javascript/practice_session.js'></script>
 
@@ -31,12 +19,12 @@
 	    <video class="inner" id="their-video" autoplay></video>
 	    
 	    <div id="start-button">
-    		<input type="button" id="start-session" value="Start rehearsal" class="btn btn-default btn-lg" onclick="toggle(this);">
+    		<input type="button" id="start_session" value="Start rehearsal" class="btn btn-default btn-lg" onclick="toggle(this);">
 		</div>
 
 	</div>
-	<button type='button' id='begin_recording'>Start Session</button>
-	<button type='button' id='end_recording' hidden>End Session</button>
+	<!-- <button type='button' id='begin_recording'>Start Session</button>
+	<button type='button' id='end_recording' hidden>End Session</button> -->
 	<li class='right_bar' id='critiques' hidden></li>
 
 {{else}}
@@ -46,7 +34,7 @@
 	    <video class="outer" id="their-video" autoplay></video>
 	</div>
 
-	{{#if is_recording}}
+	{{#if practice_start}}
 		<div class="well button-panel">
 	        <h3>Click tags to comment on performance</h3>
 	        <ul class="tags">
@@ -72,14 +60,6 @@
 
 	<li class='right_bar' id='critiques'></li>
 	<input type='text' id='critique_text'></input>
-	<button type='button' id='bad_pitch' class='good_button'>Pitch</button>
-	<button type='button' id='bad_pitch' class='good_button'>Posture</button>
-	<button type='button' id='bad_pitch' class='good_button'>Tone</button>
-	<button type='button' id='bad_pitch' class='good_button'>Rhythm</button>	
-	<button type='button' id='bad_pitch' class='bad_button'>Pitch</button>
-	<button type='button' id='bad_pitch' class='bad_button'>Tone</button>
-	<button type='button' id='bad_pitch' class='bad_button'>Posture</button>
-	<button type='button' id='bad_pitch' class='bad_button'>Rhythm</button>
 
 {{/if}}
 

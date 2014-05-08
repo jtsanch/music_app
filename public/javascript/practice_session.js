@@ -24,7 +24,12 @@ $(document).ready(function(){
     if(if_musician == "true"){
       //we need to await the call
       $("#start_session").on("click", function(snapshot){
-        practice_session.child('session_start').set(new Date().getTime());
+        //if button=start, turn to stop
+        if($("#start_session").value == "Start rehearsal") {
+          practice_session.child('practice_start').set(new Date().getTime());
+        } else {
+          practice_session.child('practice_end').set(new Date().getTime());
+        }
         
       });
       peer.on('open', function(peer_id){
@@ -193,6 +198,19 @@ $(document).ready(function(){
       window.localStream = stream;
       start_conversation();
   }, function(){ alert("Camera disabled."); }); 
-  
+
+  //toggle start/stop button
+  function toggle(button) {
+      switch(button.value) {
+          case "Start rehearsal":
+               button.value = "Stop rehearsal";
+               //update fb, start recording and switch critiquer's interface
+               break;
+          case "Stop rehearsal":
+               //update fb is_recording value, start recording and switch critiquer's interface
+               button.value = "Start rehearsal";
+               break;
+      }
+  }
 
 });
