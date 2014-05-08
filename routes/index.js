@@ -15,3 +15,7 @@ exports.index = function(req, res){
 		]
 	});
 }
+
+exports.splash = function(req, res) {
+  res.render('splash', {'appName':'SoundBoard'});
+};
