@@ -71,14 +71,3 @@ exports.home = function(req, res){
     } 
     checkCount();
 }
-
-
-function getOnlineUsers(fb_instance){
-
-    console.log("end fxn"+onlineUsers);
-    return onlineUsers;
-}
-
-exports.index = function(req, res){
-    res.render('index', {title:"Musique"});
-}
