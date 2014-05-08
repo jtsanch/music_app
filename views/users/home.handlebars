@@ -11,8 +11,8 @@
 <h2>Welcome back <span id="username"></span>!</h2>
 <input type="hidden" id="clicked_user">
 
-<h2>Who's online?</h3>
-{{#each onlineUsers}}
+<h2>Who's online?</h2>
+  {{#each onlineUsers}}
     <div class="row">
       <div class="col-sm-6 col-md-4">
           <div class="caption thumbnail">
@@ -22,23 +22,38 @@
           </div>
       </div>
     </div>
-{{/each}}
+  {{/each}}
 
-<div id="profile_view" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div id="profile_view" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <button id="profile_link" type="button" class="btn btn-default">Go to their profile</button> 
+          <br/><br/>
+          <button id="invite_asM" type="button" class="btn btn-default">Invite to watch you rehearse</button> 
+        
+        </div>
+      </div>
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal   <button id="invite_asL" type="button" class="btn btn-default">Request to listen to them rehearse</button> -->
+
+<div id="incoming_call" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      </div>
       <div class="modal-body">
-        <button id="profile_link" type="button" class="btn btn-default">Profile</button> 
-        <!-- This is the button that will take you to practice room/ -->
-        <button id="invite_asM" type="button" class="btn btn-default">Invite to watch you rehearse</button> 
+        <span id="caller_name"></span> wants to hear your feedback while they practice!
+        <br/><br/>
+        <button id="invite_accepted" type="button" class="btn btn-default">Accept Invite!</button> 
+        <br/><br/>
+        <button id="invite_rejected" type="button" class="btn btn-default">Reject Invite</button> 
       
       </div>
     </div>
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal   <button id="invite_asL" type="button" class="btn btn-default">Request to listen to them rehearse</button> -->
+</div>
 
 
 </div>
@@ -46,13 +61,4 @@
 <script type='text/javascript'
         src='https://cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js'>
 </script>
-        <!-- <div class="row">
-            <div class="col-xs-6 col-md-3">
-                <a href="{{profile}}" class="thumbnail">
-                    <h5>{{name}}</h5>
-                    <h5>Instrument:</h5><h5>{{instrument}}</h5>
-                    <img src="/images/{{image}}">
-                </a>
-            </div>
-        </div> -->
 
