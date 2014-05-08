@@ -110,7 +110,7 @@ $(document).ready(function(){
     url = window.URL.createObjectURL(webmBlob);
     $("#critique_video").src = url;      
 
-    if(if_musician){
+    if(if_musician != "false"){
       
       $("#critique_video").on('timeupdate', function(){
         pratice_session.child('critique_video_time').put($("#critique_video").currentTime);
