@@ -10,10 +10,9 @@ $(document).ready(function() {
     initPage();
     login_user();
   
-  $("#logout").on("click", function(){
-    logout();
-    window.location.replace("/login");
-  });
+    $("#logout").on("click", function(){
+      logout();
+    });
 
 });
 
@@ -24,6 +23,7 @@ function initPage(){
 
 function logout(){
    fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
+
    auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error){
 

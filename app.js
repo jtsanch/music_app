@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs  = require('express3-handlebars');
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var practice = require('./routes/practice_session');
@@ -16,7 +15,8 @@ var about = require('./routes/about');
 var help = require('./routes/help');
 
 var app = express();
-
+app.locals.Firebase = Firebase;
+9
 // view engine setup
 // view engine setup
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -44,7 +44,7 @@ app.get('/register', users.register);
 app.get('/home', users.home);
 
 //practice session pages
-app.get('/practice/:critiquer_id/:musician_id', practice.show);
+app.get('/practice/:critiquer_id', practice.show);
 app.get('/practice/new', practice.new);
 
 /// catch 404 and forwarding to error handler

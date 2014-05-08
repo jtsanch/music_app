@@ -1,50 +1,67 @@
 exports.show = function(req, res) {
-	var user_id = req.params.id;
+    var Firebase = req.app.locals.Firebase;
+    var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 
-    res.render('users/users', {
-        title: "User name",
-        user_id: user_id
+    var user_id = req.params.id;
+    var user = fb_instance.child('users').child(user_id);
+    
+    user.on('value', function(snapshot){
+        if(snapshot.val()){
+            res.render('users/show', {
+                title: snapshot.val().name,
+                user: snapshot.val()
+            });
+        } else {
+            res.render('users/show', {
+                title: "User doesn't exist!",
+                user: {name:"I don't exist", id:"-1"}
+            });
+        }
     });
+    
 }
 
 exports.login = function(req, res) {
 
-	res.render('users/login',{
-		title: 'Login'
-	});
+    res.render('users/login',{
+        title: 'Login'
+    });
 
 }
 
 exports.register = function(req, res){
-	var user_id = req.params.id;
+    var user_id = req.params.id;
 
-	res.render('users/register',{
-		title: 'Register'
-	});
-}
-
-exports.home = function(req, res){
-    var fb_instance = new req.app.Firebase("http://sizzling-fire-6665.firebase.com");
-    fb_instance.child('online_users').child(user.id).on('value',function(snapshot){
-              if(snapshot.val()){
-                current_user = snapshot.val().user_name;
-                current_id = snapshot.val().user_id;
-                window.localStorage.setItem("user_id", current_id);
-                window.localStorage.setItem("user_name", current_user);
-                begin_app();
-              }else{
-                //error, logout
-                logout();
-              }
-            });
-
-
-    res.render('users/home',{
-        title: 'Home',
-        onlineUsers: onlineUsers
+    res.render('users/register',{
+        title: 'Register'
     });
 }
 
+exports.home = function(req, res){
+    var onlineUsers=[];
+    var Firebase = req.app.locals.Firebase;
+    var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
+    fb_instance.child('online_users').once('value', function(userSnap) {
+        for (user in userSnap.val()){
+            fb_instance.child('users/'+user).once('value', function(mediaSnap) {
+                onlineUsers.push(mediaSnap.val());
+                console.log(mediaSnap.val());
+            });
+        }
+        
+        res.render('users/home',{
+            title: 'Home',
+            onlineUsers: onlineUsers
+        });
+    });
+}
+
+function getOnlineUsers(fb_instance){
+
+    console.log("end fxn"+onlineUsers);
+    return onlineUsers;
+}
+
 exports.index = function(req, res){
-	res.render('index', {title:"Musique"});
+    res.render('index', {title:"Musique"});
 }
