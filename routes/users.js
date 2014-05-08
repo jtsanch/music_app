@@ -39,26 +39,39 @@ exports.register = function(req, res){
 
 exports.home = function(req, res){
     var onlineUsers=[];
+    var count=0;
+    var lengthUser=-1;
     var Firebase = req.app.locals.Firebase;
     var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
     fb_instance.child('online_users').once('value', function(userSnap) {
-        for (var i = 0; i<userSnap.length; i++){
-            var user = userSnap[i];
+        lengthUser = Object.keys(userSnap.val()).length;
+        for (user in userSnap.val()){
             fb_instance.child('users/'+user).once('value', function(mediaSnap) {
                 onlineUsers.push(mediaSnap.val());
-                console.log(mediaSnap.val());
+                count += 1;
             });
-            if (i===userSnap.length-1){
-                console.log("rendering");
-                console.log(onlineUsers);
-                res.render('users/home',{
-                    title: 'Home',
-                    onlineUsers: onlineUsers
-                });
-            }
         }
     });
+
+    function checkCount()
+    {
+        if ( count==lengthUser)
+        {
+            console.log("rendering");
+            console.log(onlineUsers);
+            res.render('users/home',{
+                title: 'Home',
+                onlineUsers: onlineUsers
+            });
+        }
+        else
+        {
+                setTimeout(checkCount,100);
+        }
+    } 
+    checkCount();
 }
+
 
 function getOnlineUsers(fb_instance){
 
