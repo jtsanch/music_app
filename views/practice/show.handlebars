@@ -17,7 +17,16 @@
 	}
 </script>
 <script src='/javascripts/practice_session.js'></script>
+
+<input hidden id='session_id' value={{session_id}}>
+<input hidden id='if_musician' value={{if_musician}}>
+
+<script src='/javascript/practice_session.js'></script>
+<video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
+
+
 {{#if if_musician}}
+
 	<div class="pure-u-2-3" id="video-container">
 	    <video class="outer" id="my-video" muted="true" autoplay=""></video>
 	    <video class="inner" id="their-video" autoplay=""></video>
@@ -27,11 +36,17 @@
 		</div>
 
 	</div>
+	<button type='button' id='begin_recording'>Start Session</button>
+	<button type='button' id='end_recording' hidden>End Session</button>
+	<li class='right_bar' id='critiques' hidden</li>
+
 {{else}}
+
 	<div class="pure-u-2-3" id="video-container">
 	    <video class="inner"id="my-video" muted="true" autoplay=""></video>
 	    <video class="outer" id="their-video" autoplay=""></video>
 	</div>
+
 	{{#is recording}}
 		<div class="well button-panel">
 	        <h3>Click tags to comment on performance</h3>
@@ -56,3 +71,17 @@
     	</div>
 	{{/if}}
 {{/if}}
+
+	<li class='right_bar' id='critiques'></li>
+	<input type='text' id='critique_text'></input>
+	<button type='button' id='bad_pitch' class='good_button'>Pitch</button>
+	<button type='button' id='bad_pitch' class='good_button'>Posture</button>
+	<button type='button' id='bad_pitch' class='good_button'>Tone</button>
+	<button type='button' id='bad_pitch' class='good_button'>Rhythm</button>	
+	<button type='button' id='bad_pitch' class='bad_button'>Pitch</button>
+	<button type='button' id='bad_pitch' class='bad_button'>Tone</button>
+	<button type='button' id='bad_pitch' class='bad_button'>Posture</button>
+	<button type='button' id='bad_pitch' class='bad_button'>Rhythm</button>
+
+{{/if}}
+

@@ -1,23 +1,23 @@
 exports.show = function(req, res) {
-    var Firebase = req.app.locals.Firebase;
-    var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
+	var Firebase = req.app.locals.Firebase;
+	var fb_instance = new req.app.Firebase("https://sizzling-fire-6665.firebaseio.com");
 
-    var user_id = req.params.id;
-    var user = fb_instance.child('users').child(user_id);
-    
-    user.on('value', function(snapshot){
-        if(snapshot.val()){
-            res.render('users/show', {
-                title: snapshot.val().name,
-                user: snapshot.val()
-            });
-        } else {
-            res.render('users/show', {
-                title: "User doesn't exist!",
-                user: {name:"I don't exist", id:"-1"}
-            });
-        }
-    });
+	var critiquer_id = req.params.critiquer_id;
+	var user = fb_instance.child('users').child(user_id);
+	
+	user.on('value', function(snapshot){
+		if(snapshot.val()){
+			res.render('users/show', {
+		        title: snapshot.val().name,
+		        user: snapshot.val()
+	    	});
+		} else {
+			res.render('users/show', {
+				title: "User doesn't exist!",
+				user: {name:"I don't exist", id:"-1"}
+			});
+		}
+	});
     
 }
 
@@ -70,15 +70,4 @@ exports.home = function(req, res){
         }
     } 
     checkCount();
-}
-
-
-function getOnlineUsers(fb_instance){
-
-    console.log("end fxn"+onlineUsers);
-    return onlineUsers;
-}
-
-exports.index = function(req, res){
-    res.render('index', {title:"Musique"});
 }
