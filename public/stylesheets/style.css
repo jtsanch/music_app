@@ -20,3 +20,11 @@ a {
 	padding-top: 30px;
 	width: 120px;
 }
+
+.outer {
+	float: left;
+}
+
+.inner {
+	float: left;x
+}

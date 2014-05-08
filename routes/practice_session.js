@@ -5,8 +5,10 @@ var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 exports.show = function(req, res) {
 	var critiquer_id = req.params.critiquer_id;
     var musician_id = req.params.musician_id;
+    var user_id = req.params.id;
     res.render('practice/show', {
         title: "Practice session title",
+        user_id: user_id,
         critiquer_id: critiquer_id,
         musician_id: musician_id
     });

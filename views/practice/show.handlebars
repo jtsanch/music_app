@@ -3,7 +3,15 @@
 	var musician_id  = {{musician_id}};
 </script>
 <script src='/javascripts/practice_session.js'></script>
-<div class="pure-u-2-3" id="video-container">
-    <video id="their-video" autoplay=""></video>
-    <video id="my-video" muted="true" autoplay=""></video>
-</div>
+
+{{#if if_musician}}
+	<div class="pure-u-2-3" id="video-container">
+	    <video class="outer" id="my-video" muted="true" autoplay=""></video>
+	    <video class="inner" id="their-video" autoplay=""></video>
+	</div>
+{{else}}
+	<div class="pure-u-2-3" id="video-container">
+	    <video class="inner"id="my-video" muted="true" autoplay=""></video>
+	    <video class="outer" id="their-video" autoplay=""></video>
+	</div>
+{{/if}}
