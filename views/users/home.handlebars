@@ -1,4 +1,4 @@
-<script src='javascript/home.js'></script>
+<script src='javascript/main.js'></script>
 
 <div id="logging_in"><div id="log_text"><h3>Logging in...</h3></div></div>
 
@@ -9,22 +9,38 @@
     </div>
 
 <h2>Welcome back <span id="username"></span>!</h2>
+<input type="hidden" id="clicked_user">
 
-    <h2>Who's online?</h3>
-    {{#each onlineUsers}}
-        <div class="row">
-          <div class="col-sm-6 col-md-4">
-              <div class="caption">
-                <a href="users/{{user_id}}" class="thumbnail">
-                <h3>{{user_name}}</h3>
-                <h5>My instrument: {{instrument}}</h5>
-                <a href="#" class="btn btn-default" role="button">Invite to watch you rehearse</a> 
-                <a href="#" class="btn btn-default" role="button">Request to watch rehearsal</a>
-                </a>
-              </div>
+<h2>Who's online?</h3>
+{{#each onlineUsers}}
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+          <div class="caption thumbnail">
+            <a href="#" class="user_thumbs" id="{{user_id}}" data-toggle="modal" data-target="#profile_view">
+            <h3>{{user_name}}</h3>
+            <h5>My instrument: {{instrument}}</h5></a>
           </div>
-        </div>
-    {{/each}}
+      </div>
+    </div>
+{{/each}}
+
+<div id="profile_view" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <button id="profile_link" type="button" class="btn btn-default">Profile</button> 
+        <!-- This is the button that will take you to practice room/ -->
+        <button id="invite_asM" type="button" class="btn btn-default">Invite to watch you rehearse</button> 
+      
+      </div>
+    </div>
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal   <button id="invite_asL" type="button" class="btn btn-default">Request to listen to them rehearse</button> -->
+
+
 </div>
 
 <script type='text/javascript'
