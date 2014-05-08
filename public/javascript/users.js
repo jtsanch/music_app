@@ -9,7 +9,10 @@ $(document).ready(function() {
         password: password,
         rememberMe: true
       });
-      var redirect = window.location.href.split(".com")[0]+".com/home";
+      var now = new Date().getTime();
+      fb_instance.child('online_users').child(user.id).set({user_id: user.id});
+      fb_instance.child('users').child(user.id).update({active_time: now});
+      var redirect = "/home";
       window.location.replace(redirect);
     });
 
