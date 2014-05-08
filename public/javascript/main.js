@@ -53,8 +53,6 @@ function logout(){
              //user is has logged out
           window.localStorage.removeItem("user");
           fb_instance.child('online_users').child(1).set(null);
-          console.log("here");
-          window.location.replace("/login");
     }
 
    });
