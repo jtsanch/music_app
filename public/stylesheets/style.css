@@ -75,3 +75,8 @@ a {
 	position: relative;
 
 }
+
+.modal-body {
+	margin-left: 100px;
+   	margin-right: auto;
+}
