@@ -23,7 +23,7 @@ $(document).ready(function(){
     var peer = new Peer(current_user.peer_id, 
                 { key: '2lu517mph5btke29', debug: 3 });
      
-    if(if_musician != "false"){
+    if(if_musician == "true"){
       //we need to await the call
       peer.on('open', function(peer_id){
 
@@ -34,6 +34,9 @@ $(document).ready(function(){
         //await the call from the crtiquer. Just chill out in the window
         peer.on('call', function(call){
           call.answer(window.localStream);
+          call.on('stream', function(stream){
+            $("their-video").prop('src', URL.createObjectURL(stream));
+          });
         });
       });
      } else {

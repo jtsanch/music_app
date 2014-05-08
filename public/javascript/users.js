@@ -1,7 +1,6 @@
 //used only for login/register pages
 $(document).ready(function() {
     
-  fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
   auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error) {
       // an error occurred while attempting login
@@ -41,11 +40,18 @@ $(document).ready(function() {
           var email = $("#reg_email").val();
           var password = $("#reg_password").val();
           var userName = $("#reg_userName").val();
+          var name     = $("#reg_userName").val();
           auth.createUser(email, password, function(error, user){
             if(!error){
               var now = new Date().getTime();
               var peer_id = Math.random().toString(36).substring(7);;
-              fb_instance.child('users').child(user.id).set({user_name: email, created_at: now, peer_id: peer_id });
+              fb_instance.child('users').child(user.user.id).set({
+                  user_name: email, 
+                  created_at: now, 
+                  peer_id: peer_id,
+                  id: user.user.id,
+                  name: name 
+                  });
               auth.login('password',{
                 email: email,
                 password: password,
