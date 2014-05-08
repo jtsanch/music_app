@@ -1,4 +1,14 @@
 $(document).ready(function(){
+  $("#start").on("click", function(){
+    start_recording();
+  });
+
+$("#stop").on("click", function(){
+    stop_recording();
+  });
+
+
+
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
   var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
