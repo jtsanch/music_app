@@ -8,16 +8,20 @@
 
 {{#if if_musician}}
 
+	<div id="waiting_response" hidden>
+		<div id="waiting_text">Waiting for the critiquer...</div>
+	</div>
+
 	<div class="pure-u-2-3" id="video-container">
 	    <video class="outer" id="my-video" autoplay></video>
 	    <video class="inner" id="their-video" autoplay></video>
-	    
-	    <div id="start-button">
-    		<input type="button" id="start_session" value="Start rehearsal" class="btn btn-default btn-lg" onclick="toggle(this);">
-		</div>
-
 	</div>
-	<li class='right_bar' id='critiques' hidden></li>
+	<div id="start-button">
+    	<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session"/>
+	</div>
+
+		<div id='critiques'></div>
+	<input id="critique_text" type="text" placeholder="say something..">
 
 {{else}}
 
@@ -26,7 +30,7 @@
 	    <video class="outer" id="their-video" autoplay></video>
 	</div>
 
-	{{#if is_recording}}
+	{{#if practice_start}}
 		<div class="well button-panel">
 	        <h3>Click tags to comment on performance</h3>
 	        <ul class="tags">
@@ -50,16 +54,11 @@
     	</div>
 	{{/if}}
 
-	<li class='right_bar' id='critiques'></li>
-	<input type='text' id='critique_text'></input>
-	<button type='button' id='bad_pitch' class='good_button'>Pitch</button>
-	<button type='button' id='bad_pitch' class='good_button'>Posture</button>
-	<button type='button' id='bad_pitch' class='good_button'>Tone</button>
-	<button type='button' id='bad_pitch' class='good_button'>Rhythm</button>	
-	<button type='button' id='bad_pitch' class='bad_button'>Pitch</button>
-	<button type='button' id='bad_pitch' class='bad_button'>Tone</button>
-	<button type='button' id='bad_pitch' class='bad_button'>Posture</button>
-	<button type='button' id='bad_pitch' class='bad_button'>Rhythm</button>
+
+	
+		<div id='critiques'></div>
+	<input id="critique_text" type="text" placeholder="say something..">
+
 
 {{/if}}
 

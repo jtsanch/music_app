@@ -5,7 +5,12 @@ exports.show = function(req, res) {
  
 
     var session_id = req.params.session_id;
-    var if_musician = req.params.if_musician;
+    var if_musician;
+    if (req.params.if_musician==='true'){
+        if_musician = true;
+    }else{
+        if_musician = false;
+    }
     fb_instance.child('practice_sessions').child(session_id).on("value", function(snapshot){
         if(snapshot.val()){
             var critiquer_id = snapshot.val()["critiquer_id"];

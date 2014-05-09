@@ -69,8 +69,7 @@ a {
    	margin-right: auto;
 }
 
-#start-button {
-	padding-top: 20px;
+#start_session {
 	margin: 0 auto 0 auto;
 	position: relative;
 
@@ -79,4 +78,54 @@ a {
 .modal-body {
 	margin-left: 100px;
    	margin-right: auto;
+}
+
+
+#logging_in #waiting_response{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background-color: #aaaaaa;
+  text-align: center;
+}
+
+#log_text #waiting_text{
+  position:absolute;
+  left:500px;
+  top:200px;
+  color:white;
+}
+
+.indivCritiques{
+	padding:10px;
+}
+
+.negative{
+	background-color:#FB5772;
+}
+
+.positive{
+	background-color:#32CD32;
+}
+
+#critiques{
+	position: absolute;
+	right: 0;
+	height: 100%;
+	top: 50px;
+	width: 25%;
+	border-left: 2px #aaaaaa solid;
+}
+
+#critique_text{
+	position: absolute;
+	right: 0;
+	width: 25%;
+	font-size: 15px;
+	padding: 10px;
+	outline: none;
+	border-left: 2px #aaaaaa solid;
+	bottom: 0;
 }

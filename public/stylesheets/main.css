@@ -161,42 +161,4 @@ a {
   width: 30%;
   right: 0;
 }
-.grayscale {
-  -webkit-filter: grayscale(100%);
-}
-.sepia {
-  -webkit-filter: sepia(100%);
-}
-.xray {
-  -webkit-filter: invert(100%);
-}
-.insta {
-  -webkit-filter: contrast(160%);
-}
-.insta2 {
-  -webkit-filter: saturate(3);
-}
-#edit_buttons {
-  padding: 10px 0;
-}
 
-#logging_in{
-  position:absolute;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background-color: #aaaaaa;
-  text-align: center;
-}
-
-#log_text{
-  position:absolute;
-  left:400px;
-  top:200px;
-  color:white;
-}
-
-#indivCritiques{
-  
-}

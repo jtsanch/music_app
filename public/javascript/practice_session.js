@@ -41,7 +41,15 @@ $(document).ready(function(){
     if(if_musician == "true"){
       //we need to await the call
       $("#start_session").on("click", function(snapshot){
-        practice_session.child('session_start').set(new Date().getTime());
+        //on first button click, toggle to stop
+        if($("#start_session").value == "Start Session") {
+          practice_session.child('practice_start').set(new Date().getTime());
+          $("#start_session").value("End Session");
+        } else {
+          practice_session.child('practice_end').set(new Date().getTime());
+          $("#start_session").hide();
+          stop_recording();
+        }
         
       });
       peer.on('open', function(peer_id){
@@ -87,14 +95,15 @@ $(document).ready(function(){
     peer.on('error', function(err){
       alert(err.message);
     });
+
   }
 
 
   //called upon the button being clicked
   function start_recording(){
     
-    $("#begin_recording").hide();
-    $("#end_recording").show();
+    // $("#begin_recording").hide();
+    // $("#end_recording").show();
 
     var ctx = canvas.getContext('2d');
     var CANVAS_HEIGHT = canvas.height;
@@ -142,25 +151,37 @@ $(document).ready(function(){
     } else {
 
         document.getElementById("#critique_video").addEventListener('loadedmetadata', function() {
-        
         //Only the musician can control the video      
         practice_session.child('critique_video_time').on('child_changed', function(snapshot){
             this.currentTime = snapshot.val(); 
             $("#critique_video").play();
           });
-        }, false);
+        }, 
+        false);
 
-        $("#critique_text").onkeyup = function(e){
-          e = e || event;
-          if ( e.keyCode === 13 && !e.ctrlKey){
-            var now = new Date().getTime();
-            var text = $("#critique_text");
-            add_critique_item(now, text);
-          }
+      $("#critique_text").keydown(function(e){
+        e = e || event;
+        if ( e.which == 13 && !e.ctrlKey){
+          var now = new Date().getTime();
+          var text = $(this).val();
+          $(this).val("");
+          add_critique_item(now, text, "neutral");
         }
-        $(".critique_rating").on("click",function(){
-          add_critique(""+$(this).id);
-        });
+      });
+
+      $(".up").on("click",function(){
+        var now = new Date().getTime();
+        var topic = $(this).attr('id');
+        var text = "Good "+topic+"!";
+        add_critique_item(now, text, "positive");
+      });
+
+      $(".down").on("click",function(){
+        var now = new Date().getTime();
+        var topic = $(this).attr('id');
+        var text = "Work on "+topic;
+        add_critique_item(now, text, "negative");
+      });
     }
 
     render_critique();
@@ -192,19 +213,12 @@ $(document).ready(function(){
   }
 
   //render the critique item in the list
-  function add_critique_item( sent_at, text){
-  
-    $("#critiques").append("<li class='indivCritiques' id='"+sent_at+"'>"+text+"<br\>"+
-      sent_at +"</li>");
+  function add_critique_item( sent_at, text, type){
+    practice_session.child('critiques').push({text:text, sent: sent_at, type:type});
 
-  }
-
-  //add a new critique item during critique session
-  function add_critique( text ){
-
-    var now = new Date().getTime();
-    practice_session.child('critiques').push({text:text, sent: now});
-
+    $("#critiques").append("<div class='indivCritiques "+type+"' id='"+sent_at+"'>"+
+      "<span class='timestamp'>"+sent_at+": </span>"+
+      text +"</div>");
   }
   
   navigator.getUserMedia({audio: true, video: true}, function(stream){
