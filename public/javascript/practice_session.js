@@ -28,10 +28,13 @@ $(document).ready(function(){
         if($("#start_session").value == "Start Session") {
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").value("End Session");
+          start_recording();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           $("#start_session").hide();
           stop_recording();
+          $('#practice-container').hide();
+          $('#playback-container').show();
         }
         
       });
@@ -201,19 +204,5 @@ $(document).ready(function(){
       window.localStream = stream;
       start_conversation();
   }, function(){ alert("Camera disabled."); }); 
-
-  //toggle start/stop button
-  function toggle(button) {
-      switch(button.value) {
-          case "Start rehearsal":
-               button.value = "Stop rehearsal";
-               //update fb, start recording and switch critiquer's interface
-               break;
-          case "Stop rehearsal":
-               //update fb is_recording value, start recording and switch critiquer's interface
-               button.value = "Start rehearsal";
-               break;
-      }
-  }
 
 });
