@@ -24,11 +24,14 @@ $(document).ready(function(){
     if(if_musician == "true"){
       //we need to await the call
       $("#start_session").on("click", function(snapshot){
-        //if button=start, turn to stop
-        if($("#start_session").value == "Start rehearsal") {
+        //on first button click, toggle to stop
+        if($("#start_session").value == "Start Session") {
           practice_session.child('practice_start').set(new Date().getTime());
+          $("#start_session").value("End Session");
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
+          $("#start_session").hide();
+          stop_recording();
         }
         
       });
@@ -81,8 +84,8 @@ $(document).ready(function(){
   //called upon the button being clicked
   function start_recording(){
     
-    $("#begin_recording").hide();
-    $("#end_recording").show();
+    // $("#begin_recording").hide();
+    // $("#end_recording").show();
 
     var ctx = canvas.getContext('2d');
     var CANVAS_HEIGHT = canvas.height;

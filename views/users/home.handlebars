@@ -3,15 +3,15 @@
 <div id="logging_in"><div id="log_text"><h3>Logging in...</h3></div></div>
 
 <div class="container">
-    <div class="jumbotron">
-        <h2>Welcome to SoundBoard</h2>
-        <h4>SoundBoard allows you to connect with other fellow musicians to critique each other's music online! Click on an online user to get started.</h4>
-    </div>
+  <div class="jumbotron">
+      <h2>Welcome to SoundBoard</h2>
+      <h4>SoundBoard allows you to connect with other fellow musicians to critique each other's music online! Click on an online user to get started.</h4>
+  </div>
 
-<h2>Welcome back <span id="username"></span>!</h2>
-<input type="hidden" id="clicked_user">
+  <h2>Welcome back <span id="username"></span>!</h2>
+  <input type="hidden" id="clicked_user">
 
-<h2>Who's online?</h2>
+  <h2>Who's online?</h2>
   {{#each onlineUsers}}
     <div class="row">
       <div class="col-sm-6 col-md-4">
@@ -31,8 +31,8 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
-          <button id="profile_link" type="button" class="btn btn-default">Go to their profile</button> 
-          <br/><br/>
+          <button id="profile_link" type="button" class="btn btn-default">Profile</button> 
+          <!-- This is the button that will take you to practice room/ -->
           <button id="invite_asM" type="button" class="btn btn-default">Invite to watch you rehearse</button> 
         
         </div>
@@ -40,21 +40,19 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal   <button id="invite_asL" type="button" class="btn btn-default">Request to listen to them rehearse</button> -->
 
-<div id="incoming_call" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-body">
-        <span id="caller_name"></span> wants to hear your feedback while they practice!
-        <br/><br/>
-        <button id="invite_accepted" type="button" class="btn btn-default">Accept Invite!</button> 
-        <br/><br/>
-        <button id="invite_rejected" type="button" class="btn btn-default">Reject Invite</button> 
-      
+  <div id="incoming_call" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          <span id="caller_name"></span> wants to hear your feedback while they practice!
+          <br/>
+          <button id="invite_accepted" type="button" class="btn btn-default">Accept Invite!</button> 
+          <br/>
+          <button id="invite_rejected" type="button" class="btn btn-default">Reject Invite</button>
+        </div>
       </div>
-    </div>
-  </div><!-- /.modal-dialog -->
-</div>
-
+    </div><!-- /.modal-dialog -->
+  </div>
 
 </div>
 
