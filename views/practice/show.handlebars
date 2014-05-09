@@ -2,11 +2,14 @@
 
 <input hidden id='session_id' value={{session_id}}>
 <input hidden id='if_musician' value={{if_musician}}>
+<input hidden id='if_musician' value={{practice_start}}>
+<input hidden id='if_musician' value={{practice_end}}>
 
 <video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
 
-
+<div id="practice-container">
 {{#if if_musician}}
+
 
 	<div id="waiting_response" hidden>
 		<div id="waiting_text">Waiting for the critiquer...</div>
@@ -19,9 +22,6 @@
 	<div id="start-button">
     	<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session"/>
 	</div>
-
-		<div id='critiques'></div>
-	<input id="critique_text" type="text" placeholder="say something..">
 
 {{else}}
 
@@ -53,12 +53,26 @@
 	        </ul>
     	</div>
 	{{/if}}
-
-
 	
-		<div id='critiques'></div>
+	<div id='critiques'></div>
 	<input id="critique_text" type="text" placeholder="say something..">
 
-
 {{/if}}
+</div>
+
+<div id="playback-container" hidden>
+	{{#if if_musician}}
+		<div class="pure-u-2-3" id="video-container">
+		    <video class="bottom-video" id="my-video" autoplay></video>
+		    <video class="top-video" id="their-video" autoplay></video>
+		    <video class="critique-video" id="critique_video"></video>
+		</div>
+	{{else}}
+		<div class="pure-u-2-3" id="video-container">
+		    <video class="top-video" id="my-video" autoplay></video>
+		    <video class="bottom-video" id="their-video" autoplay></video>
+		    <video class="critique-video" id="critique_video" controls></video>
+		</div>
+	{{/if}}
+</div>
 

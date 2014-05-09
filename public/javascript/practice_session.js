@@ -45,10 +45,13 @@ $(document).ready(function(){
         if($("#start_session").value == "Start Session") {
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").value("End Session");
+          start_recording();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           $("#start_session").hide();
           stop_recording();
+          $('#practice-container').hide();
+          $('#playback-container').show();
         }
         
       });
