@@ -1,9 +1,3 @@
-<script>
-	var critiquer_id = {{critiquer_id}};
-	var musician_id  = {{musician_id}};
-	var practice_start = {{practice_start}}
-	var practice_end = {{practice_end}}
-</script>
 <script src='/javascript/practice_session.js'></script>
 
 <input hidden id='session_id' value={{session_id}}>
@@ -19,8 +13,8 @@
 	    <video class="inner" id="their-video" autoplay></video>
 	</div>
 	
-	<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session"/>
-	<!-- <li class='right_bar' id='critiques' hidden></li> -->
+	<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
+	<li class='right_bar' id='critiques' hidden></li>
 
 {{else}}
 
@@ -29,29 +23,27 @@
 	    <video class="outer" id="their-video" autoplay></video>
 	</div>
 
-	{{#if practice_start}}
-		<div class="well button-panel">
-	        <h3>Click tags to comment on performance</h3>
-	        <ul class="tags">
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-pitch" value="good pitch">Pitch</button>
-	                <button type="button" class="btn btn-default down" id="bad-pitch" value="bad pitch">Pitch</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-tone" value="good tone">Tone</button>
-	                <button type="button" class="btn btn-default down" id="bad-tone" value="bad tone">Tone</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-rhythm" value="good rhythm">Rhythm</button>
-	                <button type="button" class="btn btn-default down" id="bad-rhythm" value="bad rhythm">Rhythm</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-posture" value="good posture">Posture</button>
-	                <button type="button" class="btn btn-default down" id="bad-posture" value="bad posture">Posture</button>
-	            </div>
-	        </ul>
-    	</div>
-	{{/if}}
+	<div class="well button-panel">
+        <h3>Click tags to comment on performance</h3>
+        <ul class="tags">
+            <div class="tag-pair btn-group btn-group-lg">
+	            <button type="button" class="btn btn-default up" id="good-pitch" value="good pitch">Pitch</button>
+	            <button type="button" class="btn btn-default down" id="bad-pitch" value="bad pitch">Pitch</button>
+            </div>
+            <div class="tag-pair btn-group btn-group-lg">
+                <button type="button" class="btn btn-default up" id="good-tone" 	value="good tone">Tone</button>
+                <button type="button" class="btn btn-default down" id="bad-tone" 	value="bad tone">Tone</button>
+            </div>
+            <div class="tag-pair btn-group btn-group-lg">
+                <button type="button" class="btn btn-default up" id="good-rhythm" value="good rhythm">Rhythm</button>
+                <button type="button" class="btn btn-default down" id="bad-rhythm" value="bad rhythm">Rhythm</button>
+            </div>
+            <div class="tag-pair btn-group btn-group-lg">
+                <button type="button" class="btn btn-default up" id="good-posture" 	value="good posture">Posture</button>
+                <button type="button" class="btn btn-default down" id="bad-posture" value="bad posture">Posture</button>
+            </div>
+        </ul>
+	</div>
 
 	<li class='right_bar' id='critiques'></li>
 	<input type='text' id='critique_text'></input>
