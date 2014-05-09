@@ -30,29 +30,28 @@
 	    <video class="outer" id="their-video" autoplay></video>
 	</div>
 
-	{{#if practice_start}}
+	<!-- This may need to be called via javascript once the status changes, im just going to have it default to always showing -->
 		<div class="well button-panel">
 	        <h3>Click tags to comment on performance</h3>
 	        <ul class="tags">
 	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-pitch" value="good pitch">Pitch</button>
-	                <button type="button" class="btn btn-default down" id="bad-pitch" value="bad pitch">Pitch</button>
+	                <button type="button" class="btn btn-default up" id="good-pitch" value="pitch">Pitch</button>
+	                <button type="button" class="btn btn-default down" id="bad-pitch" value="pitch">Pitch</button>
 	            </div>
 	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-tone" value="good tone">Tone</button>
-	                <button type="button" class="btn btn-default down" id="bad-tone" value="bad tone">Tone</button>
+	                <button type="button" class="btn btn-default up" id="good-tone" value="tone">Tone</button>
+	                <button type="button" class="btn btn-default down" id="bad-tone" value="tone">Tone</button>
 	            </div>
 	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-rhythm" value="good rhythm">Rhythm</button>
-	                <button type="button" class="btn btn-default down" id="bad-rhythm" value="bad rhythm">Rhythm</button>
+	                <button type="button" class="btn btn-default up" id="good-rhythm" value="rhythm">Rhythm</button>
+	                <button type="button" class="btn btn-default down" id="bad-rhythm" value="rhythm">Rhythm</button>
 	            </div>
 	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-posture" value="good posture">Posture</button>
-	                <button type="button" class="btn btn-default down" id="bad-posture" value="bad posture">Posture</button>
+	                <button type="button" class="btn btn-default up" id="good-posture" value="posture">Posture</button>
+	                <button type="button" class="btn btn-default down" id="bad-posture" value="posture">Posture</button>
 	            </div>
 	        </ul>
     	</div>
-	{{/if}}
 	
 	<div id='critiques'></div>
 	<input id="critique_text" type="text" placeholder="say something..">

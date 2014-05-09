@@ -34,7 +34,7 @@ $(document).ready(function(){
   //steps... check for fb_instance ref and if chatroom has one peer connection
   //if there is a peer connection
   function start_conversation(){
-    
+
     var id, call;
     var peer = new Peer({key: '2lu517mph5btke29'});
      
