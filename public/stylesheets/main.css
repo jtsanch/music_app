@@ -189,9 +189,14 @@ a {
   background-color: #aaaaaa;
   text-align: center;
 }
+
 #log_text{
   position:absolute;
   left:400px;
   top:200px;
   color:white;
+}
+
+#indivCritiques{
+  
 }

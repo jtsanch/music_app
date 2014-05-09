@@ -1,12 +1,6 @@
 $(document).ready(function(){
-  $("#start").on("click", function(){
-    start_recording();
-  });
 
-$("#stop").on("click", function(){
-    stop_recording();
-  });
-
+//variables
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
   var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
@@ -22,7 +16,21 @@ $("#stop").on("click", function(){
   var startTime = null;
   var endTime = null;
   var frames = [];
-  
+
+  function toggle(button) {
+      switch(button.value) {
+          case "Start rehearsal":
+               button.value = "Stop rehearsal";
+               start_recording();
+               break;
+          case "Stop rehearsal":
+               //update fb is_recording value, start recording and switch critiquer's interface
+               button.value = "Start rehearsal";
+               stop_recording();
+               break;
+      }
+  }
+
   //steps... check for fb_instance ref and if chatroom has one peer connection
   //if there is a peer connection
   function start_conversation(){
@@ -79,8 +87,8 @@ $("#stop").on("click", function(){
     peer.on('error', function(err){
       alert(err.message);
     });
-
   }
+
 
   //called upon the button being clicked
   function start_recording(){
@@ -108,6 +116,7 @@ $("#stop").on("click", function(){
     rafId = requestAnimationFrame(drawVideoFrame_);
   } 
 
+//called when teh musician stops recording
   function stop_recording() {
 
     cancelAnimationFrame(rafId);
@@ -118,6 +127,7 @@ $("#stop").on("click", function(){
        
   }
 
+//called when session begins
   function begin_critique_session(){
     var webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
     url = window.URL.createObjectURL(webmBlob);
@@ -156,6 +166,7 @@ $("#stop").on("click", function(){
     render_critique();
   }
 
+//renders the critique
   function render_critique(){
     //create dictionary of [sent time of critique] -> text of critique
     var critiques;
@@ -178,16 +189,16 @@ $("#stop").on("click", function(){
       }
     },1000);
 
-
   }
 
   //render the critique item in the list
   function add_critique_item( sent_at, text){
   
-    $("#critiques").append("<li id='"+sent_at+"'>"+text+"<br\>"+
+    $("#critiques").append("<li class='indivCritiques' id='"+sent_at+"'>"+text+"<br\>"+
       sent_at +"</li>");
 
   }
+
   //add a new critique item during critique session
   function add_critique( text ){
 
@@ -201,7 +212,6 @@ $("#stop").on("click", function(){
       $('#my-video').prop('src', URL.createObjectURL(stream));
       window.localStream = stream;
       start_conversation();
-  }, function(){ alert("Camera disabled."); }); 
-  
+  }, function(){ alert("Camera disabled."); });  
 
 });
