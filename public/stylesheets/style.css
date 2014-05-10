@@ -22,29 +22,27 @@ a {
 }
 
 .outer {
-	float: left;
-	width:50%;
-	height:350px;
+	position:absolute;
+	top:0;
+	left:0;
+	width:75%;
+	height:500px;
 	background-color: red; 
 	outline-width: 30px;
 	outline-color: black;
 }
 
 .inner {
-	float: left;
-	width:14%;
-	height:120px;
+	position:absolute;
+	bottom:150px;
+	left:0;
+	width:20%;
+	height:180px;
 	background-color: blue;
-	padding-bottom: 10px;
-	padding-left: 10px;
 	position: absolute;
 	outline-width: 30px;
 	outline-color: black;
-}
-
-.button-panel {
-	width: 100%;
-	height: 250px;
+	z-index: 3;
 }
 
 .up {
@@ -59,14 +57,18 @@ a {
 	background-image: -webkit-linear-gradient(top,#FF6042,#B2432E 100%);
 }
 
+.down:hover {
+	background-image: -webkit-linear-gradient(top,#B2432E,#FF6042 100%);
+}
+
 .tag-pair {
 	padding-right: 20px;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 .tags {
-	margin-left: 100px;
-   	margin-right: auto;
+	width:100%;
+	text-align: center;
 }
 
 #start_session {
@@ -81,7 +83,7 @@ a {
 }
 
 
-#logging_in #waiting_response{
+#logging_in, #waiting_response{
   position:absolute;
   left:0;
   top:0;
@@ -89,13 +91,17 @@ a {
   height:100%;
   background-color: #aaaaaa;
   text-align: center;
+  background-color:rgba(30,30,30,0.7);
+	z-index:10;
 }
 
-#log_text #waiting_text{
+#log_text, #waiting_text{
   position:absolute;
-  left:500px;
+  left:450px;
   top:200px;
   color:white;
+  z-index:11;
+  font-size:24px;
 }
 
 .indivCritiques{
@@ -117,6 +123,7 @@ a {
 	top: 50px;
 	width: 25%;
 	border-left: 2px #aaaaaa solid;
+	z-index: 1;
 }
 
 #critique_text{
@@ -128,4 +135,52 @@ a {
 	outline: none;
 	border-left: 2px #aaaaaa solid;
 	bottom: 0;
+	z-index: 1;
 }
+
+#waiting_critique{
+	position: absolute;
+	right: 0;
+	top:50px;
+	width: 25%;
+	height:100%;
+	background-color:rgba(30,30,30,0.8);
+	z-index: 2;
+}
+
+.button-panel{
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:75%;
+	height:150px;
+	margin:0;
+	background-color: #cccccc;
+	padding: 0 20px 20px;
+	z-index: 1;
+}
+
+#waiting_button-panel{
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:75%;
+	height:150px;
+	margin:0;
+	background-color:rgba(30,30,30,0.8);
+	z-index: 2;
+	padding:50px 150px;
+	font-size: 24px;
+	color: white;
+}
+
+#start_session{
+	top:50px;
+	left:30px;
+}
+
+.btn.down, .btn.up{
+	text-shadow:none;
+	border-radius: 4px
+}
+

@@ -38,23 +38,26 @@ $(document).ready(function(){
     var id, call;
     var peer = new Peer({key: '2lu517mph5btke29'});
      
+     //musician
     if(if_musician == "true"){
       //we need to await the call
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
-        if($("#start_session").value == "Start Session") {
+        if($("#start_session").val() === "Start Session") {
+         console.log("started session");
           practice_session.child('practice_start').set(new Date().getTime());
-          $("#start_session").value("End Session");
+          $("#start_session").val("End Session");
           start_recording();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
-          $("#start_session").hide();
           stop_recording();
+          $("#start_session").hide();
           $('#practice-container').hide();
           $('#playback-container').show();
         }
         
       });
+
       peer.on('open', function(peer_id){
 
         practice_session.child("musician_peer_id").set(peer_id);
@@ -63,6 +66,7 @@ $(document).ready(function(){
 
         //await the call from the crtiquer. Just chill out in the window
         peer.on('call', function(call){
+          $("#waiting_response").fadeOut();
           call.answer(window.localStream);
           call.on('stream', function(stream){
 
@@ -71,10 +75,13 @@ $(document).ready(function(){
           });
         });
       });
+
+      //critiquer
      } else {
       practice_session.child('session_start').on('value', function(snapshot){
         //button has been pressed
-
+        $("#waiting_button-panel").fadeOut();
+        $("#waiting_critique").fadeOut();
       });
       //we are the critiquer and need to make the call
       practice_session.child('musician_peer_id').on('value',function(snapshot){
@@ -127,6 +134,8 @@ $(document).ready(function(){
 
     rafId = requestAnimationFrame(drawVideoFrame_);
   } 
+//
+
 
 //called when teh musician stops recording
   function stop_recording() {
