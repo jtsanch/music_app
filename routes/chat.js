@@ -24,13 +24,13 @@ module.exports = function(io){
   io.sockets.on('connection',function(socket){
     socket.emit('connected',{m:'ok'});
 
-    socket.on('new_user',function(data){
-      console.log('new user connected: '+ data.username);
+    socket.on('user_connect',function(data){
+      console.log('new user connected: '+ data.user_id);
       current_users[socket.id] = {
-        name: data.username,
-        color: "#"+((1<<24)*Math.random()|0).toString(16)
+        user_id:   data.user_id,
+        user_name: data.user_name
       }
-      io.sockets.emit('to_all',{m:data.username+' joined the room.',c:'#eee'});
+      io.sockets.emit('on',{m:data.username+' joined the room.',c:'#eee'});
     });
 
     socket.on('user_msg',function(data){

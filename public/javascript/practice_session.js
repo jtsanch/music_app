@@ -242,13 +242,16 @@ $(document).ready(function(){
 
   });
 
+
   navigator.getUserMedia({audio: true, video: true}, function(stream){
-      // Set your video displays
+      //Set your video displeoays
       $( '#my-video').prop('src', URL.createObjectURL(stream));
       window.localStream = stream;
+      
       start_conversation();
-  }, function(){ alert("Camera disabled."); }); 
 
+  }, function(){ alert("Camera disabled."); }); 
+    
   //toggle start/stop button
   function toggle(button) {
       switch(button.val()) {
