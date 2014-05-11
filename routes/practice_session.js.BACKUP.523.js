@@ -18,8 +18,18 @@ exports.show = function(req, res) {
         if(snapshot.val()){
             res.render('practice/show', {
                 title: "My Practice Session",
+<<<<<<< HEAD
                 session : snapshot.val(),
                 if_musician : if_musician
+=======
+                session_id : session_id,
+                if_musician : if_musician,
+                critiquer_id : snapshot.val()["critiquer_id"],
+                musician_id : snapshot.val()["musician_id"],
+                is_recording : false,
+                practice_start: practice_start,
+                practice_end: practice_end
+>>>>>>> ef2fb29485727711db4a261d3e1cd93529a6321e
             });
         } else {
             res.render('error_page',{

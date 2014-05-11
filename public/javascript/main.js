@@ -14,7 +14,22 @@ $(document).ready(function() {
     login_user();
   
     $("#logout").on("click", function(){
-    //  logout();  
+       var current
+       auth_logout = new FirebaseSimpleLogin(fb_instance, function(error, user) {
+          if (error) {
+            // an error occurred while attempting login
+
+          } else if (user) {
+            //logged in
+          }else{
+              //logout the user
+              fb_instance.child("online_users").child(current_user.id).remove();
+              window.localStorage.removeItem("user");
+              current_user=null;
+              window.location.replace('/login');
+          }
+        });  
+       auth_logout.logout();
     });
 
      /* begin Profile Page js */
@@ -80,22 +95,6 @@ function show_invite_prompt(session_id, caller_name){
         window.location.replace(redirect);
   });
 }
-//WE HAVE TO GET LOGOUT TO WORK EVENTUALLY
-// function logout(){
-//    auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
-//     if (error){
-//     }else if (user){
-
-//     }else{
-//       //logout
-//          //user is has logged out
-//       fb_instance.child("online_users").child(current_id).remove();
-//       window.localStorage.removeItem("user");
-//     }
-
-//    });
-//    auth.logout();  
-// }
 
 function login_user(){
     $("container").hide();
@@ -106,16 +105,15 @@ function login_user(){
             // an error occurred while attempting login
 
           } else if (user) {
-            //user is logged in
-             fb_instance.child("users").child(user.id).on("value", function(snapshot){
-                window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
-                current_user = JSON.parse(window.localStorage["user"]);
-                begin_app(); 
-             });
-            }else{
-              //error, logout
-           //   logout();
-            }
+          //user is logged in, init the variables and such
+           fb_instance.child("users").child(user.id).on("value", function(snapshot){
+              window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
+              current_user = JSON.parse(window.localStorage["user"]);
+              begin_app(); 
+           });
+          }else{
+            //logged out
+          }
         });
      }else{
       current_user = JSON.parse(window.localStorage["user"]);
