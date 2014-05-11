@@ -19,6 +19,7 @@ exports.show = function(req, res) {
             res.render('practice/show', {
                 title: "My Practice Session",
                 session : snapshot.val(),
+                session_id : session_id,
                 if_musician : if_musician
             });
         } else {

@@ -43,12 +43,7 @@ $(document).ready(function(){
       //we need to await the call
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
-<<<<<<< HEAD
         if($("#start_session").val() == "Start Session") {
-=======
-        if($("#start_session").val() === "Start Session") {
-         console.log("started session");
->>>>>>> ef2fb29485727711db4a261d3e1cd93529a6321e
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").val("End Session");
           start_recording();
@@ -79,17 +74,10 @@ $(document).ready(function(){
           });
         });
       });
-<<<<<<< HEAD
-     
-=======
 
-      //critiquer
->>>>>>> ef2fb29485727711db4a261d3e1cd93529a6321e
      } else {
 
       practice_session.child('practice_start').on('value', function(snapshot){
-        //button has been pressed
-<<<<<<< HEAD
         if(snapshot.val() && if_musician){
           $("#critique_text").keyup( function(e){
             e = e || event;
@@ -113,11 +101,8 @@ $(document).ready(function(){
         if(snapshot.val() && if_musician){
           stop_recording();
         }
-      
-=======
         $("#waiting_button-panel").fadeOut();
         $("#waiting_critique").fadeOut();
->>>>>>> ef2fb29485727711db4a261d3e1cd93529a6321e
       });
       
       //we are the critiquer and need to make the call
@@ -211,10 +196,6 @@ $(document).ready(function(){
             this.currentTime = snapshot.val(); 
             $("#critique_video").play();
           });
-<<<<<<< HEAD
-        }, false);
-
-=======
         }, 
         false);
 
@@ -241,7 +222,6 @@ $(document).ready(function(){
         var text = "Work on "+topic;
         add_critique_item(now, text, "negative");
       });
->>>>>>> ef2fb29485727711db4a261d3e1cd93529a6321e
     }
 
     render_critique();
@@ -308,35 +288,11 @@ $(document).ready(function(){
 
 
   navigator.getUserMedia({audio: true, video: true}, function(stream){
-<<<<<<< HEAD
       //Set your video displeoays
       $( '#my-video').prop('src', URL.createObjectURL(stream));
-=======
-      // Set your video displays
-      $('#my-video').prop('src', URL.createObjectURL(stream));
->>>>>>> ef2fb29485727711db4a261d3e1cd93529a6321e
-      window.localStream = stream;
-      
+      window.localStream = stream;      
       start_conversation();
-<<<<<<< HEAD
 
   }, function(){ alert("Camera disabled."); }); 
-    
-  //toggle start/stop button
-  function toggle(button) {
-      switch(button.val()) {
-          case "Start rehearsal":
-               button.val("Stop rehearsal");
-               //update fb, start recording and switch critiquer's interface
-               break;
-          case "Stop rehearsal":
-               //update fb is_recording value, start recording and switch critiquer's interface
-               button.val("Start rehearsal");
-               break;
-      }
-  }
-=======
-  }, function(){ alert("Camera disabled."); });  
->>>>>>> ef2fb29485727711db4a261d3e1cd93529a6321e
 
 });
