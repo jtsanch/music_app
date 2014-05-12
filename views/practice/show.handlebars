@@ -2,72 +2,63 @@
 
 <input hidden id='session_id' value={{session_id}}>
 <input hidden id='if_musician' value={{if_musician}}>
-<input hidden id='if_musician' value={{practice_start}}>
-<input hidden id='if_musician' value={{practice_end}}>
+<input hidden id='practice_start' value={{practice_start}}>
+<input hidden id='practice_end' value={{practice_end}}>
 
 <video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
+<audio id='critique_audio' hidden></audio>
 
 <div id="practice-container">
-{{#if if_musician}}
-
-
-	<div id="waiting_response">
-		<div id="waiting_text">Waiting for the critiquer...</div>
-	</div>
-
-	<div class="pure-u-2-3" id="video-container">
-	    <video class="outer" id="my-video" autoplay></video>
-	    <video class="inner" id="their-video" autoplay></video>
-	</div>
 	
-	<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
-	<li class='right_bar' id='critiques' hidden></li>
-
-{{else}}
-
-	<div class="pure-u-2-3" id="video-container">
-	    <video class="inner"id="my-video" muted autoplay></video>
-	    <video class="outer" id="their-video" autoplay></video>
+	<div id="playback-container" hidden>
+		{{#if if_musician}}
+			<div class="pure-u-2-3" id="video-container">
+			    <video class="bottom-video" id="my-video" autoplay></video>
+			    <video class="top-video" id="their-video" autoplay></video>
+			    <video class="critique-video" id="critique_video"></video>
+			</div>
+		{{else}}
+			<div class="pure-u-2-3" id="video-container">
+			    <video class="top-video" id="my-video" autoplay></video>
+			    <video class="bottom-video" id="their-video" autoplay></video>
+			    <video class="critique-video" id="critique_video" controls></video>
+			</div>
+		{{/if}}
 	</div>
 
-	<!-- This may need to be called via javascript once the status changes, im just going to have it default to always showing -->
-	<div id="waiting_button-panel">
-		Waiting for the performer to start practicing....
-	</div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-pitch" value="good pitch">Pitch</button>
-	                <button type="button" class="btn btn-default down" id="bad-pitch" value="bad pitch">Pitch</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-tone" value="good tone">Tone</button>
-	                <button type="button" class="btn btn-default down" id="bad-tone" value="bad tone">Tone</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-rhythm" value="good rhythm">Rhythm</button>
-	                <button type="button" class="btn btn-default down" id="bad-rhythm" value="bad rhythm">Rhythm</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-default up" id="good-posture" value="good posture">Posture</button>
-	                <button type="button" class="btn btn-default down" id="bad-posture" value="bad posture">Posture</button>
-	            </div>
-	        </ul>
-    	</div>
-{{/if}}
-</div>
 
-<div id="playback-container" hidden>
+
 	{{#if if_musician}}
-		<div class="pure-u-2-3" id="video-container">
-		    <video class="bottom-video" id="my-video" autoplay></video>
-		    <video class="top-video" id="their-video" autoplay></video>
-		    <video class="critique-video" id="critique_video"></video>
+
+		<div id="waiting_response">
+			<div id="waiting_text">Waiting for the critiquer...</div>
 		</div>
+
+		
+		<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
+		<li class='right_bar' id='critiques' hidden></li>
+
 	{{else}}
-		<div class="pure-u-2-3" id="video-container">
-		    <video class="top-video" id="my-video" autoplay></video>
-		    <video class="bottom-video" id="their-video" autoplay></video>
-		    <video class="critique-video" id="critique_video" controls></video>
+
+		<div id="waiting_button-panel">
+			Waiting for the performer to start practicing....
 		</div>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-pitch" value="good pitch">Pitch</button>
+            <button type="button" class="btn btn-default down" id="bad-pitch" value="bad pitch">Pitch</button>
+        </div>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-tone" value="good tone">Tone</button>
+            <button type="button" class="btn btn-default down" id="bad-tone" value="bad tone">Tone</button>
+        </div>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-rhythm" value="good rhythm">Rhythm</button>
+            <button type="button" class="btn btn-default down" id="bad-rhythm" value="bad rhythm">Rhythm</button>
+        </div>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-posture" value="good posture">Posture</button>
+            <button type="button" class="btn btn-default down" id="bad-posture" value="bad posture">Posture</button>
+        </div>
+	</div>
 	{{/if}}
 </div>
-

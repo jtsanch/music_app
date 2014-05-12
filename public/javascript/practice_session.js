@@ -72,6 +72,7 @@ $(document).ready(function(){
         }
         
       });
+
       var peers_logged_in = 0;
       video_peer.on('open', function(peer_id){
         
@@ -92,7 +93,7 @@ $(document).ready(function(){
 
       audio_peer.on('open', function(peer_id){
         
-        practice_session.child("musician_video_peer_id").set(peer_id);
+        practice_session.child("musician_audio_peer_id").set(peer_id);
 
         //await the call from the crtiquer. Just chill out in the window
         audio_peer.on('call', function(call){
