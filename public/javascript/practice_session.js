@@ -21,7 +21,6 @@ $(document).ready(function(){
   //start the conversation link after streams have been allowed
   function start_conversation(){
 
-    var id;
     var video_peer = new Peer({key: '2lu517mph5btke29'});
     var audio_peer = new Peer({key: '2lu517mph5btke29'});
      
@@ -143,8 +142,8 @@ $(document).ready(function(){
               $('#playback-container').show();
               $('#waiting-response').fadeOut();
             }
-            var peer_id = snapshot.val();
-            var call = video_peer.call(peer_id, window.video_stream);
+            var other_peer_id = snapshot.val();
+            var call = video_peer.call(other_peer_id, window.video_stream);
 
             //call your musician friend and establish the connection
             call.on('stream', function(stream){
@@ -166,8 +165,8 @@ $(document).ready(function(){
               $('#playback-container').show();
            }
 
-            var peer_id = snapshot.val();
-            var call = audio_peer.call(peer_id, window.audio_stream);
+            var other_peer_id = snapshot.val();
+            var call = audio_peer.call(other_peer_id, window.audio_stream);
 
             call.on('stream', function(stream){
               $("#their-audio").prop('src', URL.createObjectURL(stream));
