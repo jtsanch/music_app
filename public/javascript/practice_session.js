@@ -41,6 +41,8 @@ $(document).ready(function(){
     });
   }
 
+  var time_start;
+
   //init the musician listeners
   function initialize_musician(video_peer, audio_peer){
     
@@ -51,7 +53,7 @@ $(document).ready(function(){
           $("#start_session").val("End Session");
           $('#practice-container').show();
           start_recording();
-
+          time_start = new Date().getTime();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           stop_recording();
@@ -100,23 +102,39 @@ $(document).ready(function(){
         });
       });
   }
-
   //init critique items
   function initialize_critiquer(video_peer, audio_peer){
 
       practice_session.child('practice_start').on('value', function(snapshot){
         if(snapshot.val()){
-          $("#critique_text").keyup( function(e){
-            e = e || event;
-            if ( e.keyCode === 13 && !e.ctrlKey){
-              var now = new Date().getTime();
-              var text = $("#critique_text");
-              add_critique_item(now, text);
-            }
-          });
+          
+          time_start = new Date().getTime();
         
           $(".critique_rating").on("click",function(){
             add_critique($(this).id);
+          });
+          $("#critique_text").keydown(function(e){
+            e = e || event;
+            if ( e.which == 13 && !e.ctrlKey){
+              var now = new Date().getTime();
+              var text = $(this).val();
+              $(this).val("");
+              add_critique_item(now, text, "neutral");
+            }
+          });
+
+          $(".up").on("click",function(){
+            var now = new Date().getTime();
+            var topic = $(this).attr('id');
+            var text = "Good "+topic+"!";
+            add_critique_item(now, text, "positive");
+          });
+
+          $(".down").on("click",function(){
+            var now = new Date().getTime();
+            var topic = $(this).attr('id');
+            var text = "Work on "+topic;
+            add_critique_item(now, text, "negative");
           });
 
           start_recording();
@@ -129,6 +147,7 @@ $(document).ready(function(){
           stop_recording();
           $("#waiting_button-panel").fadeOut();
           $("#waiting_critique").fadeOut();
+          begin_critique_session();
         }
       });
       
@@ -181,8 +200,8 @@ $(document).ready(function(){
   function start_recording(){
 
     if(if_musician){
-      recordRTC_Video.startRecording();
-      recordRTC_Audio.startRecording(); 
+      window.recordRTC_Video.startRecording();
+      window.recordRTC_Audio.startRecording(); 
     } else {
       window.musician_video_stream.startRecording();
       window.musician_audio_stream.startRecording();
@@ -194,11 +213,11 @@ $(document).ready(function(){
   function stop_recording() {
 
     if(if_musician){
-      recordRTC_Audio.stopRecording(function(audioURL) {
+      window.recordRTC_Audio.stopRecording(function(audioURL) {
         $("#critique_audio").prop('src', audioURL);
       });
 
-      recordRTC_Video.stopRecording(function(videoURL) {
+      window.recordRTC_Video.stopRecording(function(videoURL) {
         $("#critique_video").prop('src',videoURL);
       });
     } else {
@@ -213,52 +232,65 @@ $(document).ready(function(){
        
   }
 
+  function show_critique_items(){
+    $("#critique_video").show();
+  }
+
   //called when session begins
   function begin_critique_session(){
-    var webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
 
-    $("#critique_video").prop('src', URL.createObjectURL(webmBlob));
+    show_critique_items();
+    var critique_audio = document.getElementById('critique_audio');
+    var critique_video = document.getElementById('critique_video');
 
-    if(if_musician != "false"){
-      
+    if(if_musician){
+
       $("#critique_video").on('timeupdate', function(){
-        pratice_session.child('critique_video_time').put($("#critique_video").currentTime);
+
+        critique_audio.currentTime = critique_video.currentTime;
+        practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
+
+        if(critique_video.paused){
+          critique_audio.pause();
+        } else {
+          critique_audio.play();
+        }
+      });
+
+      $("#critique_video").on('pause', function(){
+        practice_session.child('critique_video_paused').set(true);
+        critique_audio.pause();
       });
 
     } else {
 
-        document.getElementById("#critique_video").addEventListener('loadedmetadata', function() {
-        //Only the musician can control the video      
-        practice_session.child('critique_video_time').on('child_changed', function(snapshot){
-            this.currentTime = snapshot.val(); 
-            $("#critique_video").play();
+        critique_video.addEventListener('loadedmetadata', function() {
+          
+          //Only the musician can control the video      
+          practice_session.child('critique_video_time').on('value', function(snapshot){
+            
+            if(snapshot.val()){    
+              critique_video.currentTime = snapshot.val().time;
+              critique_audio.currentTime = snapshot.val().time;
+              if(!snapshot.val().paused){
+                critique_video.play();
+                critique_audio.play(); 
+              } else {
+                critique_video.pause();
+                critique_audio.pause();
+              }
+            }
+
           });
-        }, 
-        false);
+/*
+          practice_session.child('critique_video_paused').on('value', function(snapshot){
+            if(snapshot.val()){
+              critique_video.pause();
+              critique_audio.pause();
+            }
+          });*/
+           }, false);
 
-      $("#critique_text").keydown(function(e){
-        e = e || event;
-        if ( e.which == 13 && !e.ctrlKey){
-          var now = new Date().getTime();
-          var text = $(this).val();
-          $(this).val("");
-          add_critique_item(now, text, "neutral");
-        }
-      });
-
-      $(".up").on("click",function(){
-        var now = new Date().getTime();
-        var topic = $(this).attr('id');
-        var text = "Good "+topic+"!";
-        add_critique_item(now, text, "positive");
-      });
-
-      $(".down").on("click",function(){
-        var now = new Date().getTime();
-        var topic = $(this).attr('id');
-        var text = "Work on "+topic;
-        add_critique_item(now, text, "negative");
-      });
     }
 
     render_critique();
@@ -267,12 +299,16 @@ $(document).ready(function(){
   //renders the critique
   function render_critique(){
     //create dictionary of [sent time of critique] -> text of critique
-    var critiques;
+    var critiques = [];
     practice_session.child('critiques').on('value', function(snapshot){
       if(snapshot.val()){
-        for(var critique in snapshot.val()){
+        for(var critique_key in snapshot.val()){
+        
+          var critique = snapshot.val()[critique_key] - time_start;
+
           critiques[critique.sent_at] = critique.text;
           add_critique_item(critique.sent_at, critique.text);
+
         }
       }
     });
@@ -285,7 +321,7 @@ $(document).ready(function(){
           scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
         });
       }
-    },1000);
+    },500);
 
   }
 
@@ -301,7 +337,9 @@ $(document).ready(function(){
   var ready = 0;  
    // record audio
   navigator.getUserMedia({audio: true}, function(mediaStream) {
-    window.recordRTC_Audio = RecordRTC(mediaStream, {type:"audio"});
+    if(if_musician){
+      window.recordRTC_Audio = RecordRTC(mediaStream, {type:"audio"});  
+    }
     window.audio_stream    = mediaStream;
     $("#my-audio").prop('src', URL.createObjectURL(mediaStream));
     ready += 1;
@@ -317,7 +355,9 @@ $(document).ready(function(){
   navigator.getUserMedia({video: true}, function(mediaStream) {
     $("#status").html("waiting..");
     $("#my-video").prop('src', URL.createObjectURL(mediaStream));
-    window.recordRTC_Video = RecordRTC(mediaStream,{type:"video"});
+    if(if_musician){
+       window.recordRTC_Video = RecordRTC(mediaStream,{type:"video"});   
+    }
     window.video_stream    =  mediaStream;
     ready += 1;
     if(ready == 2){
