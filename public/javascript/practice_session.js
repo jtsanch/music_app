@@ -8,6 +8,7 @@ $(document).ready(function(){
   var session_id  = $("#session_id").val();
   var if_musician = $("#if_musician").val() == "true";
   
+  //load the practice session
   var practice_session = fb_instance.child('practice_sessions').child(session_id);
   
   //recording elements
@@ -17,27 +18,12 @@ $(document).ready(function(){
   var endTime = null;
   var frames = [];
 
-  function toggle(button) {
-      switch(button.value) {
-          case "Start rehearsal":
-               button.value = "Stop rehearsal";
-               start_recording();
-               break;
-          case "Stop rehearsal":
-               //update fb is_recording value, start recording and switch critiquer's interface
-               button.value = "Start rehearsal";
-               stop_recording();
-               break;
-      }
-  }
-
-  //steps... check for fb_instance ref and if chatroom has one peer connection
-  //if there is a peer connection
+  //start the conversation link after streams have been allowed
   function start_conversation(){
 
     var id, call;
     var video_peer = new Peer({key: '2lu517mph5btke29'});
-    var audiio_peer = new Peer({key: '2lu517mph5btke29'});
+    var audio_peer = new Peer({key: '2lu517mph5btke29'});
      
     //musician
     if(if_musician){
@@ -56,19 +42,23 @@ $(document).ready(function(){
     });
   }
 
+  //init the musician listeners
   function initialize_musician(video_peer, audio_peer){
+    
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
         if($("#start_session").val() == "Start Session") {
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").val("End Session");
           start_recording();
+
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           stop_recording();
           $("#start_session").hide();
           $('#practice-container').hide();
           $('#playback-container').show();
+          begin_critique_session();
         }
         
       });
@@ -77,15 +67,16 @@ $(document).ready(function(){
       video_peer.on('open', function(peer_id){
         
         practice_session.child("musician_video_peer_id").set(peer_id);
+        peers_logged_in += 1;
 
         //await the call from the crtiquer. Just chill out in the window
         video_peer.on('call', function(call){
           if(peers_logged_in == 2){
-            $("#waiting_response").fadeOut();            
+            $("#waiting_response").fadeOut();         
+            $('#playback-container').show();   
           }
-          call.answer(window.recordRTC_Video);
+          call.answer(window.video_stream);
           call.on('stream', function(stream){
-
             $("#their-video").prop('src', URL.createObjectURL(stream));
           });
         });
@@ -93,26 +84,28 @@ $(document).ready(function(){
 
       audio_peer.on('open', function(peer_id){
         
+        peers_logged_in += 1;
         practice_session.child("musician_audio_peer_id").set(peer_id);
 
         //await the call from the crtiquer. Just chill out in the window
         audio_peer.on('call', function(call){
           if(peers_logged_in == 2){
-            $("#waiting_response").fadeOut();            
+            $("#waiting_response").fadeOut();  
+            $('#playback-container').show();          
           }
-          call.answer(window.recordRTC_Audio);
+          call.answer(window.audio_stream);
           call.on('stream', function(stream){
             $("#their-audio").prop('src', URL.createObjectURL(stream));
           });
         });
       });
-
   }
 
+  //init critique items
   function initialize_critiquer(video_peer, audio_peer){
 
       practice_session.child('practice_start').on('value', function(snapshot){
-        if(snapshot.val() && if_musician){
+        if(snapshot.val()){
           $("#critique_text").keyup( function(e){
             e = e || event;
             if ( e.keyCode === 13 && !e.ctrlKey){
@@ -123,7 +116,7 @@ $(document).ready(function(){
           });
         
           $(".critique_rating").on("click",function(){
-            add_critique(""+$(this).id);
+            add_critique($(this).id);
           });
 
           start_recording();
@@ -132,11 +125,11 @@ $(document).ready(function(){
 
       practice_session.child('practice_end').on('value', function(snapshot){
         //button has been pressed
-        if(snapshot.val() && if_musician){
+        if(snapshot.val()){
           stop_recording();
+          $("#waiting_button-panel").fadeOut();
+          $("#waiting_critique").fadeOut();
         }
-        $("#waiting_button-panel").fadeOut();
-        $("#waiting_critique").fadeOut();
       });
       
       //we are the critiquer and need to make the call
@@ -144,131 +137,83 @@ $(document).ready(function(){
       video_peer.on('open', function(peer_id){
         practice_session.child('musician_video_peer_id').on('value', function(snapshot){
           if(snapshot.val()){
-            musician_video_peer_id = snapshot.val();
-            call = peer.call(musician_video_peer_id, window.localStream);
+            peers_logged_in+=1;
+            if(peers_logged_in == 2){
+              $('#playback-container').show();
+              $('#waiting-response').fadeOut();
+            }
+            var peer_id = snapshot.val();
+            call = video_peer.call(peer_id, window.video_stream);
 
             //call your musician friend and establish the connection
             call.on('stream', function(stream){
                 $("#their-video").prop('src', URL.createObjectURL(stream));
+                window.musician_video_stream = RecordRTC(stream, {type:'video'});
             });
 
           }
-        practice_session.child('musician_audio_id').on('value', function(snapshot){
-          if(snapshot.val()){
-            musician_audio_peer_id = snapshot.val();
-            call = peer.call(musician_video_peer_id, window.localStream);
-
-            //call your musician friend and establish the connection
-            call.on('stream', function(stream){
-                $("#their-video").prop('src', URL.createObjectURL(stream));
-            });
-
-          }
-        });
-      
-        practice_session.child("musician_video_peer_id").set(peer_id);
-
-        //await the call from the crtiquer. Just chill out in the window
-        video_peer.on('call', function(call){
-          if(peers_logged_in == 2){
-            $("#waiting_response").fadeOut();            
-          }
-          call.answer(window.recordRTC_Video);
-          call.on('stream', function(stream){
-
-            $("#their-video").prop('src', URL.createObjectURL(stream));
-          });
         });
       });
 
       audio_peer.on('open', function(peer_id){
         
-        practice_session.child("musician_video_peer_id").set(peer_id);
-
-        //await the call from the crtiquer. Just chill out in the window
-        audio_peer.on('call', function(call){
-          if(peers_logged_in == 2){
-            $("#waiting_response").fadeOut();            
+        practice_session.child('musician_audio_peer_id').on('value', function(snapshot){
+          if(snapshot.val()){
+            peers_logged_in+=1;
+            if(peers_logged_in == 2){
+              $("#waiting-response").fadeOut();
+              $('#playback-container').show();
           }
-          call.answer(window.recordRTC_Audio);
-          call.on('stream', function(stream){
-            $("#their-audio").prop('src', URL.createObjectURL(stream));
-          });
+
+            var peer_id = snapshot.val();
+            call = audio_peer.call(peer_id, window.audio_stream);
+
+            call.on('stream', function(stream){
+              $("#their-audio").prop('src', URL.createObjectURL(stream));
+              window.musician_audio_stream = RecordRTC(stream, {type:'audio'});
+            })
+          }
         });
-      });
-
-      var musician_video_peer_id;
-      var musician_audio_peer_id;
-      practice_session.child('musician_video_peer_id').on('value', function(snapshot){
-        if(snapshot.val()){
-          musician_video_peer_id = snapshot.val();
-
-
-        }
-      });
-      practice_session.child('musician_peer_id').on('value',function(snapshot){
-        if(snapshot.val()){
-          var musician_peer_id = snapshot.val();
-          call = peer.call(musician_peer_id, window.localStream);
-
-          //call your musician friend and establish the connection
-          call.on('stream', function(stream){
-              $("#their-video").prop('src', URL.createObjectURL(stream));
-          });
-
-          } else {
-            //display error
-
-          }
+ 
       });
   }
 
-  //called upon the button being clicked
   function start_recording(){
-    
-    // $("#begin_recording").hide();
-    // $("#end_recording").show();
 
-    var ctx = canvas.getContext('2d');
-    var CANVAS_HEIGHT = canvas.height;
-    var CANVAS_WIDTH = canvas.width;
-
-    frames = []; // clear existing frames;
-    startTime = Date.now();
-
-    function drawVideoFrame_(time) {
-      rafId = requestAnimationFrame(drawVideoFrame_);
-      var video;
-      if(if_musician){
-        video = document.querySelector('my-video');
-      } else {
-        video = document.querySelector('their-video');
-      }
-
-      ctx.drawImage(video, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-      var url = canvas.toDataURL('image/webp', 1); // image/jpeg is way faster :(
-      //console.timeEnd('canvas.dataURL() took');
-      frames.push(url); 
+    if(if_musician){
+      recordRTC_Video.startRecording();
+      recordRTC_Audio.startRecording(); 
+    } else {
+      window.musician_video_stream.startRecording();
+      window.musician_audio_stream.startRecording();
     }
 
-    rafId = requestAnimationFrame(drawVideoFrame_);
   } 
-//
 
 
-//called when teh musician stops recording
   function stop_recording() {
 
-    cancelAnimationFrame(rafId);
-    
-    endTime = Date.now();
+    if(if_musician){
+      recordRTC_Audio.stopRecording(function(audioURL) {
+        $("#critique_audio").prop('src', audioURL);
+      });
 
-    begin_critique_session();
+      recordRTC_Video.stopRecording(function(videoURL) {
+        $("#critique_video").prop('src',videoURL);
+      });
+    } else {
+      window.musician_audio_stream.stopRecording(function(audioURL) {
+        $("#critique_audio").prop('src', audioURL);
+      });
+
+      window.musician_video_stream.stopRecording(function(videoURL) {
+        $("#critique_video").prop('src',videoURL);
+      });
+    }
        
   }
 
-//called when session begins
+  //called when session begins
   function begin_critique_session(){
     var webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
 
@@ -319,7 +264,7 @@ $(document).ready(function(){
     render_critique();
   }
 
-//renders the critique
+  //renders the critique
   function render_critique(){
     //create dictionary of [sent time of critique] -> text of critique
     var critiques;
@@ -352,13 +297,16 @@ $(document).ready(function(){
       "<span class='timestamp'>"+sent_at+": </span>"+
       text +"</div>");
   }
+
   var ready = 0;  
    // record audio
   navigator.getUserMedia({audio: true}, function(mediaStream) {
-    window.recordRTC_Audio = RecordRTC(mediaStream);
+    window.recordRTC_Audio = RecordRTC(mediaStream, {type:"audio"});
+    window.audio_stream    = mediaStream;
+    $("#my-audio").prop('src', URL.createObjectURL(mediaStream));
     ready += 1;
     if(ready == 2){
-      record_audio_and_video();
+      start_conversation();
     }
   
   },function(failure){
@@ -368,23 +316,16 @@ $(document).ready(function(){
   // record video
   navigator.getUserMedia({video: true}, function(mediaStream) {
     $("#status").html("waiting..");
+    $("#my-video").prop('src', URL.createObjectURL(mediaStream));
     window.recordRTC_Video = RecordRTC(mediaStream,{type:"video"});
+    window.video_stream    =  mediaStream;
     ready += 1;
     if(ready == 2){
-      record_audio_and_video();
+      start_conversation();
     }
   
   },function(failure){
 
   });
 
-  /*
-  navigator.getUserMedia({audio: true, video: true}, function(stream){
-      //Set your video displeoays
-      $( '#my-video').prop('src', URL.createObjectURL(stream));
-      window.localStream = stream;      
-      start_conversation();
-
-  }, function(){ alert("Camera disabled."); }); 
-*/
 });
