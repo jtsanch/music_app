@@ -110,16 +110,15 @@ $(document).ready(function(){
           
           time_start = new Date().getTime();
         
-          $(".critique_rating").on("click",function(){
-            add_critique($(this).id);
-          });
           $("#critique_text").keydown(function(e){
             e = e || event;
             if ( e.which == 13 && !e.ctrlKey){
               var now = new Date().getTime();
               var text = $(this).val();
+              var offset_time = Math.floor((now - time_start) / 1000)
               $(this).val("");
-              add_critique_item(now, text, "neutral");
+              add_critique(now, text, "neutral");
+              add_critique_item(now, text, "neutral", offset_time);
             }
           });
 
@@ -127,14 +126,18 @@ $(document).ready(function(){
             var now = new Date().getTime();
             var topic = $(this).attr('id');
             var text = "Good "+topic+"!";
-            add_critique_item(now, text, "positive");
+            var offset_time = Math.floor((now - time_start) / 1000)
+            add_critique(now, text, "positive");
+            add_critique_item(now, text, "positive", offset_time);
           });
 
           $(".down").on("click",function(){
             var now = new Date().getTime();
             var topic = $(this).attr('id');
             var text = "Work on "+topic;
-            add_critique_item(now, text, "negative");
+            var offset_time = Math.floor((now - time_start) / 1000)
+            add_critique(now, text, "negative");
+            add_critique_item(now, text, "negative", offset_time);
           });
 
           start_recording();
@@ -234,6 +237,7 @@ $(document).ready(function(){
 
   function show_critique_items(){
     $("#critique_video").show();
+    $("#critiques").show();
   }
 
   //called when session begins
@@ -282,14 +286,7 @@ $(document).ready(function(){
             }
 
           });
-/*
-          practice_session.child('critique_video_paused').on('value', function(snapshot){
-            if(snapshot.val()){
-              critique_video.pause();
-              critique_audio.pause();
-            }
-          });*/
-           }, false);
+         }, false);
 
     }
 
@@ -303,35 +300,44 @@ $(document).ready(function(){
     practice_session.child('critiques').on('value', function(snapshot){
       if(snapshot.val()){
         for(var critique_key in snapshot.val()){
-        
-          var critique = snapshot.val()[critique_key] - time_start;
 
-          critiques[critique.sent_at] = critique.text;
-          add_critique_item(critique.sent_at, critique.text);
+          var critique = snapshot.val()[critique_key];
+          var offset_time = Math.floor((critique.sent - time_start) / 1000);
+          
+          critiques[offset_time] = critique.text;
+          if(if_musician)
+            add_critique_item(critique.sent, critique.text, critique.type, offset_time);
 
         }
       }
     });
 
     setInterval( function(){
-      if( critiques[$("#critique_video").currentTime] ){
-        var scroll_to = $("#"+crtiques[$("#critique_video").currentTime]);
-        scroll_to.className = active_critique;
-        $("#critiques").animate({
-          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-        });
+      var time = Math.round($("#critique_video").prop('currentTime'));
+      if( critiques[time] ){
+        var scroll_to = $("#critique_at_"+time);
+        scroll_to.className = 'active_critique';
+     /*   $("#critiques").animate({
+          scrollTop: scroll_to.offset().top - container.offset().top + container.scrollTop()
+        });*/
+        $("#active_critique").html(critiques[time]);
       }
     },500);
 
   }
 
   //render the critique item in the list
-  function add_critique_item( sent_at, text, type){
-    practice_session.child('critiques').push({text:text, sent: sent_at, type:type});
+  function add_critique_item( sent_at, text, type, sent_id){
+    var date = new Date(sent_at);
+    var time_to_show = date.getHours() + ":" + date.getMinutes();
 
-    $("#critiques").append("<div class='indivCritiques "+type+"' id='"+sent_at+"'>"+
-      "<span class='timestamp'>"+sent_at+": </span>"+
+    $("#critiques").append("<div class='indivCritiques "+type+"' id='critique_at_"+sent_id+"'>"+
+      "<span class='timestamp'>"+time_to_show+": </span>"+
       text +"</div>");
+  }
+  
+  function add_critique(sent_at, text, type){
+    practice_session.child('critiques').push({sent:sent_at, text:text, type:type});
   }
 
   var ready = 0;  
