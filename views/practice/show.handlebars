@@ -7,9 +7,7 @@
 
 <video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
 
-<div id="practice-container">
 {{#if if_musician}}
-
 
 	<div id="waiting_response">
 		<div id="waiting_text">Waiting for the critiquer...</div>
@@ -33,51 +31,55 @@
 	</div>
 
 	<!-- This may need to be called via javascript once the status changes, im just going to have it default to always showing -->
-	<div id="waiting_button-panel">
-		Waiting for the performer to start practicing....
+	<div id="practice-container" hidden> 
+		<div id="waiting_button-panel">
+			Waiting for the performer to start practicing....
+		</div>
+			<div class="button-panel">
+		        <h4>Click tags to rate specific parts of the performance!</h4>
+		        <h5>Green = good, red = can improve</h5>
+		        <div class="tags">
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-pitch" value="pitch">Pitch</button>
+		                <button type="button" class="btn btn-hover down" id="bad-pitch" value="pitch">Pitch</button>
+		            </div>
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-tone" value="tone">Tone</button>
+		                <button type="button" class="btn btn-hover down" id="bad-tone" value="tone">Tone</button>
+		            </div>
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-rhythm" value="rhythm">Rhythm</button>
+		                <button type="button" class="btn btn-hover down" id="bad-rhythm" value="rhythm">Rhythm</button>
+		            </div>
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-posture" value="posture">Posture</button>
+		                <button type="button" class="btn btn-hover down" id="bad-posture" value="posture">Posture</button>
+		            </div>
+		        </div>
+	    	</div>
+		<div id="waiting_critique"></div>
+		<div id='critiques'></div>
+		<input id="critique_text" type="text" placeholder="say something..">
 	</div>
-		<div class="button-panel">
-	        <h4>Click tags to rate specific parts of the performance!</h4>
-	        <h5>Green = good, red = can improve</h5>
-	        <div class="tags">
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-hover up" id="good-pitch" value="pitch">Pitch</button>
-	                <button type="button" class="btn btn-hover down" id="bad-pitch" value="pitch">Pitch</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-hover up" id="good-tone" value="tone">Tone</button>
-	                <button type="button" class="btn btn-hover down" id="bad-tone" value="tone">Tone</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-hover up" id="good-rhythm" value="rhythm">Rhythm</button>
-	                <button type="button" class="btn btn-hover down" id="bad-rhythm" value="rhythm">Rhythm</button>
-	            </div>
-	            <div class="tag-pair btn-group btn-group-lg">
-	                <button type="button" class="btn btn-hover up" id="good-posture" value="posture">Posture</button>
-	                <button type="button" class="btn btn-hover down" id="bad-posture" value="posture">Posture</button>
-	            </div>
-	        </div>
-    	</div>
-	<div id="waiting_critique"></div>
-	<div id='critiques'></div>
-	<input id="critique_text" type="text" placeholder="say something..">
 
 {{/if}}
-</div>
 
-<div id="playback-container" hidden>
-	{{#if if_musician}}
+{{#if if_musician}}
+	<div class="playback-container" hidden>
 		<div class="pure-u-2-3" id="video-container">
 		    <video class="bottom-video" id="my-video" autoplay></video>
 		    <video class="top-video" id="their-video" autoplay></video>
 		    <video class="critique-video" id="critique_video"></video>
 		</div>
-	{{else}}
+	</div>
+{{else}}
+	<div class="playback-container" hidden>
 		<div class="pure-u-2-3" id="video-container">
 		    <video class="top-video" id="my-video" autoplay></video>
 		    <video class="bottom-video" id="their-video" autoplay></video>
 		    <video class="critique-video" id="critique_video" controls></video>
 		</div>
-	{{/if}}
-</div>
+	</div>
+{{/if}}
+
 

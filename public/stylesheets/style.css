@@ -184,3 +184,19 @@ a {
 	border-radius: 4px
 }
 
+#top-video {
+	position: absolute;
+	right: 0px;
+}
+
+#bottom-video {
+	position: absolute;
+	right: 0px;
+
+}
+
+#critique-video {
+	position: absolute;
+	left: 0px;
+}
+
