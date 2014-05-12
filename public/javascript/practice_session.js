@@ -50,6 +50,7 @@ $(document).ready(function(){
         if($("#start_session").val() == "Start Session") {
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").val("End Session");
+          $('#practice-container').show();
           start_recording();
 
         } else {

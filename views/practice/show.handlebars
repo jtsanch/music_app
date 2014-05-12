@@ -8,7 +8,6 @@
 <video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
 <audio id='critique_audio' hidden></audio>
 
-<div id="practice-container">
 	
 	<div id="playback-container" hidden>
 		{{#if if_musician}}
@@ -33,12 +32,39 @@
 		<div id="waiting_response">
 			<div id="waiting_text">Waiting for the critiquer...</div>
 		</div>
+		<div id="waiting_button-panel">
+			Waiting for the performer to start practicing....
+		</div>
+			<div class="button-panel">
+		        <h4>Click tags to rate specific parts of the performance!</h4>
+		        <h5>Green = good, red = can improve</h5>
+		        <div class="tags">
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-pitch" value="pitch">Pitch</button>
+		                <button type="button" class="btn btn-hover down" id="bad-pitch" value="pitch">Pitch</button>
+		            </div>
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-tone" value="tone">Tone</button>
+		                <button type="button" class="btn btn-hover down" id="bad-tone" value="tone">Tone</button>
+		            </div>
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-rhythm" value="rhythm">Rhythm</button>
+		                <button type="button" class="btn btn-hover down" id="bad-rhythm" value="rhythm">Rhythm</button>
+		            </div>
+		            <div class="tag-pair btn-group btn-group-lg">
+		                <button type="button" class="btn btn-hover up" id="good-posture" value="posture">Posture</button>
+		                <button type="button" class="btn btn-hover down" id="bad-posture" value="posture">Posture</button>
+		            </div>
+		        </div>
+	    	</div>
+		<div id="waiting_critique"></div>
+		<div id='critiques'></div>
+		<input id="critique_text" type="text" placeholder="say something..">
 
 		
 		<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
 		<li class='right_bar' id='critiques' hidden></li>
 
-	{{else}}
 
 		<div id="waiting_button-panel">
 			Waiting for the performer to start practicing....
