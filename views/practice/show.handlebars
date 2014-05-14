@@ -9,21 +9,21 @@
 <audio id='critique_audio' hidden></audio>
 
 	
-	<div id="playback-container" hidden>
-		{{#if if_musician}}
-			<div class="pure-u-2-3" id="video-container">
-			    <video class="bottom-video" id="my-video" autoplay></video>
-			    <video class="top-video" id="their-video" autoplay></video>
-			    <audio id='their-audio' hidden autoplay></hidden>
-			</div>
-		{{else}}
-			<div class="psure-u-2-3" id="video-container">
-			    <video class="top-video" id="my-video" autoplay></video>
-			    <video class="bottom-video" id="their-video" autoplay></video>
-			    <audio id='their-audio' hidden autoplay></hidden>
-			</div>
-		{{/if}}
+<div id="playback-container" hidden>
+{{#if if_musician}}
+	<div class="pure-u-2-3" id="video-container">
+	    <video class="bottom-video" id="my-video" autoplay></video>
+		    <video class="top-video" id="their-video" autoplay></video>
+	    <audio id='their-audio' hidden autoplay></hidden>
 	</div>
+{{else}}
+	<div class="psure-u-2-3" id="video-container">
+	    <video class="top-video" id="my-video" autoplay></video>
+	    <video class="bottom-video" id="their-video" autoplay></video>
+	    <audio id='their-audio' hidden autoplay></hidden>
+	</div>
+{{/if}}
+</div>
 
 
 
