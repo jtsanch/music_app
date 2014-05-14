@@ -74,7 +74,7 @@ $(document).ready(function(){
         //await the call from the crtiquer. Just chill out in the window
         video_peer.on('call', function(call){
           if(peers_logged_in == 2){
-            $("#waiting_response").fadeOut();         
+            $("#waiting_response").hide();         
             $('#playback-container').show();   
           }
           call.answer(window.video_stream);
@@ -85,14 +85,13 @@ $(document).ready(function(){
       });
 
       audio_peer.on('open', function(peer_id){
-        
         peers_logged_in += 1;
         practice_session.child("musician_audio_peer_id").set(peer_id);
 
         //await the call from the crtiquer. Just chill out in the window
         audio_peer.on('call', function(call){
           if(peers_logged_in == 2){
-            $("#waiting_response").fadeOut();  
+            $("#waiting_response").hide();  
             $('#playback-container').show();          
           }
           call.answer(window.audio_stream);
@@ -124,7 +123,7 @@ $(document).ready(function(){
 
           $(".up").on("click",function(){
             var now = new Date().getTime();
-            var topic = $(this).attr('id');
+            var topic = $(this).val();
             var text = "Good "+topic+"!";
             var offset_time = Math.floor((now - time_start) / 1000)
             add_critique(now, text, "positive");
@@ -133,12 +132,15 @@ $(document).ready(function(){
 
           $(".down").on("click",function(){
             var now = new Date().getTime();
-            var topic = $(this).attr('id');
+            var topic = $(this).val();
             var text = "Work on "+topic;
             var offset_time = Math.floor((now - time_start) / 1000)
             add_critique(now, text, "negative");
             add_critique_item(now, text, "negative", offset_time);
           });
+
+          $("#waiting_button-panel").hide();
+          $("#waiting_critique").hide();
 
           start_recording();
         }
@@ -147,9 +149,9 @@ $(document).ready(function(){
       practice_session.child('practice_end').on('value', function(snapshot){
         //button has been pressed
         if(snapshot.val()){
+          $("#button-panel").hide();
+          $('#critique_text').hide();
           stop_recording();
-          $("#waiting_button-panel").fadeOut();
-          $("#waiting_critique").fadeOut();
           begin_critique_session();
         }
       });
@@ -162,7 +164,6 @@ $(document).ready(function(){
             peers_logged_in+=1;
             if(peers_logged_in == 2){
               $('#playback-container').show();
-              $('#waiting-response').fadeOut();
             }
             var other_peer_id = snapshot.val();
             var call = video_peer.call(other_peer_id, window.video_stream);
@@ -183,7 +184,6 @@ $(document).ready(function(){
           if(snapshot.val()){
             peers_logged_in+=1;
             if(peers_logged_in == 2){
-              $("#waiting-response").fadeOut();
               $('#playback-container').show();
            }
 
@@ -236,6 +236,16 @@ $(document).ready(function(){
   }
 
   function show_critique_items(){
+    $( ".top-video" ).css({
+      "top": "320px",
+      "left": "420px",
+      "width": "300px"
+    });
+    $( ".bottom-video" ).css({
+      "width": "300px",
+      "top": "320px",
+      "left": "80px"
+    });
     $("#critique_video").show();
     $("#critiques").show();
   }
