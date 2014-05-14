@@ -148,7 +148,7 @@ a {
 	z-index: 2;
 }
 
-.button-panel{
+#button-panel{
 	position:absolute;
 	bottom:0;
 	left:0;
@@ -175,8 +175,8 @@ a {
 }
 
 #start_session{
-	top:50px;
-	left:30px;
+	top: 300px;
+	left: 280px;
 }
 
 .btn.down, .btn.up{
@@ -184,19 +184,33 @@ a {
 	border-radius: 4px
 }
 
-#top-video {
+.top-video {
 	position: absolute;
-	right: 0px;
+	top: 50px;
+	left: 420px;
+	width: 400px;
 }
 
-#bottom-video {
+.bottom-video {
 	position: absolute;
-	right: 0px;
-
-}
-
-#critique-video {
-	position: absolute;
+	top: 50px;
 	left: 0px;
+	width: 400px;
+}
+
+#critique_video {
+	position: absolute;
+top: 0px;
+left: 200px;
+width: 400px;
+}
+
+#active_critique{
+	background: white;
+	position: absolute;
+	top: 300px;
+	left: 200px;
+	text-align: center;
+	width: 400px;
 }
 

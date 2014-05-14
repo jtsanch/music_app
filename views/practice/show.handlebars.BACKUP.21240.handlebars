@@ -13,6 +13,23 @@
 
 	
 <div id="playback-container" hidden>
+<<<<<<< HEAD
+{{#if if_musician}}
+	<div class="pure-u-2-3" id="video-container">
+	    <video class="bottom-video" id="my-video" autoplay></video>
+		    <video class="top-video" id="their-video" autoplay></video>
+	    <audio id='their-audio' hidden autoplay></hidden>
+	</div>
+{{else}}
+	<div class="psure-u-2-3" id="video-container">
+	    <video class="top-video" id="my-video" autoplay></video>
+	    <video class="bottom-video" id="their-video" autoplay></video>
+	    <audio id='their-audio' hidden autoplay></hidden>
+	</div>
+{{/if}}
+</div>
+
+=======
 	{{#if if_musician}}
 		<div class="pure-u-2-3" id="video-container">
 		    <video class="bottom-video" id="my-video" autoplay></video>
@@ -26,8 +43,8 @@
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
 	{{/if}}
-{{/if}}
 </div>
+>>>>>>> 5cf25e8eeb3034ffb75f3fa9134c0c8b7a4d72d2
 
 
 {{#if if_musician}}

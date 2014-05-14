@@ -62,14 +62,14 @@ $(document).ready(function() {
           fb_instance.child("practice_sessions").child(session_id).on('value', function(snapshot_p){
             if(snapshot_p.val()){
               var calling_id = snapshot_p.val()["musician_id"];
-              fb_instance.child("users").child(scalling_id).on('value', function(snapshot_u){
+              fb_instance.child("users").child(calling_id).on('value', function(snapshot_u){
                 if (snapshot_u.val()){
                   caller_name = snapshot_u.val()["name"];
+                  show_invite_prompt(session_id, caller_name);     
                 }
               });
             }
-          });
-          show_invite_prompt(session_id, caller_name);          
+          });     
         }
       });
     }
