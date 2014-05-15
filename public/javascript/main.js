@@ -97,6 +97,7 @@ function show_invite_prompt(session_id, caller_name){
 }
 
 function login_user(){
+	document.location.href = "https://thesoundboard.herokuapp.com/login";
     $("container").hide();
     if (!window.localStorage["user"]){
        fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
