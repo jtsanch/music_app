@@ -21,8 +21,8 @@ $(document).ready(function(){
   //start the conversation link after streams have been allowed
   function start_conversation(){
 
-    var video_peer = new Peer({key: '2lu517mph5btke29'});
-    var audio_peer = new Peer({key: '2lu517mph5btke29'});
+    var video_peer = new Peer({key: 'sgi0gh4qeao9wwmi'});
+    var audio_peer = new Peer({key: 'sgi0gh4qeao9wwmi'});
      
     //musician
     if(if_musician){
