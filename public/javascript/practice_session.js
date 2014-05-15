@@ -381,7 +381,7 @@ $(document).ready(function(){
     }
   
   },function(failure){
-
+    console.log(failure);
   });
 
 });
