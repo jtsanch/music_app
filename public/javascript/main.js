@@ -97,7 +97,8 @@ function show_invite_prompt(session_id, caller_name){
 }
 
 function login_user(){
-	if(document.location.href != "https://thesoundboard.herokuapp.com/login")
+	if(document.location.href != "https://thesoundboard.herokuapp.com/login" 
+		&& document.location.href != "https://thesoundboard.herokuapp.com/register")
 		document.location.href = "https://thesoundboard.herokuapp.com/login";
     $("container").hide();
     if (!window.localStorage["user"]){
