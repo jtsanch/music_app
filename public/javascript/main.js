@@ -21,6 +21,7 @@ $(document).ready(function() {
             // an error occurred while attempting login
 
           } else if (user) {
+
             //logged in
           }else{
               //logout the user
@@ -120,17 +121,38 @@ function login_user(){
               begin_app(); 
            });
            
-           socket = io.connect('http://localhost');
-           socket.emit('user_connect', user.id);
+           socket = io.connect('http://localhost:3000');
+           
+           window.setInterval(function(){
+            socket.emit('user_ping', {m:user.id});
+           }, 30000);
+           socket.on('connected', function(data){
+            console.log(data);
+           })
+           socket.on('friend_ping', function(data){
+            console.log(data);
+           });
+
           }else{
             //logged out
           }
         });
      }else{
-      current_user = JSON.parse(window.localStorage["user"]);
-      begin_app();
-     } 
-
+ 
+       socket = io.connect('http://thesoundboard.herokuapp.com');    
+   
+       current_user = JSON.parse(window.localStorage["user"]);
+   
+       window.setInterval(function(){
+          socket.emit('user_ping', {m:current_user.id});
+       }, 30000);
+       
+       socket.on('friend_ping', function(data){
+          console.log(data);
+       });
+  
+       begin_app();
+      } 
     }
 
 function begin_app(){

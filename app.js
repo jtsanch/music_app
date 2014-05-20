@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var practice = require('./routes/practice_session');
 var Firebase = require('firebase');
-var http = require('http');3
+var http = require('http');
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
 var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 var about = require('./routes/about');
@@ -81,44 +81,35 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-var server = http.createServer(app);
+var server = http.createServer(app).listen(3000);
+
 var io = require('socket.io').listen(server);
 
-app.listen(3000);
 console.log("listening now");
 
 var current_users = {};
-io.set('log level', 1);
 io.sockets.on('connection',function(socket){
 
-socket.emit('connected',{m:'ok'});
+    socket.emit('connected',{m:'ok'});
 
-socket.on('user_connect',function(data){
+    socket.on('user_connect',function(data){
 
-  current_users[socket.id] = data;
-  io.sockets.emit('user_ping',{m:data});
-  console.log('user connected ' +data);
-/*  window.setInterval(function(){
-    io.sockets.emit('user_ping',{m:data});
-    console.log('pinged users');
-  }, 30000);*/
+      current_users[socket.id] = data;
+      io.sockets.emit('user_ping',{m:data});
+      console.log('user connected ' +data);
 
-});
+    });
 
-//if user doesn't ping in two minutes, it's removed from
-//current users
-socket.on('user_ping', function(data){
-  console.log(data + " just pinged us");s
-  current_users[data] = true;
-});
+    socket.on('user_ping', function(data){
+      io.sockets.emit('friend_ping', data);
+    });
 
-//when the user has left the site
-socket.on('user_disconnect', function(data){
-  delete current_users[data];
-});
+    //when the user has left the site
+    socket.on('user_disconnect', function(data){
+      delete current_users[data];
+    });
 
-socket.on('disconnect',function(){
-  user = current_users[socket.id];
+    socket.on('disconnect',function(){
       io.sockets.emit('user_disconnect', {m:user})
     });
 });
