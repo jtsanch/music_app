@@ -216,20 +216,56 @@ $(document).ready(function(){
   function stop_recording() {
 
     if(if_musician){
+      
       window.recordRTC_Audio.stopRecording(function(audioURL) {
-        $("#critique_audio").prop('src', audioURL);
+        window.recordRTC_Video.stopRecording(function(videoURL) {
+          $("#critique_video").prop('src',videoURL);
+          $("#critique_audio").prop('src', audioURL);
+          
+          var audio = {
+            blob: window.recordRTC_Audio.blob(),
+            dataURL: audioURL
+          };
+
+          var video = {
+            blob: window.recordRTC_Video.blob(),
+            dataURL: videoURL
+          };
+
+          var files = { };
+          var filename = session_id; 
+
+          files.audio = {
+            name: file_name + "." + audio.blob.type.split('/')[1],
+            type: audio.blob.type,
+            contents: audio.dataURL
+          };
+
+          files.video = {
+            name: file_name + "." + video.blob.type.split('/')[1],
+            type: video.blob.type,
+            contents.videoURL 
+          };
+
+          var bucket   = AWS.S3({params: {Bucket: 'thesoundboard'}});
+          var params   = {Key: filename, Body: files};
+          bucket.putObject(params, function(err){
+            if(err){
+              console.log('file upload failed');
+            } else {
+              console.log('file upload successful');
+            }
+          });
+        });
       });
 
-      window.recordRTC_Video.stopRecording(function(videoURL) {
-        $("#critique_video").prop('src',videoURL);
-      });
     } else {
+      
       window.musician_audio_stream.stopRecording(function(audioURL) {
-        $("#critique_audio").prop('src', audioURL);
-      });
-
-      window.musician_video_stream.stopRecording(function(videoURL) {
-        $("#critique_video").prop('src',videoURL);
+        window.musician_video_stream.stopRecording(function(videoURL) {
+          $("#critique_audio").prop('src', audioURL);
+          $("#critique_video").prop('src',videoURL);
+        });
       });
     }
        
