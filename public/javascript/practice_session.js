@@ -355,6 +355,9 @@ $(document).ready(function(){
   navigator.getUserMedia({audio: true}, function(mediaStream) {
     if(if_musician){
       window.recordRTC_Audio = RecordRTC(mediaStream, {type:"audio"});  
+      practice_session.child('musician_audio_connected').set(true);
+    } else {
+      practice_session.child('critiquer_audio_connected').set(true);
     }
     window.audio_stream    = mediaStream;
     $("#my-audio").prop('src', URL.createObjectURL(mediaStream));
@@ -372,7 +375,10 @@ $(document).ready(function(){
     $("#status").html("waiting..");
     $("#my-video").prop('src', URL.createObjectURL(mediaStream));
     if(if_musician){
-       window.recordRTC_Video = RecordRTC(mediaStream,{type:"video"});   
+       window.recordRTC_Video = RecordRTC(mediaStream,{type:"video"});  
+       practice_session.child('musician_video_connected').set(true); 
+    } else {
+       practice_session.child('critiquer_video_connected').set(true);
     }
     window.video_stream    =  mediaStream;
     ready += 1;
