@@ -121,7 +121,7 @@ function login_user(){
               begin_app(); 
            });
            
-           socket = io.connect('http://localhost:3000');
+           socket = io.connect('https://thesoundboard.herokuapp.com');
            
            window.setInterval(function(){
             socket.emit('user_ping', {m:user.id});
@@ -139,7 +139,7 @@ function login_user(){
         });
      }else{
  
-       socket = io.connect('http://thesoundboard.herokuapp.com');    
+       socket = io.connect('https://thesoundboard.herokuapp.com');    
    
        current_user = JSON.parse(window.localStorage["user"]);
    
