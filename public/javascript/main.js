@@ -108,38 +108,39 @@ function login_user(){
       var home = document.location.href;
   		if(home != host+"/login" && home != host+"/register"){
   			document.location.href = host+"/login";
+      }
+       fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
+       auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
+          if (error) {
+            // an error occurred while attempting login
 
-         fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
-         auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
-            if (error) {
-              // an error occurred while attempting login
+          } else if (user) {
+          //user is logged in, init the variables and such
+           fb_instance.child("users").child(user.id).on("value", function(snapshot){
 
-            } else if (user) {
-            //user is logged in, init the variables and such
-             fb_instance.child("users").child(user.id).on("value", function(snapshot){
-                window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
-                current_user = JSON.parse(window.localStorage["user"]);
-                
-                socket = io.connect(location.origin);    
-                socket.emit('user_connect', {m:current_user.id});             
+              window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
+              current_user = JSON.parse(window.localStorage["user"]);
+              
+              socket = io.connect(location.origin);    
+              socket.emit('user_connect', {m:current_user.id});             
 
 
-                begin_app(); 
-             });             
-         
-            }else{
-              //logged out
-            }
-          });
-        }
+              begin_app(); 
+           });             
+       
+          }else{
+            //logged out
+          }
+        });
+          
       }else{
      
-           current_user = JSON.parse(window.localStorage["user"]); 
+         current_user = JSON.parse(window.localStorage["user"]); 
 
-           socket = io.connect(location.origin);    
-           socket.emit('user_connect', {m:current_user.id});
+         socket = io.connect(location.origin);    
+         socket.emit('user_connect', {m:current_user.id});
 
-           begin_app();
+         begin_app();
     }
     
   }
