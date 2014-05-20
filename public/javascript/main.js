@@ -2,6 +2,7 @@ var current_user;
 var fb_instance;
 var online_users;
 var auth;
+var socket;
 
 (function() {
 
