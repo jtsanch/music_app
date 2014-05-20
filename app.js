@@ -91,11 +91,6 @@ var io = require('socket.io').listen(server);
 
 console.log("listening now");
 
-io.configure(function(){
-    io.set("transports",["xhr-polling"]);
-    io.set("polling duration", 10);
-});
-
 var current_users = {};
 
 io.sockets.on('connection',function(socket){
