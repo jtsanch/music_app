@@ -31,6 +31,7 @@ module.exports = function(io){
       io.sockets.emit('user_ping',{m:data});
       window.setInterval(function(){
         io.sockets.emit('user_ping',{m:data});
+        console.log('pinged users');
       }, 30000);
 
     });
@@ -38,6 +39,7 @@ module.exports = function(io){
     //if user doesn't ping in two minutes, it's removed from
     //current users
     socket.on('user_ping', function(data){
+      console.log(data + " just pinged us");s
       current_users[data] = true;
     });
 
