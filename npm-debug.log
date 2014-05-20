@@ -1,64 +1,26 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'NodeDirectUploader' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
 2 info using npm@1.4.3
 3 info using node@v0.10.26
-4 verbose readDependencies using package.json deps
-5 verbose cache add [ 'NodeDirectUploader', null ]
-6 verbose cache add name=undefined spec="NodeDirectUploader" args=["NodeDirectUploader",null]
-7 verbose parsed url { protocol: null,
-7 verbose parsed url   slashes: null,
-7 verbose parsed url   auth: null,
-7 verbose parsed url   host: null,
-7 verbose parsed url   port: null,
-7 verbose parsed url   hostname: null,
-7 verbose parsed url   hash: null,
-7 verbose parsed url   search: null,
-7 verbose parsed url   query: null,
-7 verbose parsed url   pathname: 'NodeDirectUploader',
-7 verbose parsed url   path: 'NodeDirectUploader',
-7 verbose parsed url   href: 'NodeDirectUploader' }
-8 silly lockFile 250b7bdf-NodeDirectUploader NodeDirectUploader
-9 verbose lock NodeDirectUploader /Users/Admin/.npm/250b7bdf-NodeDirectUploader.lock
-10 silly lockFile 250b7bdf-NodeDirectUploader NodeDirectUploader
-11 silly lockFile 250b7bdf-NodeDirectUploader NodeDirectUploader
-12 verbose addNamed [ 'NodeDirectUploader', '' ]
-13 verbose addNamed [ null, '*' ]
-14 silly lockFile 7a3d525a-NodeDirectUploader NodeDirectUploader@
-15 verbose lock NodeDirectUploader@ /Users/Admin/.npm/7a3d525a-NodeDirectUploader.lock
-16 silly addNameRange { name: 'NodeDirectUploader', range: '*', hasData: false }
-17 verbose url raw NodeDirectUploader
-18 verbose url resolving [ 'https://registry.npmjs.org/', './NodeDirectUploader' ]
-19 verbose url resolved https://registry.npmjs.org/NodeDirectUploader
-20 info trying registry request attempt 1 at 05:10:08
-21 http GET https://registry.npmjs.org/NodeDirectUploader
-22 http 404 https://registry.npmjs.org/NodeDirectUploader
-23 silly registry.get cb [ 404,
-23 silly registry.get   { date: 'Tue, 20 May 2014 12:10:06 GMT',
-23 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B)',
-23 silly registry.get     'content-type': 'application/json',
-23 silly registry.get     via: '1.1 varnish',
-23 silly registry.get     'cache-control': 'max-age=0',
-23 silly registry.get     'content-length': '52',
-23 silly registry.get     'accept-ranges': 'bytes',
-23 silly registry.get     age: '0',
-23 silly registry.get     'x-served-by': 'cache-v42-ASH, cache-lax1433-LAX',
-23 silly registry.get     'x-cache': 'MISS, MISS',
-23 silly registry.get     'x-cache-hits': '0, 0',
-23 silly registry.get     'x-timer': 'S1400587806.414997816,VS0,VS34,VE138,VE170',
-23 silly registry.get     'keep-alive': 'timeout=10, max=50',
-23 silly registry.get     connection: 'Keep-Alive' } ]
-24 silly lockFile 7a3d525a-NodeDirectUploader NodeDirectUploader@
-25 silly lockFile 7a3d525a-NodeDirectUploader NodeDirectUploader@
-26 error 404 'NodeDirectUploader' is not in the npm registry.
-26 error 404 You should bug the author to publish it
-26 error 404 It was specified as a dependency of 'application-name'
-26 error 404
-26 error 404 Note that you can also install from a
-26 error 404 tarball, folder, or http url, or git url.
-27 error System Darwin 13.1.0
-28 error command "node" "/usr/local/bin/npm" "install" "NodeDirectUploader"
-29 error cwd /Users/Admin/projects/music_app
-30 error node -v v0.10.26
-31 error npm -v 1.4.3
-32 error code E404
-33 verbose exit [ 1, true ]
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart application-name@0.0.1
+6 info start application-name@0.0.1
+7 verbose unsafe-perm in lifecycle true
+8 info application-name@0.0.1 Failed to exec start script
+9 error application-name@0.0.1 start: `node ./bin/www`
+9 error Exit status 8
+10 error Failed at the application-name@0.0.1 start script.
+10 error This is most likely a problem with the application-name package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     node ./bin/www
+10 error You can get their info via:
+10 error     npm owner ls application-name
+10 error There is likely additional logging output above.
+11 error System Darwin 13.1.0
+12 error command "node" "/usr/local/bin/npm" "start"
+13 error cwd /Users/Admin/projects/music_app
+14 error node -v v0.10.26
+15 error npm -v 1.4.3
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]

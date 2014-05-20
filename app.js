@@ -10,6 +10,10 @@ var users = require('./routes/users');
 var practice = require('./routes/practice_session');
 var Firebase = require('firebase');
 var http = require('http');
+
+var AWS = require('aws-sdk');
+AWS.config.region = 'us-west-2';
+
 var WebSocketServer = require('ws').Server;
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
 var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
@@ -103,14 +107,18 @@ io.sockets.on('connection',function(socket){
     socket.on('user_connect',function(data){
    
       current_users[socket.id] = data.m;
-      fb_instance.child('users').child(data.m).child('online').set(true);
+    
+      if(data.m)
+          fb_instance.child('users').child(data.m).child('online').set(true);
+    
       console.log('user connected ' +data.m);
-
+      
     });
 
     socket.on('disconnect',function(){
         var id = current_users[socket.id];
         console.log(id + " disconnected")
-        fb_instance.child('users').child(id).child('online').set(false); 
+        if(id)
+            fb_instance.child('users').child(id).child('online').set(false); 
     });
 });
