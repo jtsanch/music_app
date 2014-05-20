@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var practice = require('./routes/practice_session');
 var Firebase = require('firebase');
 var http = require('http');
+var WebSocketServer = require('ws').Server;
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
 var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 var about = require('./routes/about');
@@ -87,29 +88,29 @@ var io = require('socket.io').listen(server);
 
 console.log("listening now");
 
+io.configure(function(){
+    io.set("transports",["xhr-polling"]);
+    io.set("polling duration", 10);
+});
+
 var current_users = {};
+
 io.sockets.on('connection',function(socket){
 
     socket.emit('connected',{m:'ok'});
-
+    var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
+    var user_ref;
     socket.on('user_connect',function(data){
+   
+      current_users[socket.id] = data.m;
+      fb_instance.child('users').child(data.m).child('online').set(true);
+      console.log('user connected ' +data.m);
 
-      current_users[socket.id] = data;
-      io.sockets.emit('user_ping',{m:data});
-      console.log('user connected ' +data);
-
-    });
-
-    socket.on('user_ping', function(data){
-      io.sockets.emit('friend_ping', data);
-    });
-
-    //when the user has left the site
-    socket.on('user_disconnect', function(data){
-      delete current_users[data];
     });
 
     socket.on('disconnect',function(){
-      io.sockets.emit('user_disconnect', {m:user})
+        var id = current_users[socket.id];
+        console.log(id + " disconnected")
+        fb_instance.child('users').child(id).child('online').set(false); 
     });
 });
