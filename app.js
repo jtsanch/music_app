@@ -14,7 +14,6 @@ var http = require('http');
 var AWS = require('aws-sdk');
 AWS.config.region = 'us-west-2';
 
-var WebSocketServer = require('ws').Server;
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
 var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 var about = require('./routes/about');
@@ -112,7 +111,7 @@ io.sockets.on('connection',function(socket){
           fb_instance.child('users').child(data.m).child('online').set(true);
     
       console.log('user connected ' +data.m);
-      
+
     });
 
     socket.on('disconnect',function(){
