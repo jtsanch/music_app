@@ -22,30 +22,33 @@ module.exports = function(io){
   var current_users = {};
   io.set('log level', 1);
   io.sockets.on('connection',function(socket){
+
     socket.emit('connected',{m:'ok'});
 
     socket.on('user_connect',function(data){
-      console.log('new user connected: '+ data.user_id);
-      current_users[socket.id] = {
-        user_id:   data.user_id,
-        user_name: data.user_name
-      }
-      io.sockets.emit('on',{m:data.username+' joined the room.',c:'#eee'});
+
+      current_users[socket.id] = data;
+      io.sockets.emit('user_ping',{m:data});
+      window.setInterval(function(){
+        io.sockets.emit('user_ping',{m:data});
+      }, 30000);
+
     });
 
-    socket.on('user_msg',function(data){
-      user = current_users[socket.id];
-      io.sockets.emit('to_all',{m:user.name+': '+data.m,c:user.color});
+    //if user doesn't ping in two minutes, it's removed from
+    //current users
+    socket.on('user_ping', function(data){
+      current_users[data] = true;
     });
 
-    socket.on('user_vid',function(data){
-      user = current_users[socket.id];
-      io.sockets.emit('to_all',{m:user.name+": "+data.m,v:data.v,c:user.color});
+    //when the user has left the site
+    socket.on('user_disconnect', function(data){
+      delete current_users[data];
     });
 
     socket.on('disconnect',function(){
       user = current_users[socket.id];
-      io.sockets.emit('to_all',{m:user.name+' left the room.',c:'#eee'});
+      io.sockets.emit('user_disconnect', {m:user})
     });
   });
 }

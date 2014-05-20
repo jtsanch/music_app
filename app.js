@@ -84,5 +84,6 @@ module.exports = app;
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var chat = require('./routes/chat')(io);
+
 app.listen(3000);
 console.log("listening now");

@@ -117,6 +117,13 @@ function login_user(){
               window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
               current_user = JSON.parse(window.localStorage["user"]);
               begin_app(); 
+              socket = io.connect('http://localhost');
+              socket.on('news', function (data) {
+                console.log(data);
+                socket.emit('my other event', { my: 'data' });
+              });
+
+            socket.emit('user_connect', user.id);
            });
           }else{
             //logged out
