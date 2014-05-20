@@ -2,6 +2,7 @@ var current_user;
 var fb_instance;
 var online_users;
 var auth;
+var socket;
 
 (function() {
 
@@ -20,6 +21,7 @@ $(document).ready(function() {
             // an error occurred while attempting login
 
           } else if (user) {
+
             //logged in
           }else{
               //logout the user
@@ -102,37 +104,56 @@ function login_user(){
 
     if (!window.localStorage["user"]){
 
-		if(document.location.href != "https://thesoundboard.herokuapp.com/login" 
-			&& document.location.href != "https://thesoundboard.herokuapp.com/register")
-			document.location.href = "https://thesoundboard.herokuapp.com/login";
+      var host = document.location.origin;
+      var home = document.location.href;
+  		if(home != host+"/login" && home != host+"/register"){
+  			document.location.href = host+"/login";
 
-       fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
-       auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
-          if (error) {
-            // an error occurred while attempting login
+         fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com/");
+         auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
+            if (error) {
+              // an error occurred while attempting login
 
-          } else if (user) {
-          //user is logged in, init the variables and such
-           fb_instance.child("users").child(user.id).on("value", function(snapshot){
-              window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
-              current_user = JSON.parse(window.localStorage["user"]);
-              begin_app(); 
-           });
-          }else{
-            //logged out
-          }
-        });
-     }else{
-      current_user = JSON.parse(window.localStorage["user"]);
-      begin_app();
-     } 
+            } else if (user) {
+            //user is logged in, init the variables and such
+             fb_instance.child("users").child(user.id).on("value", function(snapshot){
+                window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
+                current_user = JSON.parse(window.localStorage["user"]);
+                
+                socket = io.connect(location.origin);    
+                socket.emit('user_connect', {m:current_user.id});             
 
+
+                begin_app(); 
+             });             
+         
+            }else{
+              //logged out
+            }
+          });
+        }
+      }else{
+     
+           current_user = JSON.parse(window.localStorage["user"]); 
+
+           socket = io.connect(location.origin);    
+           socket.emit('user_connect', {m:current_user.id});
+
+           begin_app();
     }
+    
+  }
 
 function begin_app(){
    $("#username").text(current_user.name); 
    $("#logging_in").hide();
    $(".container").show();
+
+   fb_instance.child('online_users').on('value', function(snapshot){
+    if(snapshot){
+      console.log(snapshot.val());
+    }
+   });
 }
 
 })();

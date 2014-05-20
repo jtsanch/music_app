@@ -19,33 +19,4 @@ io.sockets.in('game').emit('message', 'cool game');
 io.sockets.socket(socketid).emit('message', 'for your eyes only');
 */
 module.exports = function(io){
-  var current_users = {};
-  io.set('log level', 1);
-  io.sockets.on('connection',function(socket){
-    socket.emit('connected',{m:'ok'});
-
-    socket.on('user_connect',function(data){
-      console.log('new user connected: '+ data.user_id);
-      current_users[socket.id] = {
-        user_id:   data.user_id,
-        user_name: data.user_name
-      }
-      io.sockets.emit('on',{m:data.username+' joined the room.',c:'#eee'});
-    });
-
-    socket.on('user_msg',function(data){
-      user = current_users[socket.id];
-      io.sockets.emit('to_all',{m:user.name+': '+data.m,c:user.color});
-    });
-
-    socket.on('user_vid',function(data){
-      user = current_users[socket.id];
-      io.sockets.emit('to_all',{m:user.name+": "+data.m,v:data.v,c:user.color});
-    });
-
-    socket.on('disconnect',function(){
-      user = current_users[socket.id];
-      io.sockets.emit('to_all',{m:user.name+' left the room.',c:'#eee'});
-    });
-  });
 }
