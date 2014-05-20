@@ -14,6 +14,7 @@ var http = require('http');
 var AWS = require('aws-sdk');
 AWS.config.region = 'us-west-2';
 
+
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
 var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
 var about = require('./routes/about');
@@ -88,6 +89,9 @@ module.exports = app;
 var server = http.createServer(app).listen(3000);
 
 var io = require('socket.io').listen(server);
+
+io.set("transports", ["xhr-polling"]);
+io.set("polling duration", 10);
 
 console.log("listening now");
 
