@@ -61,8 +61,7 @@ $(document).ready(function(){
           $('#practice-container').hide();
           $('#playback-container').show();
           begin_critique_session();
-        }
-        
+        }  
       });
 
       var peers_logged_in = 0;
@@ -333,6 +332,10 @@ $(document).ready(function(){
         $("#active_critique").html(critiques[time]);
       }
     },500);
+
+    $(".indivCritiques").on("click", function(){
+      
+    }); 
 
   }
 
