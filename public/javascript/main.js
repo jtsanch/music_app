@@ -121,7 +121,7 @@ function login_user(){
               window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
               current_user = JSON.parse(window.localStorage["user"]);
               
-              socket = io.connect();    
+              socket = io.connect(window.location.hostname);    
               socket.emit('user_connect', {m:current_user.id});             
 
 
@@ -137,7 +137,7 @@ function login_user(){
      
          current_user = JSON.parse(window.localStorage["user"]); 
 
-         socket = io.connect();    
+         socket = io.connect(window.location.hostname);    
          socket.emit('user_connect', {m:current_user.id});
 
          begin_app();
