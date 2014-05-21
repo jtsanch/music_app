@@ -18,6 +18,10 @@ $(document).ready(function(){
   var endTime = null;
   var frames = [];
 
+  //instance vars
+  var critiqueBarLen = 600;
+  var halfWidthCritique = 5;
+
   //start the conversation link after streams have been allowed
   function start_conversation(){
 
@@ -59,7 +63,6 @@ $(document).ready(function(){
           stop_recording();
           $("#start_session").hide();
           $('#practice-container').hide();
-          $('#playback-container').show();
           begin_critique_session();
         }  
       });
@@ -135,9 +138,7 @@ $(document).ready(function(){
             add_critique_item(sent_at, text, "negative");
           });
 
-          $("#waiting_button-panel").hide();
-          $("#waiting_critique").hide();
-
+          $("#critique-panel").show();
           start_recording();
         }
       });
@@ -145,8 +146,7 @@ $(document).ready(function(){
       practice_session.child('practice_end').on('value', function(snapshot){
         //button has been pressed
         if(snapshot.val()){
-          $("#button-panel").hide();
-          $('#critique_text').hide();
+          $("#critique-panel").hide();
           stop_recording();
           begin_critique_session();
         }
@@ -248,16 +248,15 @@ $(document).ready(function(){
   }
 
   function show_critique_items(){
-    $( ".top-video" ).css({
-      "top": "320px",
-      "left": "420px",
-      "width": "300px"
+    $("#their-video").css({
+      "right": "20px",
+      "width": "200px",
+      "position": "absolute",
+      "top": "50px",
+      "height": "initial",
+      "left": "initial"
     });
-    $( ".bottom-video" ).css({
-      "width": "300px",
-      "top": "320px",
-      "left": "80px"
-    });
+  
     $("#critique_video").show();
     $("#critiques").show();
   }
@@ -309,28 +308,29 @@ $(document).ready(function(){
       });
 
     }
-
-    render_critique();
+    var total_len = $("#critique_video").duration;
+    render_critique(total_len);
   }
 
   //renders the critique
-  function render_critique(){
+  function render_critique(total_len){
+
     //create dictionary of [sent time of critique] -> text of critique
     var critiques = [];
     practice_session.child('critiques').on('value', function(snapshot){
       if(snapshot.val()){
-        console.log("making the critiques. here are the time stamps");
         for(var critique_key in snapshot.val()){
 
           var critique = snapshot.val()[critique_key];
           
           critiques[critique.sent] = critique.text;
-          console.log(critique.sent);
+
           //might need to cancel this and make it for both
           if(if_musician)
-            add_critique_item(critique.sent, critique.text, critique.type, true);
-
+            add_critique_item(critique.sent, total_len, critique.text, critique.type, true);
         }
+
+
       }
     });
 
@@ -347,26 +347,25 @@ $(document).ready(function(){
       }
     },500);
 
-
-    $(".indivCritiques").on("click", function(){
-      
-    }); 
-
   }
 
   //render the critique item in the list
-  function add_critique_item(sent_at, text, type, rendering){
+  function add_critique_item(sent_at, total_len, text, type, rendering){
 //sent_at is in seconds
-    var mins = Math.floor(sent_at/60);
-    var seconds = sent_at%60;
-    if(seconds<10)
-      seconds = "0"+seconds;
-    var timestamp = mins + ":" + seconds;
+    var pixPerSec = critiqueBarLen/total_len;
 
-    $("#critiques").append("<div class='indivCritiques "+type+"' value='"+sent_at+"'>"+
-      "<span class='timestamp'>"+timestamp+": </span>"+
-      text +"</div>");
+    var displacePix = (sent_at*pixPerSec)-halfWidthCritique;
+    // var mins = Math.floor(sent_at/60);
+    // var seconds = sent_at%60;
+    // if(seconds<10)
+    //   seconds = "0"+seconds;
+    // var timestamp = mins + ":" + seconds;
 
+    var newCritique = $("#critiques").append("<div class='indivCritiques "+type+"' value='"+sent_at+"'></div>");
+    newCritique.css({
+      "left": displacePix
+    });
+    
     //add to DB
     if(!rendering)
       practice_session.child('critiques').push({sent:sent_at, text:text, type:type});
