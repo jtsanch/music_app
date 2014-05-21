@@ -18,6 +18,9 @@ $(document).ready(function(){
   var endTime = null;
   var frames = [];
 
+  //hide navbar for chatroom
+  $(".navbar").hide();
+
   //start the conversation link after streams have been allowed
   function start_conversation(){
 

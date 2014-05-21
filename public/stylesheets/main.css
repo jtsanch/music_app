@@ -1,6 +1,9 @@
 .video-container {
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  left: 50%;
+  margin-left: -240px;
+  top: 10px;
+
 }
 #webcam_stream_topright {
   padding: 0;

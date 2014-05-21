@@ -184,7 +184,7 @@ a {
 	border-radius: 4px
 }
 
-.top-video {
+/*.top-video {
 	position: absolute;
 	top: 50px;
 	left: 420px;
@@ -196,13 +196,30 @@ a {
 	top: 50px;
 	left: 0px;
 	width: 400px;
+}*/
+
+.outer-video {
+	position: absolute;
+	top: 20px;
+	width: 480px;
+	margin-left: auto;
+ 	margin-right: auto;
+ 	display: table;
+}
+
+.inner-video {
+	position: absolute;
+	top: 20px;
+	left: 0px;
+	width: 160px;
+	z-index: 2;
 }
 
 #critique_video {
 	position: absolute;
-top: 0px;
-left: 200px;
-width: 400px;
+	top: 0px;
+	left: 200px;
+	width: 400px;
 }
 
 #active_critique{
@@ -214,5 +231,14 @@ width: 400px;
 	width: 400px;
 }
 
+#exit {
+	float: right;
+}
 
+.memo {
+	width: 300px;
+}
 
+p.memo {
+	font-size: 30px;
+}
