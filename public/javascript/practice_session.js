@@ -18,6 +18,10 @@ $(document).ready(function(){
   var endTime = null;
   var frames = [];
 
+  //instance vars
+  var critiqueBarLen = 600;
+  var halfWidthCritique = 5;
+
   //start the conversation link after streams have been allowed
   function start_conversation(){
 
@@ -59,10 +63,8 @@ $(document).ready(function(){
           stop_recording();
           $("#start_session").hide();
           $('#practice-container').hide();
-          $('#playback-container').show();
           begin_critique_session();
-        }
-        
+        }  
       });
 
       var peers_logged_in = 0;
@@ -114,10 +116,9 @@ $(document).ready(function(){
             if ( e.which == 13 && !e.ctrlKey){
               var now = new Date().getTime();
               var text = $(this).val();
-              var offset_time = Math.floor((now - time_start) / 1000)
+              var sent_at = Math.floor((now-time_start)/1000);
               $(this).val("");
-              add_critique(now, text, "neutral");
-              add_critique_item(now, text, "neutral", offset_time);
+              add_critique_item(sent_at, text, "neutral");
             }
           });
 
@@ -125,23 +126,19 @@ $(document).ready(function(){
             var now = new Date().getTime();
             var topic = $(this).val();
             var text = "Good "+topic+"!";
-            var offset_time = Math.floor((now - time_start) / 1000)
-            add_critique(now, text, "positive");
-            add_critique_item(now, text, "positive", offset_time);
+            var sent_at = Math.floor((now-time_start)/1000);
+            add_critique_item(sent_at, text, "positive");
           });
 
           $(".down").on("click",function(){
             var now = new Date().getTime();
             var topic = $(this).val();
             var text = "Work on "+topic;
-            var offset_time = Math.floor((now - time_start) / 1000)
-            add_critique(now, text, "negative");
-            add_critique_item(now, text, "negative", offset_time);
+            var sent_at = Math.floor((now-time_start)/1000);
+            add_critique_item(sent_at, text, "negative");
           });
 
-          $("#waiting_button-panel").hide();
-          $("#waiting_critique").hide();
-
+          $("#critique-panel").show();
           start_recording();
         }
       });
@@ -149,8 +146,7 @@ $(document).ready(function(){
       practice_session.child('practice_end').on('value', function(snapshot){
         //button has been pressed
         if(snapshot.val()){
-          $("#button-panel").hide();
-          $('#critique_text').hide();
+          $("#critique-panel").hide();
           stop_recording();
           begin_critique_session();
         }
@@ -252,16 +248,15 @@ $(document).ready(function(){
   }
 
   function show_critique_items(){
-    $( ".top-video" ).css({
-      "top": "320px",
-      "left": "420px",
-      "width": "300px"
+    $("#their-video").css({
+      "right": "20px",
+      "width": "200px",
+      "position": "absolute",
+      "top": "50px",
+      "height": "initial",
+      "left": "initial"
     });
-    $( ".bottom-video" ).css({
-      "width": "300px",
-      "top": "320px",
-      "left": "80px"
-    });
+  
     $("#critique_video").show();
     $("#critiques").show();
   }
@@ -275,28 +270,8 @@ $(document).ready(function(){
 
     if(if_musician){
 
-      $("#critique_video").on('timeupdate', function(){
-
-        critique_audio.currentTime = critique_video.currentTime;
-        practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
-
-        if(critique_video.paused){
-          critique_audio.pause();
-        } else {
-          critique_audio.play();
-        }
-      });
-
-      $("#critique_video").on('pause', function(){
-        practice_session.child('critique_video_paused').set(true);
-        critique_audio.pause();
-      });
-
-    } else {
-
-        critique_video.addEventListener('loadedmetadata', function() {
-          
-          //Only the musician can control the video      
+      // musician's video will move based on what the critiquer did
+      critique_video.addEventListener('loadedmetadata', function() {   
           practice_session.child('critique_video_time').on('value', function(snapshot){
             
             if(snapshot.val()){    
@@ -314,13 +289,32 @@ $(document).ready(function(){
           });
          }, false);
 
-    }
+    } else {
+      $("#critique_video").on('timeupdate', function(){
 
-    render_critique();
+        critique_audio.currentTime = critique_video.currentTime;
+        practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
+
+        if(critique_video.paused){
+          critique_audio.pause();
+        } else {
+          critique_audio.play();
+        }
+      });
+
+      $("#critique_video").on('pause', function(){
+        practice_session.child('critique_video_paused').set(true);
+        critique_audio.pause();
+      });
+
+    }
+    var total_len = $("#critique_video").duration;
+    render_critique(total_len);
   }
 
   //renders the critique
-  function render_critique(){
+  function render_critique(total_len){
+
     //create dictionary of [sent time of critique] -> text of critique
     var critiques = [];
     practice_session.child('critiques').on('value', function(snapshot){
@@ -328,15 +322,18 @@ $(document).ready(function(){
         for(var critique_key in snapshot.val()){
 
           var critique = snapshot.val()[critique_key];
-          var offset_time = Math.floor((critique.sent - time_start) / 1000);
           
-          critiques[offset_time] = critique.text;
-          if(if_musician)
-            add_critique_item(critique.sent, critique.text, critique.type, offset_time);
+          critiques[critique.sent] = critique.text;
 
+          //might need to cancel this and make it for both
+          if(if_musician)
+            add_critique_item(critique.sent, total_len, critique.text, critique.type, true);
         }
+
+
       }
     });
+
 
     setInterval( function(){
       var time = Math.round($("#critique_video").prop('currentTime'));
@@ -353,17 +350,25 @@ $(document).ready(function(){
   }
 
   //render the critique item in the list
-  function add_critique_item( sent_at, text, type, sent_id){
-    var date = new Date(sent_at);
-    var time_to_show = date.getHours() + ":" + date.getMinutes();
+  function add_critique_item(sent_at, total_len, text, type, rendering){
+//sent_at is in seconds
+    var pixPerSec = critiqueBarLen/total_len;
 
-    $("#critiques").append("<div class='indivCritiques "+type+"' id='critique_at_"+sent_id+"'>"+
-      "<span class='timestamp'>"+time_to_show+": </span>"+
-      text +"</div>");
-  }
-  
-  function add_critique(sent_at, text, type){
-    practice_session.child('critiques').push({sent:sent_at, text:text, type:type});
+    var displacePix = (sent_at*pixPerSec)-halfWidthCritique;
+    // var mins = Math.floor(sent_at/60);
+    // var seconds = sent_at%60;
+    // if(seconds<10)
+    //   seconds = "0"+seconds;
+    // var timestamp = mins + ":" + seconds;
+
+    var newCritique = $("#critiques").append("<div class='indivCritiques "+type+"' value='"+sent_at+"'></div>");
+    newCritique.css({
+      "left": displacePix
+    });
+    
+    //add to DB
+    if(!rendering)
+      practice_session.child('critiques').push({sent:sent_at, text:text, type:type});
   }
 
   var ready = 0;  
