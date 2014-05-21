@@ -121,9 +121,10 @@ function login_user(){
               window.localStorage.setItem("user", JSON.stringify(snapshot.val()));
               current_user = JSON.parse(window.localStorage["user"]);
               
-              socket = io.connect('/');    
-              socket.emit('user_connect', {m:current_user.id});             
+              var host = location.origin.replace(/^http/, 'ws')
+              var ws = new WebSocket(host);
 
+              ws.send(JSON.stringify({func:'user_connect',user_id:user.id}));
 
               begin_app(); 
            });             
@@ -133,14 +134,16 @@ function login_user(){
           }
         });
 
-      }else{
+      } else {
      
-         current_user = JSON.parse(window.localStorage["user"]); 
+        current_user = JSON.parse(window.localStorage["user"]); 
 
-         socket = io.connect('/');    
-         socket.emit('user_connect', {m:current_user.id});
-
-         begin_app();
+        var host = location.origin.replace(/^http/, 'ws')
+        var ws = new WebSocket(host);
+        ws.onopen = function(){
+         ws.send(JSON.stringify({func:'user_connect',user_id:current_user.id})); 
+        };
+        begin_app();
     }
     
   }

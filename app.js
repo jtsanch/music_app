@@ -1,18 +1,19 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var exphbs  = require('express3-handlebars');
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var practice = require('./routes/practice_session');
-var Firebase = require('firebase');
-var http = require('http');
-
-var AWS = require('aws-sdk');
-AWS.config.region = 'us-west-2';
+var express         = require('express');
+var path            = require('path');
+var favicon         = require('static-favicon');
+var logger          = require('morgan');
+var cookieParser    = require('cookie-parser');
+var bodyParser      = require('body-parser');
+var exphbs          = require('express3-handlebars');
+var routes          = require('./routes/index');
+var users           = require('./routes/users');
+var practice        = require('./routes/practice_session');
+var Firebase        = require('firebase');
+var http            = require('http');
+var WebSocket       = require('ws');
+var WebSocketServer = WebSocket.Server;
+var AWS             = require('aws-sdk');
+AWS.config.region   = 'us-west-2';
 
 
 //var FirebaseSimpleLogin = require('./bower_components/firebase-simple-login');
@@ -88,12 +89,39 @@ module.exports = app;
 
 var server = http.createServer(app).listen(3000);
 
-var io = require('socket.io').listen(server);
+//var io = require('socket.io').listen(server);
 
 console.log("listening now");
 
 var current_users = {};
+var wss = new WebSocketServer({server: server});
+console.log('websocket server created');
+var count = 0;
+wss.on('connection', function(ws) {
+    var id = count;
+    count = count + 1;
+    ws.on('message', function(data){
+        data = JSON.parse(data);
+        console.log(data.func);
+        switch(data['func']){
+            case 'user_connect':
+                if(data['user_id']){
+                    fb_instance.child('users').child(data['user_id']).child('online').set(true);
+                    current_users[id] = data['user_id'];
+                    console.log('user ' + data['user_id'] + ' connected '); 
+                }
+                break;
+        }
+    });
 
+    ws.on('close', function() {
+        console.log('user ' + current_users[id] + " disconnected.");
+        fb_instance.child('users').child(current_users[id]).child('online').set(false);
+        delete current_users[id];
+    });
+});
+
+/*
 io.sockets.on('connection',function(socket){
 
     socket.emit('connected',{m:'ok'});
@@ -116,4 +144,4 @@ io.sockets.on('connection',function(socket){
         if(id)
             fb_instance.child('users').child(id).child('online').set(false); 
     });
-});
+});*/
