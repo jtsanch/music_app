@@ -138,7 +138,7 @@ function login_user(){
      
         current_user = JSON.parse(window.localStorage["user"]); 
 
-        var host = location.origin.replace(/^http/, 'wss')
+        var host = location.origin.replace(/^http/, 'wss');
         var ws = new WebSocket(host);
         ws.onopen = function(){
          ws.send(JSON.stringify({func:'user_connect',user_id:current_user.id})); 
