@@ -89,10 +89,6 @@ module.exports = app;
 var server = http.createServer(app).listen(3000);
 
 var io = require('socket.io').listen(server);
-io.configure(function(){
-    io.set("transports", ["xhr-polling"]);
-    io.set("polling duration", 10);
-});
 
 console.log("listening now");
 
