@@ -184,19 +184,12 @@ a {
 	border-radius: 4px
 }
 
-/*.top-video {
-	position: absolute;
-	top: 50px;
-	left: 420px;
-	width: 400px;
+.video-container {
+  position: absolute;
+  left: 50%;
+  margin-left: -240px;
+  top: 10px;
 }
-
-.bottom-video {
-	position: absolute;
-	top: 50px;
-	left: 0px;
-	width: 400px;
-}*/
 
 .outer-video {
 	position: absolute;
