@@ -367,6 +367,7 @@ div#comment-panel p {
 	border: none;
 	outline: none;
 	width: 160px;
+	z-index: 10;
 }
 
 .btn-group .btn-group-justified {
@@ -406,8 +407,10 @@ div#comment-panel p {
 	text-align:center;
 	left:0;
 	margin-left:auto;
-	margin-right:auto;
+	/*margin-right:auto;*/
 	top:350px;
+	z-index: 10;
+	height: 20%;
 }
 
 #text-entry textarea {
@@ -477,7 +480,7 @@ div#comment-panel p {
 	position: absolute;
 	width: 12%;
 	height: 9%;
-	margin-left: 52%;
+	margin-left: 70%;
 	margin-top: 26%;
 }
 
