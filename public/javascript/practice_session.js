@@ -59,6 +59,7 @@ $(document).ready(function(){
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").val("End Session");
           $('#practice-container').show();
+          $("#waiting_comment-panel").hide();
           start_recording();
           time_start = new Date().getTime();
         } else {
@@ -109,39 +110,145 @@ $(document).ready(function(){
   //init critique items
   function initialize_critiquer(video_peer, audio_peer){
 
+      //complimenting
+      $("#compliment-text").click(function() {
+          console.log("compliment clicked");
+
+          $("#compliment").animate({
+            height: "200%"
+          })
+
+          $("#compliment-text").hide();
+          $("#compliment-expanded").show();
+          console.log("set bool to 1");
+      });
+
+      $("#compliment-button.submit").click(function() {
+        console.log("compliment submitted");
+        //if textarea has text - submit comment to database + add to timeline
+        $("#compliment").animate({
+          height: "100%"
+        })
+        $(':input[id="compliment-textbox"]').val(null);
+        $("#compliment-expanded").hide();
+        $("#compliment-text").show();
+
+      });
+
+      $("#compliment-button.cancel").click(function() {
+        console.log("compliment cancelled");
+        $("#compliment").animate({
+          height: "100%"
+        })
+        $(':input[id="compliment-textbox"]').val(null);
+        $("#compliment-expanded").hide();
+        $("#compliment-text").show();
+      });
+
+      //commenting
+      $("#comment-text").click(function() {
+          console.log("comment clicked");
+
+          $("#comment").animate({
+            height: "200%"
+          })
+          $("#comment-text").hide();
+          console.log("comment text found: " + $("#comment-text").length);
+          console.log("comment expanded found: " + $("#comment-expanded").length);
+          $("#comment-expanded").show();
+          console.log("expanded comment");
+      });
+
+      $("#comment-button.submit").click(function() {
+        console.log("comment submitted");
+        //if textarea has text - submit to database + add to timeline
+        $("#comment").animate({
+          height: "100%"
+        })
+        $(':input[id="comment-textbox"]').val(null);
+        $("#comment-expanded").hide();
+        $("#comment-text").show();
+
+      });
+
+      $("#comment-button.cancel").click(function() {
+        console.log("comment cancelled");
+        $("#comment").animate({
+          height: "100%"
+        })
+        $(':input[id="comment-textbox"]').val(null);
+        $("#comment-expanded").hide();
+        $("#comment-text").show();
+      });
+
+      //suggestion
+      $("#suggestion-text").click(function() {
+          console.log("suggestion clicked");
+
+          $("#suggestion").animate({
+            height: "200%"
+          })
+
+          $("#suggestion-text").hide();
+          $("#suggestion-expanded").show();
+      });
+
+      $("#suggestion-button.submit").click(function() {
+        console.log("suggestion submitted");
+        //if textarea has text - submit to database + add to timeline
+        $("#suggestion").animate({
+          height: "100%"
+        })
+        $(':input[id="suggestion-textbox"]').val(null);
+        $("#suggestion-expanded").hide();
+        $("#suggestion-text").show();
+
+      });
+
+      $("#suggestion-button.cancel").click(function() {
+        console.log("suggestion cancelled");
+        $("#suggestion").animate({
+          height: "100%"
+        })
+        $(':input[id="suggestion-textbox"]').val(null);
+        $("#suggestion-expanded").hide();
+        $("#suggestion-text").show();
+      });
+
       practice_session.child('practice_start').on('value', function(snapshot){
         if(snapshot.val()){
           
           time_start = new Date().getTime();
         
-          $("#critique_text").keydown(function(e){
-            e = e || event;
-            if ( e.which == 13 && !e.ctrlKey){
-              var now = new Date().getTime();
-              var text = $(this).val();
-              var sent_at = Math.floor((now-time_start)/1000);
-              $(this).val("");
-              add_critique_item(sent_at, text, "neutral");
-            }
-          });
+          // $("#critique_text").keydown(function(e){
+          //   e = e || event;
+          //   if ( e.which == 13 && !e.ctrlKey){
+          //     var now = new Date().getTime();
+          //     var text = $(this).val();
+          //     var sent_at = Math.floor((now-time_start)/1000);
+          //     $(this).val("");
+          //     add_critique_item(sent_at, text, "neutral");
+          //   }
+          // });
 
-          $(".up").on("click",function(){
-            var now = new Date().getTime();
-            var topic = $(this).val();
-            var text = "Good "+topic+"!";
-            var sent_at = Math.floor((now-time_start)/1000);
-            add_critique_item(sent_at, text, "positive");
-          });
+          // $(".up").on("click",function(){
+          //   var now = new Date().getTime();
+          //   var topic = $(this).val();
+          //   var text = "Good "+topic+"!";
+          //   var sent_at = Math.floor((now-time_start)/1000);
+          //   add_critique_item(sent_at, text, "positive");
+          // });
 
-          $(".down").on("click",function(){
-            var now = new Date().getTime();
-            var topic = $(this).val();
-            var text = "Work on "+topic;
-            var sent_at = Math.floor((now-time_start)/1000);
-            add_critique_item(sent_at, text, "negative");
-          });
+          // $(".down").on("click",function(){
+          //   var now = new Date().getTime();
+          //   var topic = $(this).val();
+          //   var text = "Work on "+topic;
+          //   var sent_at = Math.floor((now-time_start)/1000);
+          //   add_critique_item(sent_at, text, "negative");
+          // });
 
           $("#critique-panel").show();
+          $("#waiting_comment-panel").fadeOut();
           start_recording();
         }
       });
