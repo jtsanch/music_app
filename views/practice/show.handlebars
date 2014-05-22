@@ -32,12 +32,19 @@
 	<div id="waiting_response">
 		<div id="waiting_text">Waiting for the critiquer...</div>
 	</div>
-	
+
 	<div class="memo">
 		<p>Click "Record" to begin recording your practice. Unclick the record button when you're finished.</p>
 	</div>
+
+	<div id="#practice_container" hidden>
+        <div id="practice_text">Currently practicing! Click End Session to end.</div>
+    </div>
+
 	<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
-	<div class='right_bar' id='critiques' hidden></div>
+    <div id="critiques_wrapper">
+	   <div id='critiques' hidden></div>
+    </div>
 
 {{else}}
 	<div class="memo">
@@ -46,6 +53,7 @@
 	<!-- <div id="waiting_button-panel">
 		Waiting for the performer to start practicing....
 	</div>
+<<<<<<< HEAD
     <div id="button-panel">
         <h3>Rate the performers while they play!</h3>
         <h5>Green = good, Red = could use more work</h5>
@@ -70,5 +78,16 @@
     <!-- <div id='waiting_critique'></div>
 	<div id='critiques'></div>
 	<input id="critique_text" type="text" placeholder="say something.."> -->
+
+    <!-- <div id="critique-panel">
+        
+
+    </div>
+
+    <div id="critiques_wrapper">
+	   <div id='critiques'>   
+       </div>
+    </div> -->
+
 
 {{/if}}
