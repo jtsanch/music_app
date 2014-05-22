@@ -245,6 +245,7 @@ $(document).ready(function(){
         
           $("#critique-panel").show();
           $("#waiting_comment-panel").fadeOut();
+          $("#recording").show();
 
 
           // $("#comment-textbox").keydown(function(e){
@@ -343,10 +344,13 @@ $(document).ready(function(){
             //check which is active
             var type ="";
             if ($("#option1").hasClass('active')) {
+              console.log("1 active");
               type = 'comp';
             } else if ($("#option2").hasClass('active')) {
+              console.log("2 active");
               type = "comment";
             } else {
+              console.log("3 active");
               type = 'suggest';
             }
 
@@ -376,6 +380,7 @@ $(document).ready(function(){
         //button has been pressed
         if(snapshot.val()){
           $("#critique-panel").hide();
+          $("#recording").fadeOut();
           stop_recording();
           begin_critique_session();
         }
@@ -544,6 +549,7 @@ $(document).ready(function(){
   function begin_critique_session(){
     $('#text-entry').fadeOut();
     $('#settings').show();
+    $('#full-comments').show();
     $(".memo").hide();
     show_critique_items();
     var critique_audio = document.getElementById('critique_audio');

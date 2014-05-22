@@ -16,17 +16,46 @@
 		    <video class="outer-video" id="their-video" autoplay></video>
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
+
+		<!-- blinking record -->
+		<div id="recording" hidden>
+			<p>RECORDING</p>
+		</div>
 	{{else}}
 		<div class="psure-u-2-3 video-container">
 		    <video class="inner-video" id="my-video" autoplay></video>
 		    <video class="outer-video" id="their-video" autoplay></video>
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
+
+		<!-- blinking record -->
+		<div id="recording" hidden>
+			<p>RECORDING</p>
+		</div>
 	{{/if}}
+
 </div>
 
 <div id="settings" hidden>
-	Choose your playback settings:
+		<p>Choose your playback settings:</p>
+		<div class="switch">
+			<!-- <input type="checkbox" name="my-checkbox" checked> -->
+			<p>Who is controlling the playback:</p>
+			<div class="control btn-group btn-toggle"> 
+			    <button class="btn btn-default">Them</button>
+			    <button class="btn btn-primary active">Me</button>
+		  	</div>
+		  	<p>Allow for critiquers audio:</p>
+			<div class="btn-group btn-toggle"> 
+			    <button class="btn btn-default">Off</button>
+			    <button class="btn btn-primary active">On</button>
+		  	</div>
+		</div>
+</div>
+
+<!-- where full comment is displayed/read in playback -->
+<div id="full-comments" hidden>
+	<p>Read comment here</p>
 </div>
 
 {{#if if_musician}}
@@ -35,7 +64,7 @@
 	</div>
 
 	<div class="memo">
-		<p>Click "Record" to begin recording your practice. Unclick the record button when you're finished.</p>
+		<p>Click "Start Session" to begin recording your practice. Unclick the record button when you're finished.</p>
 	</div>
 
 	<div id="#practice_container" hidden>
@@ -117,7 +146,7 @@
 
     <div id="text-entry">
     	<textarea rows="4" cols="50" id="textbox" type="text" placeholder"type here..."></textarea>
-    	<div id="radios">
+    	<!-- <div id="radios">
     		<p>Choose a color tag:</p>
     		<div id="buttons">
 				<div id="options" class="btn-group btn-group-justified" data-toggle="buttons-radio">
@@ -129,34 +158,33 @@
 
 				<button type="button" id="suggestion-button" class="cancel btn btn-default">cancel</button>
 			</div>
-		</div>
+		</div> -->
 
+		<!-- form radio buttons example -->
+		  <form id="radios" class="form">
+		  	  <p>Choose a comment tag:</p>
+			  <div id="buttons" class="btn-group btn-toggle" data-toggle="buttons">
+				    <label id ="option1" class="btn btn-success active">
+					      <input type="radio" name="options" value="option1" checked=""> +
+				    </label>
+				    <label id ="option2" class="btn btn-info">
+					      <input type="radio" name="options" value="option2"> neutral
+				    </label>
+				    <label id ="option3" class="btn btn-danger">
+					      <input type="radio" name="options" value="option3" checked=""> -
+				    </label>
+			  </div>
+			  <div id="entry">
+				  <button class="submit btn btn-default">Submit comment</button>
+				  <button class="cancel btn btn-default">Cancel</button>
+			  </div>
+		  </form>  
+  
     </div>
-
-    <!-- <textarea rows="4" cols="50" id="comment-textbox" type="text" placeholder="comment"></textarea>
-    <input id="compliment-textbox" type="text" placeholder="compliment"><br/>
-    <input id="suggestion-textbox" type="text" placeholder="suggest"> -->
 
     <div id="critiques_wrapper">
        <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
     </div>
-
-    <div id="settings" hidden>
-		<p>Choose your playback settings:</p>
-		<div class="switch">
-			<!-- <input type="checkbox" name="my-checkbox" checked> -->
-			<p>Who is controlling the playback:</p>
-			<div class="control btn-group btn-toggle"> 
-			    <button class="btn btn-lg btn-default">Them</button>
-			    <button class="btn btn-lg btn-primary active">Me</button>
-		  	</div>
-		  	<p>Allow for critiquers audio:</p>
-			<div class="btn-group btn-toggle"> 
-			    <button class="btn btn-lg btn-default">Off</button>
-			    <button class="btn btn-lg btn-primary active">On</button>
-		  	</div>
-		</div>
-	</div>
 
 {{/if}}
 
