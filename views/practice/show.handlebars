@@ -7,7 +7,7 @@
 
 <!-- <a id="exit" class="btn btn-default" href="/home">Exit to homepage</a> -->
 
-<video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
+<video id='critique_video' hidden {{#if if_musician}}{{else}}controls{{/if}}></video>
 <div id='active_critique'></div>
 <audio id='critique_audio' hidden></audio>
 
@@ -53,7 +53,10 @@
 		<p>Practice will begin when musician has started recording.</p>
 	</div>
 
-    <input id="critique_text" type="text" placeholder="say something..">
+    <input id="comment-textbox" type="text" placeholder="comment"><br/>
+    <input id="compliment-textbox" type="text" placeholder="compliment"><br/>
+    <input id="suggestion-textbox" type="text" placeholder="suggest">
+
 
     <div id="critiques_wrapper">
        <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>

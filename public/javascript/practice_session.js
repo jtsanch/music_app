@@ -26,16 +26,19 @@ $(document).ready(function(){
   var halfWidthCritique = 5;
   var critiqueItems = [];
   var time_start;
+  var recordDuration;
   var currently_recording = false;
   var timeline;
+  var critique_start;
+  var zeroTime = new Date(2014,1,1,0,0,0);
 
   //make the timeline
   function makeTimeline(){
     var container = document.getElementById('critiques');
     var options = {
-      end: 5000,
-      start: 0,
-      min: 0,
+      end: zeroTime.getTime()+5000,
+      start: zeroTime,
+      min: zeroTime,
       height: '150px',
       showMajorLabels: false,
       zoomMax: 36000000,
@@ -81,7 +84,6 @@ $(document).ready(function(){
           $("#start_session").val("End Session");
           $('#practice-container').show();
           start_recording();
-          time_start = new Date().getTime();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           stop_recording();
@@ -127,22 +129,20 @@ $(document).ready(function(){
         });
       });
   }
+
   //init critique items
   function initialize_critiquer(video_peer, audio_peer){
 
       practice_session.child('practice_start').on('value', function(snapshot){
         if(snapshot.val()){
-          
-          time_start = new Date().getTime();
-          var critique_start;
-          $("#critique_text").keydown(function(e){
+          $("#comment-textbox").keydown(function(e){
             e = e || event;
-
             if ( e.which == 13 && !e.ctrlKey){ //enter
-              var ending = new Date().getTime();
               var text = $(this).val();
+              var ending = new Date().getTime();
               var sent_at = critique_start - time_start; //msec point in video where it starts
               var duration = ending - critique_start;
+              add_critique_item_db(sent_at, duration, text, "comment");
               add_critique_item(sent_at, duration, text, "comment");
               $(this).val("");
             }else if(e.which == 8 || e.which==46) {//backspace/delete
@@ -152,21 +152,61 @@ $(document).ready(function(){
             } 
           });
 
-          // $(".up").on("click",function(){
-          //   var now = new Date().getTime();
-          //   var topic = $(this).val();
-          //   var text = "Good "+topic+"!";
-          //   var sent_at = Math.floor((now-time_start)/1000);
-          //   add_critique_item(sent_at, text, "positive");
-          // });
+          $("#compliment-textbox").keydown(function(e){
+            if ( e.which == 13 && !e.ctrlKey){ //enter
+              var text = $(this).val();
+              var ending = new Date().getTime();
+              var sent_at = critique_start - time_start; //msec point in video where it starts
+              var duration = ending - critique_start;
+              add_critique_item_db(sent_at, duration, text, "comp");
+              add_critique_item(sent_at, duration, text, "comp");
+              $(this).val("");
+            }else if(e.which == 8 || e.which==46) {//backspace/delete
+              critique_start = new Date().getTime();
+            }else if($(this).val().length == 0){//first character
+              critique_start = new Date().getTime();
+            } 
+          });
 
-          // $(".down").on("click",function(){
-          //   var now = new Date().getTime();
-          //   var topic = $(this).val();
-          //   var text = "Work on "+topic;
-          //   var sent_at = Math.floor((now-time_start)/1000);
-          //   add_critique_item(sent_at, text, "negative");
-          // });
+          $("#suggestion-textbox").keydown(function(e){
+            if ( e.which == 13 && !e.ctrlKey){ //enter
+              var text = $(this).val();
+              var ending = new Date().getTime();
+              var sent_at = critique_start - time_start; //msec point in video where it starts
+              var duration = ending - critique_start;
+              add_critique_item_db(sent_at, duration, text, "suggest");
+              add_critique_item(sent_at, duration, text, "suggest");
+              $(this).val("");
+            }else if(e.which == 8 || e.which==46) {//backspace/delete
+              critique_start = new Date().getTime();
+            }else if($(this).val().length == 0){//first character
+              critique_start = new Date().getTime();
+            } 
+          });
+
+          $(".submit").on("click",function(){
+            var type;
+            if ($(this).attr('id') === 'compliment-button'){
+              type='comp';
+            }else if ($(this).attr('id') === 'comment-button'){
+              type="comment";
+            }else{
+              type="suggest";
+            }
+
+            var ending = new Date().getTime();
+            var text = $(this).val();
+            var sent_at = critique_start - time_start; //msec point in video where it starts
+            var duration = ending - critique_start;
+            add_critique_item_db(sent_at, duration, text, type);
+            add_critique_item(sent_at, duration, text, type);
+            $(this).val("");
+          });
+
+          $(".cancel").on("click",function(){
+            $(this).val("");
+            //also close the div
+          });
 
        //   $("#critique-panel").show();
           start_recording();
@@ -228,6 +268,7 @@ $(document).ready(function(){
 
   function start_recording(){
 
+    time_start = new Date().getTime();
     currently_recording = true;
 
     if(if_musician){
@@ -235,31 +276,29 @@ $(document).ready(function(){
       window.recordRTC_Audio.startRecording(); 
       var timeElapsed = 0;
 
-      //redraw the critique timeline every 0.5 seconds
-      setInterval( function(){
-        if (currently_recording)
-        timeElapsed += 500 ;
-        if (timeElapsed > 10000){
-          timeline.setOptions({
-            end:timeElapsed
-          });
-        }
-      },500);
+      // //redraw the critique timeline every 0.5 seconds
+      // setInterval( function(){
+      //   if (currently_recording)
+      //   timeElapsed += 500 ;
+      //   if (timeElapsed > 10000){
+      //     timeline.setOptions({
+      //       end:timeElapsed
+      //     });
+      //   }
+      // },500);
 
     } else { //critiquer
       window.musician_video_stream.startRecording();
       window.musician_audio_stream.startRecording();
 
-      var timeElapsed=0;
-
       //redraw the critique timeline every 0.5 seconds
       setInterval( function(){
-        if (currently_recording)
-        timeElapsed += 500 ;
-        if (timeElapsed > 10000){
-          timeline.setOptions({
-            end:timeElapsed
-          });
+        var now = new Date().getTime();
+        if (currently_recording){
+          var timeElapsed = now - time_start;
+          if (timeElapsed > 10000){
+            timeline.setOptions({end:zeroTime.getTime()+timeElapsed});
+          }
         }
       },500);
     }
@@ -270,6 +309,8 @@ $(document).ready(function(){
   function stop_recording() {
 
     currently_recording = false;
+    var now = new Date().getTime();
+    recordDuration = now-time_start;
 
     if(if_musician){
       
@@ -338,7 +379,6 @@ $(document).ready(function(){
     });
   
     $("#critique_video").show();
-    $("#critiques").show();
   }
 
   var control = !if_musician;
@@ -364,7 +404,6 @@ $(document).ready(function(){
               if(!snapshot.val().paused){
                 critique_video.play();
                 critique_audio.play(); 
-                timeline.setCustomTime(time);
               } else {
                 critique_video.pause();
                 critique_audio.pause();
@@ -373,7 +412,6 @@ $(document).ready(function(){
 
           });
          }, false);
-
     } else {
       $("#critique_video").on('timeupdate', function(){
 
@@ -392,21 +430,38 @@ $(document).ready(function(){
         critique_audio.pause();
       });
 
+      //when you click, it will take you to that place in the video
+      //IDs are zero indexed of the item list
+      //TRAVIS!
+      //Right now it's only set so that the critiquer can click on things and jump 
+      //places in the video since there's only one event listener. If we're going to 
+      //toggle it, could you implement it?
+      timeline.on('select', function (properties) {
+        var itemIndex = properties.items[0];
+        var targetItem = critiqueItems[itemIndex];
+        var startDisplace = targetItem.start - zeroTime.getTime();//displace from start in msec
+        
+        //set new time for critiquer video in seconds
+        critique_video.currentTime = startDisplace/1000;
+
+      });
     }
-    var total_len = $("#critique_video").duration;
-    render_critique(total_len);
+    //make the dictionary for jumping to places
+    render_critique();
+
   }
 
-  function displayMusicianTimeline(length){
-    timeline.setOptions({
-      end: Math.floor(length*1000)
-    })
+  function makeMusicianTimeline(){
+    if (if_musician){
+      timeline.setOptions({
+        end: zeroTime.getTime()+recordDuration
+      });
+    }
   }
-
   //renders the critique for critique session
-  function render_critique(total_len){
-    
-    $("#critiques").show();
+  function render_critique(){
+
+    makeMusicianTimeline();
 
     //create dictionary of [sent time of critique] -> text of critique
     var critiques = [];
@@ -420,7 +475,7 @@ $(document).ready(function(){
 
           //musician needs a local copy of all the critiques
           if(if_musician)
-            add_critique_item(critique.sent, critique.duration, critique.text, critique.type, true);
+            add_critique_item(critique.sent, critique.duration, critique.text, critique.type);
         }
       }
     });
@@ -429,27 +484,30 @@ $(document).ready(function(){
     setInterval( function(){
       var time = Math.round($("#critique_video").prop('currentTime'));
       if( critiques[time] ){
-        var scroll_to = $("#critique_at_"+time);
-        scroll_to.className = 'active_critique';
-     /*   $("#critiques").animate({
-          scrollTop: scroll_to.offset().top - container.offset().top + container.scrollTop()
-        });*/
+        // var scroll_to = $("#critique_at_"+time);
+        // scroll_to.className = 'active_critique';
+        // $("#critiques").animate({
+        //   scrollTop: scroll_to.offset().top - container.offset().top + container.scrollTop()
+        // });
         $("#active_critique").html(critiques[time]);
       }
     },500);
+
+    //show the thing
+    $("#critiques").show();
   }
 
   //render the critique item in the list
-  function add_critique_item_db(sent_at, duration, total_len, text, type){
+  function add_critique_item_db(sent_at, duration, text, type){
       practice_session.child('critiques').push({sent:sent_at, duration: duration, text:text, type:type});
   }
 
   function add_critique_item(sent_at, duration, text, type){
-    //sent_at is in seconds
     var sentMsec = sent_at;
-    var startTime = new Date(sentMsec);
-    var endTime = new Date(sentMsec+duration)
+    var startTime = zeroTime.getTime()+sent_at;
+    var endTime = startTime+duration;
     var newItem = {
+      id: critiqueItems.length,
       start: startTime,
       end: endTime,
       content: text,
