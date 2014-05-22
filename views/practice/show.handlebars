@@ -5,8 +5,6 @@
 <input hidden id='practice_start' value={{practice_start}}>
 <input hidden id='practice_end' value={{practice_end}}>
 
-<!-- <a id="exit" class="btn btn-default" href="/home">Exit to homepage</a> -->
-
 <video id='critique_video' hidden {{#if if_musician}}{{else}}controls{{/if}}></video>
 <div id='active_critique'></div>
 <audio id='critique_audio' hidden></audio>
@@ -27,6 +25,9 @@
 	{{/if}}
 </div>
 
+<div id="settings" hidden>
+	Choose your playback settings:
+</div>
 
 {{#if if_musician}}
 	<div id="waiting_response">
@@ -53,13 +54,110 @@
 		<p>Practice will begin when musician has started recording.</p>
 	</div>
 
-    <input id="comment-textbox" type="text" placeholder="comment"><br/>
-    <input id="compliment-textbox" type="text" placeholder="compliment"><br/>
-    <input id="suggestion-textbox" type="text" placeholder="suggest">
+	<div id="waiting_comment-panel">
+		<p>Add comments here once recording has started</p>
+	</div>
 
+	<!-- <div id="comment-panel" class="comment-container">
+		<div id="compliment">
+			<p id="compliment-text">Add compliment</p>
+			<div class= "expanded" id="compliment-expanded" hidden>
+				<textarea rows="4" cols="50" id="compliment-textbox" placeholder="type here..."></textarea>
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<button type="button" id="compliment-button" class="submit btn btn-default">submit</button>
+					</div>
+					<div class="btn-group">
+						<button type="button" id="compliment-button" class="cancel btn btn-default">cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="comment">
+			<p id="comment-text">Add comment</p>
+			<div class= "expanded" id="comment-expanded" hidden>
+				<textarea rows="4" cols="50" id="comment-textbox" placeholder="type here..."></textarea>
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<button type="button" id="comment-button" class="submit btn btn-default">submit</button>
+					</div>
+					<div class="btn-group">
+						<button type="button" id="comment-button" class="cancel btn btn-default">cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="suggestion">
+			<p id="suggestion-text">Add suggestion</p>
+			<div class= "expanded" id="suggestion-expanded" hidden>
+				<textarea rows="4" cols="50" id="suggestion-textbox" placeholder="type here..."></textarea>
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<button type="button" id="suggestion-button" class="submit btn btn-default">submit</button>
+					</div>
+					<div class="btn-group">
+						<button type="button" id="suggestion-button" class="cancel btn btn-default">cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> --> 
+
+    <!-- <div id='waiting_critique'></div>
+	<div id='critiques'></div>
+	<input id="critique_text" type="text" placeholder="say something..">
+
+    <div id="critique-panel">
+    </div> -->
+
+    <!-- <div id="critiques_wrapper">
+	   <div id='critiques'>   
+       </div>
+    </div> -->
+
+    <div id="text-entry">
+    	<textarea rows="4" cols="50" id="textbox" type="text" placeholder"type here..."></textarea>
+    	<div id="radios">
+    		<p>Choose a color tag:</p>
+    		<div id="buttons">
+				<div id="options" class="btn-group btn-group-justified" data-toggle="buttons-radio">
+			          <button type="button" class="color btn btn-default" id="option1">Good</button>
+			          <button type="button" class="color btn btn-default" id="option2">Ok</button>
+			          <button type="button" class="color btn btn-default" id="option3">Bad</button>
+    			</div>
+				<button type="button" id="suggestion-button" class="submit btn btn-default">submit</button>
+
+				<button type="button" id="suggestion-button" class="cancel btn btn-default">cancel</button>
+			</div>
+		</div>
+
+    </div>
+
+    <!-- <textarea rows="4" cols="50" id="comment-textbox" type="text" placeholder="comment"></textarea>
+    <input id="compliment-textbox" type="text" placeholder="compliment"><br/>
+    <input id="suggestion-textbox" type="text" placeholder="suggest"> -->
 
     <div id="critiques_wrapper">
        <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
     </div>
 
+    <div id="settings" hidden>
+		<p>Choose your playback settings:</p>
+		<div class="switch">
+			<!-- <input type="checkbox" name="my-checkbox" checked> -->
+			<p>Who is controlling the playback:</p>
+			<div class="control btn-group btn-toggle"> 
+			    <button class="btn btn-lg btn-default">Them</button>
+			    <button class="btn btn-lg btn-primary active">Me</button>
+		  	</div>
+		  	<p>Allow for critiquers audio:</p>
+			<div class="btn-group btn-toggle"> 
+			    <button class="btn btn-lg btn-default">Off</button>
+			    <button class="btn btn-lg btn-primary active">On</button>
+		  	</div>
+		</div>
+	</div>
+
 {{/if}}
+
+<a id="exit" class="btn btn-danger btn-lg" href="/home">Exit Session</a>
