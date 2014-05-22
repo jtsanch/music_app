@@ -41,12 +41,13 @@
         <div id="practice_text">Currently practicing! Click End Session to end.</div>
     </div>
 
-	<input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
+    <input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
     <div id="critiques_wrapper">
-	   <div id='critiques' hidden></div>
+       <div id='critiques' hidden></div>
     </div>
 
 {{else}}
+
 	<div class="memo">
 		<p>Practice will begin when musician has started recording.</p>
 	</div>
@@ -88,6 +89,10 @@
 	   <div id='critiques'>   
        </div>
     </div> -->
+    <div id="critiques_wrapper">
+       <div id='critiques'>   </div>
+    </div>
 
+    <input id="critique_text" type="text" placeholder="say something..">
 
 {{/if}}
