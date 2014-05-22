@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-//variables
+  //variables
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
   var fb_instance = new Firebase("https://sizzling-fire-6665.firebaseio.com");
@@ -49,9 +49,10 @@ $(document).ready(function(){
 
   //start the conversation link after streams have been allowed
   function start_conversation(){
+    $("#body-wrapper").hide();
 
-    var video_peer = new Peer({key: 'sgi0gh4qeao9wwmi'});
-    var audio_peer = new Peer({key: 'sgi0gh4qeao9wwmi'});
+    var video_peer = new Peer({key: 'ewdyikcaj7nwmi'});
+    var audio_peer = new Peer({key: 'ewdyikcaj7nwmi'});
      
     //musician
     if(if_musician){
@@ -76,6 +77,7 @@ $(document).ready(function(){
 
   //init the musician listeners
   function initialize_musician(video_peer, audio_peer){
+      var toggle_critique = false;
 
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
@@ -83,6 +85,18 @@ $(document).ready(function(){
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").val("End Session");
           $('#practice-container').show();
+          $(".musician_practice_item").show();
+          $("#toggle_critique_video_audio").on('click',function(){
+            if(toggle_critique){
+              $("#their-audio").stop();
+              $("#their-video").stop();           
+              document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary active';
+            } else {
+               $("#their-audio").start();
+               $("#their-video").start();           
+              document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary';
+            }
+          });
           start_recording();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
@@ -92,7 +106,7 @@ $(document).ready(function(){
           begin_critique_session();
         }  
       });
-
+      
       var peers_logged_in = 0;
       video_peer.on('open', function(peer_id){
         
@@ -435,17 +449,6 @@ $(document).ready(function(){
       window.recordRTC_Audio.startRecording(); 
       var timeElapsed = 0;
 
-      // //redraw the critique timeline every 0.5 seconds
-      // setInterval( function(){
-      //   if (currently_recording)
-      //   timeElapsed += 500 ;
-      //   if (timeElapsed > 10000){
-      //     timeline.setOptions({
-      //       end:timeElapsed
-      //     });
-      //   }
-      // },500);
-
     } else { //critiquer
       window.musician_video_stream.startRecording();
       window.musician_audio_stream.startRecording();
@@ -548,34 +551,52 @@ $(document).ready(function(){
     $('#text-entry').fadeOut();
     $('#settings').show();
     $(".memo").hide();
+    $(".critique_session_item").show();
     show_critique_items();
     var critique_audio = document.getElementById('critique_audio');
     var critique_video = document.getElementById('critique_video');
+    
+    var video_control = if_musician;
+    var counter = 0; //so we can know how many times people switch videos
+    
+    practice_session.child('video_control').on('value', function(snapshot){
+      if(snapshot.val() && !video_control){
+        $("#toggle_video_control").class = 'btn btn-primary active';
+        counter += 1;
+        video_control = false;
+      }
+    });
 
-    if(if_musician){
+    $("toggle_video_control").on('click', function(){
+      if(!video_control){
+        video_control = true;
+        counter += 1;
+        practice_session.child('video_control').set(counter);
+      }
+    });
 
-      // musician's video will move based on what the critiquer did
-      critique_video.addEventListener('loadedmetadata', function() {   
-          practice_session.child('critique_video_time').on('value', function(snapshot){
+    // musician's video will move based on what the critiquer did
+    critique_video.addEventListener('loadedmetadata', function() {   
+        practice_session.child('critique_video_time').on('value', function(snapshot){
             
-            if(snapshot.val()){    
-              var time = snapshot.val().time;
-              critique_video.currentTime = time;
-              critique_audio.currentTime = time;
-              if(!snapshot.val().paused){
-                critique_video.play();
-                critique_audio.play(); 
-              } else {
-                critique_video.pause();
-                critique_audio.pause();
-              }
+          if(snapshot.val() && !video_control){    
+            var time = snapshot.val().time;
+            critique_video.currentTime = time;
+            critique_audio.currentTime = time;
+            if(!snapshot.val().paused){
+              critique_video.play();
+              critique_audio.play(); 
+            } else {
+              critique_video.pause();
+              critique_audio.pause();
             }
+          }
 
-          });
-         }, false);
-    } else {
-      $("#critique_video").on('timeupdate', function(){
+        });
+     }, false);
 
+    $("#critique_video").on('timeupdate', function(){
+      if(video_control){
         critique_audio.currentTime = critique_video.currentTime;
         practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
 
@@ -584,12 +605,14 @@ $(document).ready(function(){
         } else {
           critique_audio.play();
         }
-      });
 
-      $("#critique_video").on('pause', function(){
-        practice_session.child('critique_video_paused').set(true);
-        critique_audio.pause();
-      });
+      }
+    });
+
+    $("#critique_video").on('pause', function(){
+      practice_session.child('critique_video_paused').set(true);
+      critique_audio.pause();
+    });
 
       //when you click, it will take you to that place in the video
       //IDs are zero indexed of the item list
@@ -606,7 +629,7 @@ $(document).ready(function(){
         critique_video.currentTime = startDisplace/1000;
 
       });
-    }
+    
     //make the dictionary for jumping to places
     render_critique();
 

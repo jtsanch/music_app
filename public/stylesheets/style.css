@@ -7,6 +7,16 @@ a {
   color: #00B7FF;
 }
 
+#video-critique-box {
+	position: absolute;
+	top: 20px;
+	width: 480px;
+	height:450px;
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+}
+
 .body-container {
 	padding-top: 10px;
 }
@@ -294,7 +304,11 @@ p.memo {
 	font-size: 24px;
 	color: white;
 }*/
-
+#comment-expanded{
+	bottom:50px;
+	margin-left:auto;
+	margin-right:auto;
+}
 #comment-container {
 	width: 400px;
 }
@@ -381,13 +395,20 @@ div#comment-panel p {
 
 #text-entry {
 	position: absolute;
-	right: 1.5%;
-	width: 30%;
-	top: 5%;
+	opacity:.85;
+	bottom: 65px;
+	margin-left:auto;
+	margin-right:auto;
+	z-index:5;
+	width:100%;
+	
 }
 
 #text-entry textarea {
-	width: 100%;
+	width: 80%;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
 	height: 50%;
 }
 
