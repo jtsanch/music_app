@@ -340,18 +340,15 @@ $(document).ready(function(){
             } 
           });
 
-          $(".submit").on("click",function(){
+          $(".submit_button").on("click",function(){
             //check which is active
-            var type ="";
-            if ($("#option1").hasClass('active')) {
-              console.log("1 active");
-              type = 'comp';
-            } else if ($("#option2").hasClass('active')) {
-              console.log("2 active");
-              type = "comment";
-            } else {
-              console.log("3 active");
-              type = 'suggest';
+            var type;
+            if ($(this).attr('id') === 'compliment-button'){
+              type='comp';
+            }else if ($(this).attr('id') === 'comment-button'){
+              type="comment";
+            }else{
+              type="suggest";
             }
 
             var ending = new Date().getTime();
@@ -360,14 +357,12 @@ $(document).ready(function(){
             var duration = ending - critique_start;
             add_critique_item_db(sent_at, duration, text, type);
             add_critique_item(sent_at, duration, text, type);
-            $(':input[id="textbox"]').val(null);
-            $(this).val("");
+            $('#textbox').val("");
           });
 
           $(".cancel").on("click",function(){
-            $(this).val("");
             //also close the div
-            $(':input[id="textbox"]').val(null);
+            $("#textbox").val("");
           });
 
        //   $("#critique-panel").show();
