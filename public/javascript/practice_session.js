@@ -341,6 +341,9 @@ $(document).ready(function(){
     $("#critiques").show();
   }
 
+  var control = !if_musician;
+  
+
   //called when session begins
   function begin_critique_session(){
     $(".memo").hide();
