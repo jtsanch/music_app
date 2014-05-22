@@ -33,13 +33,14 @@ $(document).ready(function(){
   function makeTimeline(){
     var container = document.getElementById('critiques');
     var options = {
-        start: 0,
-        min: 0,
-        selectable: false,
-        showCustomTime: true,
-        height: '150px',
-        showMajorLabels: false
-      };
+      end: 5000,
+      start: 0,
+      min: 0,
+      height: '150px',
+      showMajorLabels: false,
+      zoomMax: 36000000,
+      type: 'rangeoverflow'
+    };
     timeline = new vis.Timeline(container, critiqueItems, options);
   }
 
@@ -72,6 +73,7 @@ $(document).ready(function(){
 
   //init the musician listeners
   function initialize_musician(video_peer, audio_peer){
+
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
         if($("#start_session").val() == "Start Session") {
@@ -231,6 +233,19 @@ $(document).ready(function(){
     if(if_musician){
       window.recordRTC_Video.startRecording();
       window.recordRTC_Audio.startRecording(); 
+      var timeElapsed = 0;
+
+      //redraw the critique timeline every 0.5 seconds
+      setInterval( function(){
+        if (currently_recording)
+        timeElapsed += 500 ;
+        if (timeElapsed > 10000){
+          timeline.setOptions({
+            end:timeElapsed
+          });
+        }
+      },500);
+
     } else { //critiquer
       window.musician_video_stream.startRecording();
       window.musician_audio_stream.startRecording();
@@ -379,16 +394,16 @@ $(document).ready(function(){
     render_critique(total_len);
   }
 
-  function displayMusicianTimeline(){
+  function displayMusicianTimeline(length){
     timeline.setOptions({
-      max: Math.floor(total_len*1000)
+      end: Math.floor(length*1000)
     })
-
-    $("#critiques").show();
   }
 
   //renders the critique for critique session
   function render_critique(total_len){
+    
+    $("#critiques").show();
 
     //create dictionary of [sent time of critique] -> text of critique
     var critiques = [];
@@ -406,8 +421,6 @@ $(document).ready(function(){
         }
       }
     });
-    if (if_musician)
-      displayMusicianTimeline();
 
     //set it so that the right critique highlights at the right moment
     setInterval( function(){
@@ -437,6 +450,7 @@ $(document).ready(function(){
       start: startTime,
       end: endTime,
       content: text,
+      type: 'rangeoverflow',
       className: type
     }
     critiqueItems.push(newItem);
