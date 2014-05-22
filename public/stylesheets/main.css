@@ -151,6 +151,7 @@ a {
 #record_stream {
   display: none;
 }
+
 #emojiSelector {
   position: fixed;
   bottom: 0;
@@ -158,3 +159,13 @@ a {
   right: 0;
 }
 
+#body-wrapper {
+  width:100%;
+  height:100%;
+  opacity:.97;
+  left:0;
+  top:0;
+  position: absolute;
+  background-color: white;
+  z-index: 10;
+}
