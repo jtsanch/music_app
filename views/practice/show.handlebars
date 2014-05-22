@@ -7,7 +7,7 @@
 
 <!-- <a id="exit" class="btn btn-default" href="/home">Exit to homepage</a> -->
 
-<video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
+<video id='critique_video' hidden {{#if if_musician}}{{else}}controls{{/if}}></video>
 <div id='active_critique'></div>
 <audio id='critique_audio' hidden></audio>
 

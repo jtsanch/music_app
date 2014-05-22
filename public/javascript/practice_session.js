@@ -26,6 +26,7 @@ $(document).ready(function(){
   var halfWidthCritique = 5;
   var critiqueItems = [];
   var time_start;
+  var recordDuration;
   var currently_recording = false;
   var timeline;
 
@@ -81,7 +82,6 @@ $(document).ready(function(){
           $("#start_session").val("End Session");
           $('#practice-container').show();
           start_recording();
-          time_start = new Date().getTime();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           stop_recording();
@@ -132,17 +132,15 @@ $(document).ready(function(){
 
       practice_session.child('practice_start').on('value', function(snapshot){
         if(snapshot.val()){
-          
-          time_start = new Date().getTime();
           var critique_start;
           $("#critique_text").keydown(function(e){
             e = e || event;
-
             if ( e.which == 13 && !e.ctrlKey){ //enter
               var ending = new Date().getTime();
               var text = $(this).val();
               var sent_at = critique_start - time_start; //msec point in video where it starts
               var duration = ending - critique_start;
+              add_critique_item_db(sent_at, duration, text, "comment");
               add_critique_item(sent_at, duration, text, "comment");
               $(this).val("");
             }else if(e.which == 8 || e.which==46) {//backspace/delete
@@ -228,6 +226,7 @@ $(document).ready(function(){
 
   function start_recording(){
 
+    time_start = new Date().getTime();
     currently_recording = true;
 
     if(if_musician){
@@ -235,31 +234,29 @@ $(document).ready(function(){
       window.recordRTC_Audio.startRecording(); 
       var timeElapsed = 0;
 
-      //redraw the critique timeline every 0.5 seconds
-      setInterval( function(){
-        if (currently_recording)
-        timeElapsed += 500 ;
-        if (timeElapsed > 10000){
-          timeline.setOptions({
-            end:timeElapsed
-          });
-        }
-      },500);
+      // //redraw the critique timeline every 0.5 seconds
+      // setInterval( function(){
+      //   if (currently_recording)
+      //   timeElapsed += 500 ;
+      //   if (timeElapsed > 10000){
+      //     timeline.setOptions({
+      //       end:timeElapsed
+      //     });
+      //   }
+      // },500);
 
     } else { //critiquer
       window.musician_video_stream.startRecording();
       window.musician_audio_stream.startRecording();
 
-      var timeElapsed=0;
-
       //redraw the critique timeline every 0.5 seconds
       setInterval( function(){
-        if (currently_recording)
-        timeElapsed += 500 ;
-        if (timeElapsed > 10000){
-          timeline.setOptions({
-            end:timeElapsed
-          });
+        var now = new Date().getTime();
+        if (currently_recording){
+          var timeElapsed = now - time_start;
+          if (timeElapsed > 10000){
+            timeline.setOptions({end:timeElapsed});
+          }
         }
       },500);
     }
@@ -270,6 +267,8 @@ $(document).ready(function(){
   function stop_recording() {
 
     currently_recording = false;
+    var now = new Date().getTime();
+    recordDuration = now-time_start;
 
     if(if_musician){
       
@@ -338,7 +337,6 @@ $(document).ready(function(){
     });
   
     $("#critique_video").show();
-    $("#critiques").show();
   }
 
   //called when session begins
@@ -370,7 +368,6 @@ $(document).ready(function(){
 
           });
          }, false);
-
     } else {
       $("#critique_video").on('timeupdate', function(){
 
@@ -388,22 +385,22 @@ $(document).ready(function(){
         practice_session.child('critique_video_paused').set(true);
         critique_audio.pause();
       });
-
     }
-    var total_len = $("#critique_video").duration;
-    render_critique(total_len);
+    //make the dictionary for jumping to places
+    render_critique();
   }
 
-  function displayMusicianTimeline(length){
-    timeline.setOptions({
-      end: Math.floor(length*1000)
-    })
+  function makeMusicianTimeline(){
+    if (if_musician){
+      timeline.setOptions({
+        end: recordDuration
+      });
+    }
   }
-
   //renders the critique for critique session
-  function render_critique(total_len){
-    
-    $("#critiques").show();
+  function render_critique(){
+
+    makeMusicianTimeline();
 
     //create dictionary of [sent time of critique] -> text of critique
     var critiques = [];
@@ -417,7 +414,7 @@ $(document).ready(function(){
 
           //musician needs a local copy of all the critiques
           if(if_musician)
-            add_critique_item(critique.sent, critique.duration, critique.text, critique.type, true);
+            add_critique_item(critique.sent, critique.duration, critique.text, critique.type);
         }
       }
     });
@@ -434,10 +431,13 @@ $(document).ready(function(){
         $("#active_critique").html(critiques[time]);
       }
     },500);
+
+    //show the thing
+    $("#critiques").show();
   }
 
   //render the critique item in the list
-  function add_critique_item_db(sent_at, duration, total_len, text, type){
+  function add_critique_item_db(sent_at, duration, text, type){
       practice_session.child('critiques').push({sent:sent_at, duration: duration, text:text, type:type});
   }
 
