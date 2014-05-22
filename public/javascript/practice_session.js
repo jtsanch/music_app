@@ -18,6 +18,9 @@ $(document).ready(function(){
   var endTime = null;
   var frames = [];
 
+  //hide navbar for chatroom
+  $(".navbar").hide();
+
   //instance vars
   var critiqueBarLen = 600;
   var halfWidthCritique = 5;
@@ -291,13 +294,34 @@ $(document).ready(function(){
   }
 
   function show_critique_items(){
+    console.log("show_critique_items");
+    // $("#their-video").css({
+    //   "right": "20px",
+    //   "width": "200px",
+    //   "position": "absolute",
+    //   "top": "50px",
+    //   "height": "initial",
+    //   "left": "initial"
+    // });
+    console.log("num their-videos:" + $("#their-video").length);
     $("#their-video").css({
-      "right": "20px",
-      "width": "200px",
       "position": "absolute",
-      "top": "50px",
-      "height": "initial",
-      "left": "initial"
+      "top": "0px",
+      "left": "350px",
+      "width": "200px",
+      "height": "450px",
+    });
+
+    $("#my-video").css({
+      "position": "absolute",
+      "top": "0px",
+      "left": "-550px",
+      "width": "200px",
+      "height": "450px",
+    });
+
+    $(".video-container").css({
+      "margin-left": "0px"
     });
   
     $("#critique_video").show();
@@ -306,7 +330,7 @@ $(document).ready(function(){
 
   //called when session begins
   function begin_critique_session(){
-
+    $(".memo").hide();
     show_critique_items();
     var critique_audio = document.getElementById('critique_audio');
     var critique_video = document.getElementById('critique_video');

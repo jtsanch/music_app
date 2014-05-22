@@ -195,21 +195,46 @@ a {
 	border-radius: 4px
 }
 
-#their-video-m{
+
+.video-container {
+  position: absolute;
+  left: 50%;
+  margin-left: -240px;
+  top: 10px;
+}
+
+.outer-video {
+	position: absolute;
+	top: 20px;
+	width: 480px;
+	margin-left: auto;
+ 	margin-right: auto;
+ 	display: table;
+}
+
+.inner-video {
+	position: absolute;
+	top: 20px;
+	left: 0px;
+	width: 160px;
+	z-index: 2;
+}
+
+/*#their-video-m{
 	position: absolute;
 	top: 50px;
 	left: 0px;
 	width: 100%;
 	height: 100%;
 	text-align: center;
-}
+}*/
 
 #practice_text{
 	vertical-align: middle;
 	text-align: center;
 }
 
-#my-video {
+/*#my-video {
 	position: absolute;
 	top: 50px;
 	width: 200px;
@@ -218,11 +243,43 @@ a {
 
 #their-video, #critique_video {
 	position: absolute;
+	top: 0px;
+	left: 200px;
+	width: 400px;
 	top: 50px;
 	left: 0px;
 	width: 100%;
 	height: 450px;
+}*/
+
+/*#their-video {
+    position: absolute;
+    top: 0px;
+    left: 350px;
+    width: 200px;
+    height: 450px;
 }
+
+#my-video {
+    position: absolute;
+    top: 0px;
+    left: -550px;
+    width: 200px;
+    height: 450px;
+}*/
+
+#critique_video {
+	position: absolute;
+	top: 0px;
+	left: 200px;
+	/*width: 400px;*/
+	top: 50px;
+	left: 0px;
+	/*width: 100%;*/
+	height: 450px;
+	left: 50%;
+	margin-left: -300px;
+}*/
 
 
 #active_critique{
@@ -234,3 +291,14 @@ a {
 	width: 400px;
 }
 
+#exit {
+	float: right;
+}
+
+.memo {
+	width: 300px;
+}
+
+p.memo {
+	font-size: 30px;
+}

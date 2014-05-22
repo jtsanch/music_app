@@ -23,6 +23,7 @@ exports.show = function(req, res) {
                 if_musician : if_musician
             });
         } else {
+            console.log(session_id);
             res.render('error_page',{
                 error: "Practice session does not exist!"
             });
