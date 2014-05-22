@@ -96,6 +96,7 @@ console.log("listening now");
 var current_users = {};
 var wss = new WebSocketServer({server: server});
 console.log('websocket server created');
+console.log(wss);
 var count = 0;
 wss.on('connection', function(ws) {
     var id = count;
