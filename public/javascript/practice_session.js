@@ -34,12 +34,12 @@ $(document).ready(function(){
      var container = document.getElementById('critiques');
     var options = {
       end: 5000,
-      max: 5000,
       start: 0,
       min: 0,
       height: '150px',
       showMajorLabels: false,
-      zoomMax: 3600000
+      zoomMax: 36000000,
+      type: 'rangeoverflow'
     };
     timeline = new vis.Timeline(container, critiqueItems, options);
   }
@@ -381,7 +381,7 @@ $(document).ready(function(){
 
   function displayMusicianTimeline(){
     timeline.setOptions({
-      max: Math.floor(total_len*1000)
+      end: Math.floor(total_len*1000)
     })
 
     $("#critiques").show();
