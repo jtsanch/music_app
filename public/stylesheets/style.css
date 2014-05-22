@@ -197,7 +197,7 @@ a {
 
 .outer-video {
 	position: absolute;
-	top: 20px;
+	top: 0px;
 	width: 480px;
 	margin-left: auto;
  	margin-right: auto;
@@ -206,7 +206,7 @@ a {
 
 .inner-video {
 	position: absolute;
-	top: 20px;
+	top: 0px;
 	left: 0px;
 	width: 160px;
 	z-index: 2;
@@ -393,15 +393,26 @@ div#comment-panel p {
 	margin-top: 20%;
 }
 
-#text-entry {
+/*#text-entry {
 	position: absolute;
 	right: 1.5%;
 	width: 30%;
 	top: 5%;
+	text-align:center;
+}*/
+
+#text-entry{
+	position: absolute;
+	width:100%;
+	text-align:center;
+	left:0;
+	margin-left:auto;
+	margin-right:auto;
+	top:350px;
 }
 
 #text-entry textarea {
-	width: 80%;
+	width: 24%;
 	margin-left:auto;
 	margin-right:auto;
 	display:block;
@@ -420,8 +431,9 @@ div#comment-panel p {
 }
 
 #buttons {
-	width: 100%;
+	width: 80%;
 	display: inline-block;
+	left:0;
 }
 
 #submission-options {
@@ -457,8 +469,8 @@ div#comment-panel p {
 	font-size: 14px;
 }
 
-#entry {
-	padding-top: 20px;
+#cancel-button {
+	margin-right: 60px
 }
 
 #recording {
