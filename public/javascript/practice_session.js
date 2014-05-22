@@ -561,7 +561,7 @@ $(document).ready(function(){
     var critique_audio = document.getElementById('critique_audio');
     var critique_video = document.getElementById('critique_video');
     
-    var video_control = if_musician;
+    var video_control = !if_musician;
     var counter = 0; //so we can know how many times people switch videos
     
     practice_session.child('video_control').on('value', function(snapshot){
