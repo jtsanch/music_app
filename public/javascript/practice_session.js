@@ -77,23 +77,28 @@ $(document).ready(function(){
 
   //init the musician listeners
   function initialize_musician(video_peer, audio_peer){
-      var toggle_critique = false;
+      var toggle_critique = true;
 
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
         if($("#start_session").val() == "Start Session") {
           practice_session.child('practice_start').set(new Date().getTime());
+          $("#toggle_critiquer_box").show();
           $("#start_session").val("End Session");
           $('#practice-container').show();
           $(".musician_practice_item").show();
-          $("#toggle_critique_video_audio").on('click',function(){
-            if(toggle_critique){
-              $("#their-audio").stop();
-              $("#their-video").stop();           
-              document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary active';
-            } else {
-               $("#their-audio").start();
-               $("#their-video").start();           
+          $("#toggle_off_critiquer").on("click", function(){
+              if(toggle_critique){
+                $("#their-audio").stop();
+                $("#their-video").stop();           
+                document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary active';
+              }          
+          });
+
+          $("#toggle_on_critiquer").on('click',function(){
+            if(!toggle_critique){
+               $("#their-audio").play();
+               $("#their-video").play();           
               document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary';
             }
           });
@@ -260,7 +265,6 @@ $(document).ready(function(){
           $("#critique-panel").show();
           $("#waiting_comment-panel").fadeOut();
           $("#recording").show();
-
 
           // $("#comment-textbox").keydown(function(e){
           //   e = e || event;
@@ -561,21 +565,39 @@ $(document).ready(function(){
     var counter = 0; //so we can know how many times people switch videos
     
     practice_session.child('video_control').on('value', function(snapshot){
-      if(snapshot.val() && !video_control){
-        $("#toggle_video_control").class = 'btn btn-primary active';
-        counter += 1;
+      if(snapshot.val()){
+        if(if_musician && !video_control && snapshot.val() == 'musician'){
+          $("#give_them_video_control").class = 'btn btn-primary active';
+          video_control = false;
+        } else if(!if_musician && !video_control && snapshot.val() == 'critiquer'){
+          $("#give_them_video_control").class = 'btn btn-primary active';
+          video_control = false;
+        }
+      }
+    });
+
+    $("#give_them_video_control").on('click', function(){
+      if(video_control){
         video_control = false;
-      }
-    });
-
-    $("toggle_video_control").on('click', function(){
-      if(!video_control){
-        video_control = true;
         counter += 1;
-        practice_session.child('video_control').set(counter);
+        var val = 'musician';
+        if(if_musician)
+          val = 'critiquer'
+
+        practice_session.child('video_control').set(val);
       }
     });
+    $("#give_us_video_control").on('click', function(){
+      if(!video_control){
+          video_control = true;
+          counter += 1;
+          var val = 'musician';
+          if(if_musician)
+            val = 'critiquer';
 
+          practice_session.child('video_control').set(val);
+        }
+    });
     // musician's video will move based on what the critiquer did
     critique_video.addEventListener('loadedmetadata', function() {   
         practice_session.child('critique_video_time').on('value', function(snapshot){

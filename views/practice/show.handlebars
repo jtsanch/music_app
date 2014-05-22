@@ -38,20 +38,22 @@
 	{{/if}}
 
 </div>
-
+<div id='toggle_critiquer_box' hidden>
+	Toggle the critiquer video and audio 
+	<div class="control btn-group btn-toggle" style='bottom:100px;position:absolute;left:100px;'> 
+	    <button id='toggle_off_critiquer' class="btn btn-default">Off</button>
+	    <button id='toggle_on_critiquer' class="btn btn-primary active">On</button>
+	</div>
+</div>		
 <div id="settings" hidden>
 		<p>Choose your playback settings:</p>
 		<div class="switch">
 			<!-- <input type="checkbox" name="my-checkbox" checked> -->
 			<p>Who is controlling the playback:</p>
-			<div class="control btn-group btn-toggle"> 
-			    <button class="btn btn-default">Them</button>
-			    <button class="btn btn-primary active">Me</button>
-		  	</div>
 		  	<p>Allow for critiquers audio:</p>
 			<div class="btn-group btn-toggle"> 
-			    <button class="btn btn-default">Off</button>
-			    <button class="btn btn-primary active">On</button>
+			    <button id='give_them_video_control' class="btn btn-default">Them</button>
+				<button id='give_us_video_control' class="btn btn-primary active">Me</button>
 		  	</div>
 		</div>
 </div>
@@ -87,9 +89,9 @@
 
 	<div class="memo">
 		<p class='before_practice'>Practice will begin when musician has started recording.</p>
-		<div class='musician_practice_item' hidden>The critiquer will still see and hear you if you turn off their video feed<button class='btn btn-primary' id='toggle_critique_video_audio'>Turn off critiquer video feed</button></div>
-		<div class='critique_session_item' hidden><button id='toggle_video_control' class='btn btn-primary {{#if if_musician}}active{{/if}}'>Toggle video control</button></div>
 	</div>
+
+	<div class='musician_practice_item' hidden>The critiquer will still see and hear you if you turn off their video feed<	button class='btn btn-primary' id='toggle_critique_video_audio'>Turn off critiquer video feed</button></div>
 
 	<div id="waiting_comment-panel">
 		<p>Add comments here once recording has started</p>
