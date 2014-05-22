@@ -31,16 +31,15 @@ $(document).ready(function(){
 
   //make the timeline
   function makeTimeline(){
-     var container = document.getElementById('critiques');
+    var container = document.getElementById('critiques');
     var options = {
-      end: 5000,
-      max: 5000,
-      start: 0,
-      min: 0,
-      height: '150px',
-      showMajorLabels: false,
-      zoomMax: 3600000
-    };
+        start: 0,
+        min: 0,
+        selectable: false,
+        showCustomTime: true,
+        height: '150px',
+        showMajorLabels: false
+      };
     timeline = new vis.Timeline(container, critiqueItems, options);
   }
 
@@ -341,11 +340,13 @@ $(document).ready(function(){
           practice_session.child('critique_video_time').on('value', function(snapshot){
             
             if(snapshot.val()){    
-              critique_video.currentTime = snapshot.val().time;
-              critique_audio.currentTime = snapshot.val().time;
+              var time = snapshot.val().time;
+              critique_video.currentTime = time;
+              critique_audio.currentTime = time;
               if(!snapshot.val().paused){
                 critique_video.play();
                 critique_audio.play(); 
+                timeline.setCustomTime(time);
               } else {
                 critique_video.pause();
                 critique_audio.pause();
