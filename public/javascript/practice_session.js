@@ -89,8 +89,8 @@ $(document).ready(function(){
           $(".musician_practice_item").show();
           $("#toggle_off_critiquer").on("click", function(){
               if(toggle_critique){
-                $("#their-audio").stop();
-                $("#their-video").stop();           
+                $("#their-audio").pause();
+                $("#their-video").pause();           
                 document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary active';
               }          
           });
