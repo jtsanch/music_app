@@ -1,0 +1,51 @@
+{
+  "name": "vis",
+  "version": "1.0.1",
+  "description": "A dynamic, browser-based visualization library.",
+  "homepage": "http://visjs.org/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/almende/vis.git"
+  },
+  "keywords": [
+    "vis",
+    "visualization",
+    "web based",
+    "browser based",
+    "javascript",
+    "chart",
+    "linechart",
+    "timeline",
+    "graph",
+    "network",
+    "browser"
+  ],
+  "scripts": {
+    "test": "jake test --trace",
+    "build": "jake --trace"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jake": "latest",
+    "jake-utils": "latest",
+    "clean-css": "latest",
+    "browserify": "3.22",
+    "wrench": "latest",
+    "moment": "latest",
+    "hammerjs": "1.0.5",
+    "mousetrap": "latest",
+    "emitter-component": "latest",
+    "node-watch": "latest"
+  },
+  "readme": "vis.js\n==================\n\nVis.js is a dynamic, browser based visualization library.\nThe library is designed to be easy to use, handle large amounts\nof dynamic data, and enable manipulation of the data.\nThe library consists of the following components:\n\n- DataSet and DataView. A flexible key/value based data set.\n  Add, update, and remove items. Subscribe on changes in the data set.\n  Filter and order items and convert fields of items.\n- Timeline. Display different types of data on a timeline.\n  The timeline and the items on the timeline can be interactively moved,\n  zoomed, and manipulated.\n- Graph. Display an interactive graph or network with nodes and edges.\n\nThe vis.js library is developed by [Almende B.V](http://almende.com).\n\n\n## Install\n\nInstall via npm:\n\n    npm install vis\n\nInstall via bower:\n\n    bower install vis\n\nOr download the library from the github project:\n[https://github.com/almende/vis.git](https://github.com/almende/vis.git).\n\n\n## Load\n\n\nTo use a component, include the javascript and css files of vis in your web page:\n\n```html\n<!DOCTYPE HTML>\n<html>\n<head>\n  <script src=\"components/vis/dist/vis.js\"></script>\n  <link href=\"components/vis/dist/vis.css\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n<body>\n  <script type=\"text/javascript\">\n    // ... load a visualization\n  </script>\n</body>\n</html>\n```\n\nor load vis.js using require.js. Note that vis.css must be loaded too.\n\n```js\nrequire.config({\n  paths: {\n    vis: 'path/to/vis',\n  }\n});\nrequire(['vis'], function (math) {\n  // ... load a visualization\n});\n```\n\n\nA timeline can be instantiated as:\n\n```js\nvar timeline = new vis.Timeline(container, data, options);\n```\n\nWhere `container` is an HTML element, `data` is an Array with data or a DataSet,\nand `options` is an optional object with configuration options for the\ncomponent.\n\n\n## Example\n\nA basic example on loading a Timeline is shown below. More examples can be\nfound in the [examples directory](https://github.com/almende/vis/tree/master/examples)\nof the project.\n\n```html\n<!DOCTYPE HTML>\n<html>\n<head>\n  <title>Timeline basic demo</title>\n  <script src=\"vis/dist/vis.js\"></script>\n  <link href=\"vis/dist/vis.css\" rel=\"stylesheet\" type=\"text/css\" />\n\n  <style type=\"text/css\">\n    body, html {\n      font-family: sans-serif;\n    }\n  </style>\n</head>\n<body>\n<div id=\"visualization\"></div>\n\n<script type=\"text/javascript\">\n  var container = document.getElementById('visualization');\n  var data = [\n    {id: 1, content: 'item 1', start: '2013-04-20'},\n    {id: 2, content: 'item 2', start: '2013-04-14'},\n    {id: 3, content: 'item 3', start: '2013-04-18'},\n    {id: 4, content: 'item 4', start: '2013-04-16', end: '2013-04-19'},\n    {id: 5, content: 'item 5', start: '2013-04-25'},\n    {id: 6, content: 'item 6', start: '2013-04-27'}\n  ];\n  var options = {};\n  var timeline = new vis.Timeline(container, data, options);\n</script>\n</body>\n</html>\n```\n\n\n## Build\n\nTo build the library from source, clone the project from github\n\n    git clone git://github.com/almende/vis.git\n\nThe project uses [jake](https://github.com/mde/jake) as build tool.\nThe build script uses [Browserify](http://browserify.org/) to\nbundle the source code into a library,\nand uses [UglifyJS](http://lisperator.net/uglifyjs/) to minify the code.\nThe source code uses the module style of node (require and module.exports) to\norganize dependencies.\n\nTo install all dependencies and build the library, run `npm install` in the\nroot of the project.\n\n    cd vis\n    npm install\n\nThen, the project can be build running:\n\n    npm run build\n\n\n## Test\n\nTo test the library, install the project dependencies once:\n\n    npm install\n\nThen run the tests:\n\n    npm test\n\n\n## License\n\nCopyright (C) 2010-2014 Almende B.V.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/almende/vis/issues"
+  },
+  "_id": "vis@1.0.1",
+  "dist": {
+    "shasum": "9a577a6076e416a94760fc0f674769489113e57e"
+  },
+  "_from": "vis@",
+  "_resolved": "https://registry.npmjs.org/vis/-/vis-1.0.1.tgz"
+}
