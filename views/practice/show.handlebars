@@ -5,6 +5,7 @@
 <input hidden id='practice_start' value={{practice_start}}>
 <input hidden id='practice_end' value={{practice_end}}>
 
+<!-- <a id="exit" class="btn btn-default" href="/home">Exit to homepage</a> -->
 
 <video id='critique_video' hidden {{#if if_musician}}controls{{/if}}></video>
 <div id='active_critique'></div>
@@ -12,15 +13,15 @@
 
 <div id="playback-container" hidden>
 	{{#if if_musician}}
-		<div class="pure-u-2-3" id="video-container">
-		    <video id="my-video" class="my-video-m" autoplay></video>
-		    <video id="their-video" class="their-video-m" autoplay></video>
+		<div class="pure-u-2-3 video-container">
+		    <video class="inner-video" id="my-video" autoplay></video>
+		    <video class="outer-video" id="their-video" autoplay></video>
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
 	{{else}}
-		<div class="psure-u-2-3" id="video-container">
-		    <video id="my-video" class="my-video-c" autoplay></video>
-		    <video id="their-video" class="their-video-c" autoplay></video>
+		<div class="psure-u-2-3 video-container">
+		    <video class="inner-video" id="my-video" autoplay></video>
+		    <video class="outer-video" id="their-video" autoplay></video>
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
 	{{/if}}
@@ -28,11 +29,14 @@
 
 
 {{#if if_musician}}
-
 	<div id="waiting_response">
 		<div id="waiting_text">Waiting for the critiquer...</div>
 	</div>
-	
+
+	<div class="memo">
+		<p>Click "Record" to begin recording your practice. Unclick the record button when you're finished.</p>
+	</div>
+
 	<div id="#practice_container" hidden>
         <div id="practice_text">Currently practicing! Click End Session to end.</div>
     </div>
@@ -43,20 +47,47 @@
     </div>
 
 {{else}}
-	<div id="waiting_button-panel">
+	<div class="memo">
+		<p>Practice will begin when musician has started recording.</p>
+	</div>
+	<!-- <div id="waiting_button-panel">
 		Waiting for the performer to start practicing....
 	</div>
+<<<<<<< HEAD
+    <div id="button-panel">
+        <h3>Rate the performers while they play!</h3>
+        <h5>Green = good, Red = could use more work</h5>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-pitch" value="pitch">Pitch</button>
+            <button type="button" class="btn btn-default down" id="bad-pitch" value="pitch">Pitch</button>
+        </div>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-tone" value="tone">Tone</button>
+            <button type="button" class="btn btn-default down" id="bad-tone" value="tone">Tone</button>
+        </div>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-rhythm" value="rhythm">Rhythm</button>
+            <button type="button" class="btn btn-default down" id="bad-rhythm" value="rhythm">Rhythm</button>
+        </div>
+        <div class="tag-pair btn-group btn-group-lg">
+            <button type="button" class="btn btn-default up" id="good-posture" value="posture">Posture</button>
+            <button type="button" class="btn btn-default down" id="bad-posture" value="posture">Posture</button>
+        </div>
+    </div> -->
 
-    <div id="critique-panel">
+    <!-- <div id='waiting_critique'></div>
+	<div id='critiques'></div>
+	<input id="critique_text" type="text" placeholder="say something.."> -->
+
+    <!-- <div id="critique-panel">
         
 
     </div>
 
     <div id="critiques_wrapper">
-	   <div id='critiques'>
-            <div    
+	   <div id='critiques'>   
        </div>
-    </div>
+    </div> -->
 
 
 {{/if}}
