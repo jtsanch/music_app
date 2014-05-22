@@ -38,7 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //home page
-app.get('/', routes.index);
+app.get('/', users.home);
 
 //about page
 app.get('/about', about.view);
@@ -96,6 +96,7 @@ console.log("listening now");
 var current_users = {};
 var wss = new WebSocketServer({server: server});
 console.log('websocket server created');
+console.log(wss);
 var count = 0;
 wss.on('connection', function(ws) {
     var id = count;

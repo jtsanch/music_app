@@ -71,12 +71,6 @@ a {
 	text-align: center;
 }
 
-#start_session {
-	margin: 0 auto 0 auto;
-	position: relative;
-
-}
-
 .modal-body {
 	margin-left: 100px;
    	margin-right: auto;
@@ -109,33 +103,28 @@ a {
 	height:100px;
 }
 
-.comp{
+
+.vis.timeline .item.comp{
 	background-color: green;
 }
 
-.comment{
-	background-color: blue;
+.vis.timeline .item.comment{
+	background-color: #BFEFFF;
 }
 
-.improv{
+.vis.timeline .item.suggest{
 	background-color: red;
 }
 
 
 #critiques{
 	margin:0 auto;
-	bottom: 20px;
+	bottom: 0px;
 	width: 600px;
-	height: 100px;
-	background-color: white;
-	border: 1px solid black;
-	overflow: hidden; /* prevents extra space underneath from 33px-high menu items */
-
 }
 
 #critiques_wrapper{
-	bottom: 0;
-	height: 110px;
+	bottom: 10px;
 	margin: 0 auto;
 	position: fixed;
 	width: 100%;
@@ -178,8 +167,9 @@ a {
 
 #start_session{
 	top: 300px;
-	left: 5%;
+	margin-left: 40%;
 	position: absolute;
+	margin-top: 10%;
 }
 
 .btn.down, .btn.up{
@@ -283,10 +273,6 @@ a {
 	width: 400px;
 }
 
-#exit {
-	float: right;
-}
-
 .memo {
 	width: 300px;
 }
@@ -309,13 +295,8 @@ p.memo {
 	color: white;
 }*/
 
-#waiting_comment-panel {
-	position: absolute;
-	width: 480px;
-	height: 40px;
-	top: 390px;
-	z-index: 6;
-	background-color:rgba(30,30,30,0.8);
+#comment-container {
+	width: 400px;
 }
 
 div#comment-panel {
@@ -337,14 +318,14 @@ div#comment-panel p {
 	width: 160px;
 	height: 40px;
 	background-color: #18E1FF;
-	display: inline-block; 
+	/*display: inline-block; */
 }
 
 #comment {
 	width: 160px;
 	height: 40px;
 	background-color: #FFF65F;
-	display: inline-block;
+	/*display: inline-block;*/
 	margin-left: -5px;
 }
 
@@ -352,8 +333,20 @@ div#comment-panel p {
 	width: 160px;
 	height: 40px;
 	background-color: #FF483F;
-	display: inline-block;
+	/*display: inline-block;*/
 	margin-left: -5px;
+}
+
+#option1 {
+	background-color: green;
+}
+
+#option2 {
+	background-color: #BFEFFF;
+}
+
+#option3 {
+	background-color: red;
 }
 
 .expanded textarea{
@@ -365,4 +358,81 @@ div#comment-panel p {
 
 .btn-group .btn-group-justified {
 	width: 160px;
+}
+
+#waiting_comment-panel {
+	position: absolute;
+	right: 1.5%;
+	width: 30%;
+	height: 205px;
+	z-index: 6;
+	background-color:rgba(30,30,30,0.9);
+	top: 5%;
+}
+
+
+#waiting_comment-panel p {
+	color: white;
+	font-size: 18px;
+	position: absolute;
+	margin-left: 7%;
+	margin-top: 20%;
+}
+
+#text-entry {
+	position: absolute;
+	right: 1.5%;
+	width: 30%;
+	top: 5%;
+}
+
+#text-entry textarea {
+	width: 100%;
+	height: 50%;
+}
+
+#radios {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	padding-top: 20px;
+}
+
+#radios p {
+	font-size: 16px;
+}
+
+#buttons {
+	width: 100%;
+	display: inline-block;
+}
+
+#submission-options {
+	width: 100%;
+}
+
+#buttons #options {
+	width: 50%;
+	height: 10%;
+}
+
+#options button {
+	width: 33%;
+}
+
+#exit {
+	position: absolute;
+	top: 550px;
+}
+
+#settings {
+	position: absolute;
+	width: 20%;
+	margin-top: 20%;
+	background-color: red;
+}
+
+
+#settings p {
+	font-size: 16px;
 }
