@@ -113,7 +113,6 @@ $(document).ready(function(){
         if(snapshot.val()){
           
           time_start = new Date().getTime();
-        
           $("#critique_text").keydown(function(e){
             e = e || event;
             if ( e.which == 13 && !e.ctrlKey){
@@ -227,7 +226,7 @@ $(document).ready(function(){
 
 
           var bucket   = new AWS.S3({params: {Bucket: 'thesoundboard'}});
-          var params   = {Key: filename, Body: base64_to_blob(JSON.stringify(files))};
+          var params   = {Key: filename, Body: new Blob(files) };
           bucket.putObject(params, function(err){
             if(err){
               console.log('file upload failed');
@@ -434,29 +433,5 @@ $(document).ready(function(){
   },function(failure){
     console.log(failure);
   });
-  
-  // some handy methods for converting blob to base 64 and vice versa
-  // for performance bench mark, please refer to http://jsperf.com/blob-base64-conversion/5
-  // note useing String.fromCharCode.apply can cause callstack error
-  var blob_to_base64 = function(blob, callback) {
-    var reader = new FileReader();
-    reader.onload = function() {
-      var dataUrl = reader.result;
-      var base64 = dataUrl.split(',')[1];
-      callback(base64);
-    };
-    reader.readAsDataURL(blob);
-  };
 
-  var base64_to_blob = function(base64) {
-    var binary = atob(base64);
-    var len = binary.length;
-    var buffer = new ArrayBuffer(len);
-    var view = new Uint8Array(buffer);
-    for (var i = 0; i < len; i++) {
-      view[i] = binary.charCodeAt(i);
-    }
-    var blob = new Blob([view]);
-    return blob;
-  };
 });

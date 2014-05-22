@@ -38,7 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //home page
-app.get('/', routes.index);
+app.get('/', users.home);
 
 //about page
 app.get('/about', about.view);
