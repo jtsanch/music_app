@@ -109,15 +109,16 @@ a {
 	height:100px;
 }
 
-.vis.timeline .comp{
+
+.vis.timeline .item.comp{
 	background-color: green;
 }
 
-.vis.timeline .comment{
-	background-color: blue;
+.vis.timeline .item.comment{
+	background-color: #BFEFFF;
 }
 
-.vis.timeline .improv{
+.vis.timeline .item.suggest{
 	background-color: red;
 }
 
