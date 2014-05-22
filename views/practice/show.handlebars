@@ -142,23 +142,36 @@
        </div>
     </div> -->
 
-    <div id="text-entry">
-    	<textarea rows="4" cols="50" id="textbox" type="text" placeholder"type here..."></textarea>
-    	<div id="radios">
-    		<p>Choose a color tag:</p>
-    		<div id="buttons">
-				<div id="options" class="btn-group btn-group-justified" data-toggle="buttons-radio">
-			          <button type="button" class="color btn btn-default" id="option1">Good</button>
-			          <button type="button" class="color btn btn-default" id="option2">Ok</button>
-			          <button type="button" class="color btn btn-default" id="option3">Bad</button>
-    			</div>
-				<button type="button" id="suggestion-button" class="submit btn btn-default">submit</button>
 
-				<button type="button" id="suggestion-button" class="cancel btn btn-default">cancel</button>
-			</div>
-		</div>
+		<!-- form radio buttons example -->
+		  <!-- <form id="radios" class="form">
+		  	  <p>Choose a comment tag to submit as:</p>
+			  <div id="buttons" class="btn-group btn-toggle" data-toggle="buttons">
+				    <label id ="option1" class="btn btn-success active">
+					      <input type="radio" name="options" value="option1" checked=""> +
+				    </label>
+				    <label id ="option2" class="btn btn-info">
+					      <input type="radio" name="options" value="option2"> neutral
+				    </label>
+				    <label id ="option3" class="btn btn-danger">
+					      <input type="radio" name="options" value="option3" checked=""> -
+				    </label>
+			  </div>
+			  
+		  </form>   -->
 
-    </div>
+        <div id="text-entry">
+            <textarea rows="4" cols="50" id="textbox" type="text" placeholder"type here..."></textarea>
+            <div id="buttons"> <!-- class="btn-group btn-toggle" data-toggle="buttons"> -->
+                <input type="button" class="btn btn-success submit_button" id="compliment-button" value="+">   
+                <input type='button' class="btn btn-info submit_button" id="comment-button" value="Comment">   
+                <input type='button' class="btn btn-danger submit_button" id="suggest-button" value="-">   
+            </div>
+        </div>
+           <!--  <div id="entry">
+                  <button class="cancel btn btn-default">Cancel</button>
+            </div> -->
+  
 
     <div id="critiques_wrapper">
        <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
