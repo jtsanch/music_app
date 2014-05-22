@@ -17,35 +17,46 @@
 		    <video class="outer-video" id="their-video" autoplay></video>
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
+
+		<!-- blinking record -->
+		<div id="recording" hidden>
+			<p>RECORDING</p>
+		</div>
 	{{else}}
 		<div class="psure-u-2-3 video-container">
 		    <video class="inner-video" id="my-video" autoplay></video>
-		    <div id='video-critique-box'>
-			    <video class="outer-video" id="their-video" autoplay></video>
-			    <audio id='their-audio' hidden autoplay></audio>
-			    <div id="text-entry">
-		    	<textarea rows="4" cols="50" id="textbox" type="text" placeholder"More cowbell!"></textarea>
-		    	<!--<div id="radios">
-		    		<p>Choose a color tag:</p>
-		    		<div id="buttons">
-						<div id="options" class="btn-group btn-group-justified" data-toggle="buttons-radio">
-					          <button type="button" class="color btn btn-default" id="option1">Good</button>
-					          <button type="button" class="color btn btn-default" id="option2">Ok</button>
-					          <button type="button" class="color btn btn-default" id="option3">Bad</button>
-		    			</div>
-						<button type="button" id="suggestion-button" class="submit btn btn-default">submit</button>
+		    <video class="outer-video" id="their-video" autoplay></video>
+		    <audio id='their-audio' hidden autoplay></audio>
+		</div>
 
-						<button type="button" id="suggestion-button" class="cancel btn btn-default">cancel</button>
-					</div>
-				</div> -->
-		    	</div>
-		    </div>
+		<!-- blinking record -->
+		<div id="recording" hidden>
+			<p>RECORDING</p>
 		</div>
 	{{/if}}
+
 </div>
 
 <div id="settings" hidden>
-	Choose your playback settings:
+		<p>Choose your playback settings:</p>
+		<div class="switch">
+			<!-- <input type="checkbox" name="my-checkbox" checked> -->
+			<p>Who is controlling the playback:</p>
+			<div class="control btn-group btn-toggle"> 
+			    <button class="btn btn-default">Them</button>
+			    <button class="btn btn-primary active">Me</button>
+		  	</div>
+		  	<p>Allow for critiquers audio:</p>
+			<div class="btn-group btn-toggle"> 
+			    <button class="btn btn-default">Off</button>
+			    <button class="btn btn-primary active">On</button>
+		  	</div>
+		</div>
+</div>
+
+<!-- where full comment is displayed/read in playback -->
+<div id="full-comments" hidden>
+	<p>Read comment here</p>
 </div>
 
 {{#if if_musician}}
@@ -54,7 +65,7 @@
 	</div>
 
 	<div class="memo">
-		<p>Click "Record" to begin recording your practice. Unclick the record button when you're finished.</p>
+		<p>Click "Start Session" to begin recording your practice. Unclick the record button when you're finished.</p>
 	</div>
 
 	<div id="#practice_container" hidden>
@@ -126,31 +137,27 @@
        </div>
     </div> -->
 
+    <div id="text-entry">
+    	<textarea rows="4" cols="50" id="textbox" type="text" placeholder"type here..."></textarea>
+    	<div id="radios">
+    		<p>Choose a color tag:</p>
+    		<div id="buttons">
+				<div id="options" class="btn-group btn-group-justified" data-toggle="buttons-radio">
+			          <button type="button" class="color btn btn-default" id="option1">Good</button>
+			          <button type="button" class="color btn btn-default" id="option2">Ok</button>
+			          <button type="button" class="color btn btn-default" id="option3">Bad</button>
+    			</div>
+				<button type="button" id="suggestion-button" class="submit btn btn-default">submit</button>
 
-    <!-- <textarea rows="4" cols="50" id="comment-textbox" type="text" placeholder="comment"></textarea>
-    <input id="compliment-textbox" type="text" placeholder="compliment"><br/>
-    <input id="suggestion-textbox" type="text" placeholder="suggest"> -->
+				<button type="button" id="suggestion-button" class="cancel btn btn-default">cancel</button>
+			</div>
+		</div>
+
+    </div>
 
     <div id="critiques_wrapper">
        <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
     </div>
-
-    <div id="settings" hidden>
-		<p>Choose your playback settings:</p>
-		<div class="switch">
-			<!-- <input type="checkbox" name="my-checkbox" checked> -->
-			<p>Who is controlling the playback:</p>
-			<div class="control btn-group btn-toggle"> 
-			    <button class="btn btn-lg btn-default">Them</button>
-			    <button class="btn btn-lg btn-primary active">Me</button>
-		  	</div>
-		  	<p>Allow for critiquers audio:</p>
-			<div class="btn-group btn-toggle"> 
-			    <button class="btn btn-lg btn-default">Off</button>
-			    <button class="btn btn-lg btn-primary active">On</button>
-		  	</div>
-		</div>
-	</div>
 
 {{/if}}
 

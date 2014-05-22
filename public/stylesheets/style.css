@@ -351,7 +351,7 @@ div#comment-panel p {
 	margin-left: -5px;
 }
 
-#option1 {
+/*#option1, #option1:hover {
 	background-color: green;
 }
 
@@ -361,7 +361,7 @@ div#comment-panel p {
 
 #option3 {
 	background-color: red;
-}
+}*/
 
 .expanded textarea{
 	background: transparent;
@@ -376,9 +376,9 @@ div#comment-panel p {
 
 #waiting_comment-panel {
 	position: absolute;
-	right: 1.5%;
+	right: 0.5%;
 	width: 30%;
-	height: 205px;
+	height: 215px;
 	z-index: 6;
 	background-color:rgba(30,30,30,0.9);
 	top: 5%;
@@ -395,13 +395,9 @@ div#comment-panel p {
 
 #text-entry {
 	position: absolute;
-	opacity:.85;
-	bottom: 65px;
-	margin-left:auto;
-	margin-right:auto;
-	z-index:5;
-	width:100%;
-	
+	right: 1.5%;
+	width: 30%;
+	top: 5%;
 }
 
 #text-entry textarea {
@@ -450,10 +446,49 @@ div#comment-panel p {
 	position: absolute;
 	width: 20%;
 	margin-top: 20%;
-	background-color: red;
 }
 
 
 #settings p {
-	font-size: 16px;
+	font-size: 18px;
 }
+
+.switch p {
+	font-size: 14px;
+}
+
+#entry {
+	padding-top: 20px;
+}
+
+#recording {
+	background-color: red;
+	position: absolute;
+	width: 12%;
+	height: 9%;
+	margin-left: 52%;
+	margin-top: 26%;
+}
+
+#recording p {
+	font-size: 20px;
+	color: white;
+	position: absolute;
+	margin-left: 12%;
+	bottom: 12%;
+}
+
+#full-comments {
+	position: absolute;
+	width: 40%
+	height: 30%;
+	margin-top: 20%;
+	margin-left: 70%;
+	outline-width: 20px;
+	outline-color: black;
+}
+
+#full-comments p {
+	font-size: 18px;
+}
+
