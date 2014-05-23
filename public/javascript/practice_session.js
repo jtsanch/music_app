@@ -344,6 +344,7 @@ $(document).ready(function(){
 
           $("#textbox").keydown(function(e){
             if ( e.which == 13 && !e.ctrlKey){ //enter
+              critiquer_start = 0;
               var text = $(this).val();
               var ending = new Date().getTime();
               var sent_at = critique_start - time_start; //msec point in video where it starts
@@ -353,7 +354,7 @@ $(document).ready(function(){
               $(this).val("");
             }else if(e.which == 8 || e.which==46) {//backspace/delete
               critique_start = new Date().getTime();
-            }else if($(this).val().length == 0){//first character
+            }else if($(this).val().length == 1){//first character
               critique_start = new Date().getTime();
             } 
           });
