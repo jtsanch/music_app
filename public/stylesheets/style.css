@@ -504,3 +504,87 @@ div#comment-panel p {
 	font-size: 18px;
 }
 
+#home-title {
+	margin-left: auto;
+ 	margin-right: auto;
+ 	display: table;
+ 	padding-top: 20px;
+}
+
+.search-bar {
+	/*margin-left: auto;
+ 	margin-right: auto;
+ 	display: table;*/
+ 	padding-top: 40px;
+}
+
+#search-input {
+	width: 50%;
+}
+
+#online-friends {
+	padding-top: 35px;
+}
+
+#blur-container {
+	position: fixed;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+}
+
+#blur-container img {
+	position: absolute; 
+  	top: 0; 
+  	left: 0; 
+	right: 0; 
+	bottom: 0; 
+	margin: auto; 
+	min-width: 50%;
+	min-height: 50%;
+}
+
+#cont {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 70;
+	/*overflow: auto;*/
+	margin-left: auto;
+ 	margin-right: auto;
+ 	display: table;
+ 	width: 200%;
+ 	height: 100%
+}
+
+#block {
+	width: 400px;
+	height: 200px;
+	background-color: #7BC9D6;
+	z-index: 5;
+	position: absolute;
+}
+
+#splash {
+	position: absolute;
+	width: 20%;
+	height: 40%;
+	left: 50%;
+	top: 50%;
+	margin-top: -198px;
+	margin-left: -200px;
+	/*height: 360px;*/
+	/*width: 360px;*/
+
+}
+
+.login-panel {
+	z-index: 15;
+	position: absolute;
+	margin-left: 5%
+}
+
+.login-panel h2 {
+	text-align: center;
+}

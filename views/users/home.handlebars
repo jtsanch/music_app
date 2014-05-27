@@ -2,27 +2,60 @@
 
 <div id="logging_in"><div id="log_text"><h3>Logging in...</h3></div></div>
 
-<div class="container">
-  <div class="jumbotron">
+<!--blurred splash page-->
+<!-- <div id="splash">
+  <div id="cont">
+    <div id="block"></div>
+    <div class="login-panel">
+      <h2>Welcome to Soundboard<h2>
+      <input type="email" class="form-control" id="login_email" placeholder="Email">
+      <input type="password" class="form-control" id="login_password" placeholder="Password">
+      <button type="button" class="btn btn-default btn-lg" id="big_login">Login</button>
+    </div>
+  </div>
+  <div id="blur-container">
+      <img src="images/screen.png" alt""> 
+  </div>
+</div> -->
+
+<div id="home-content" class="container-fluid">
+  <!-- <div class="jumbotron">
       <h2>Welcome to SoundBoard</h2>
       <h4>SoundBoard allows you to connect with other fellow musicians to critique each other's music online! Click on an online user to get started.</h4>
-  </div>
+  </div> -->
 
-  <h2>Welcome back <span id="username"></span>!</h2>
+
+  <h1 id="home-title">Welcome back, <span id="username"></span>!</h1>
   <input type="hidden" id="clicked_user">
 
-  <h2>Who's online?</h2>
-  {{#each onlineUsers}}
-    <div class="row">
-      <div class="col-sm-6 col-md-4">
-          <div class="caption thumbnail">
-            <a href="#" class="user_thumbs" id="{{id}}" data-toggle="modal" data-target="#profile_view">
-            <h3>{{user_name}}</h3>
-            <h5>My instrument: {{instrument}}</h5></a>
-          </div>
+  <!-- search bar -->
+   <div class="search-bar row-fluid">
+    <div class="span12">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="search for users by name or username..." id="query" name="query" value>
+        <div class="input-group-btn">
+          <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </div>
       </div>
     </div>
-  {{/each}}
+  </div>
+
+  <div id="online-friends">
+    <h2>My friends online: </h2>
+    {{#each onlineUsers}}
+      <div class="row">
+        <div class="col-sm-4 col-md-4">
+            <div class="caption thumbnail">
+              <a href="#" class="user_thumbs" id="{{id}}" data-toggle="modal" data-target="#profile_view">
+              <h3>{{user_name}}</h3>
+              <h5>My instrument: {{instrument}}</h5></a>
+            </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 
   <div id="profile_view" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
