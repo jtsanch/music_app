@@ -553,7 +553,7 @@ div#comment-panel p {
 	/*overflow: auto;*/
 	margin-left: auto;
  	margin-right: auto;
- 	margin-top: -100%;
+ 	margin-top: -150%;
  	display: table;
  	width: 200%;
  	height: 100%
@@ -561,7 +561,7 @@ div#comment-panel p {
 
 #block {
 	width: 400px;
-	height: 200px;
+	height: 250px;
 	background-color: #7BC9D6;
 	z-index: 5;
 	position: absolute;
@@ -591,6 +591,15 @@ div#comment-panel p {
 	text-align: center;
 }
 
+.login-panel button {
+	padding-top: 10px;
+	margin-left: 36%;
+}
+
+.login-panel h4 {
+	padding-top: 15px;
+}
+
 #home-content {
 	position: absolute;
 
@@ -599,5 +608,4 @@ div#comment-panel p {
 #home-body {
 	position: absolute;
 	z-index: 1;
-
 }
