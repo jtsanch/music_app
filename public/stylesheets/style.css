@@ -553,6 +553,7 @@ div#comment-panel p {
 	/*overflow: auto;*/
 	margin-left: auto;
  	margin-right: auto;
+ 	margin-top: -100%;
  	display: table;
  	width: 200%;
  	height: 100%
@@ -572,8 +573,9 @@ div#comment-panel p {
 	height: 40%;
 	left: 50%;
 	top: 50%;
-	margin-top: -198px;
-	margin-left: -200px;
+	margin-top: -260px;
+	margin-left: -230px;
+	z-index: 20;
 	/*height: 360px;*/
 	/*width: 360px;*/
 
@@ -587,4 +589,15 @@ div#comment-panel p {
 
 .login-panel h2 {
 	text-align: center;
+}
+
+#home-content {
+	position: absolute;
+
+}
+
+#home-body {
+	position: absolute;
+	z-index: 1;
+
 }
