@@ -4,7 +4,7 @@
 <input hidden id='if_musician' value={{if_musician}}>
 <input hidden id='practice_start' value={{practice_start}}>
 <input hidden id='practice_end' value={{practice_end}}>
-<div id='body-wrapper'><h1>Enable your webcam and audio above</h1></div>
+<div id='body-wrapper'><h1>Enable your webcam and audio above by clicking "Allow" twice!</h1></div>
 
 <video id='critique_video' hidden {{#if if_musician}}{{else}}controls{{/if}}></video>
 <div id='active_critique'></div>
@@ -37,10 +37,9 @@
 
 </div>
 
-<div id="settings" hidden>
+<!-- <div id="settings" hidden>
 		<p>Choose your playback settings:</p>
 		<div class="switch">
-			<!-- <input type="checkbox" name="my-checkbox" checked> -->
 			<p>Who is controlling the playback:</p>
 			<div class="control btn-group btn-toggle"> 
 			    <button class="btn btn-default">Them</button>
@@ -54,10 +53,9 @@
 		</div>
 </div>
 
-<!-- where full comment is displayed/read in playback -->
 <div id="full-comments" hidden>
 	<p>Read comment here</p>
-</div>
+</div> -->
 
 {{#if if_musician}}
 	<div id="waiting_response">
@@ -81,93 +79,21 @@
 {{else}}
 
 	<div class="memo">
-		<p class='before_practice'>Practice will begin when musician has started recording.</p>
-		<div class='musician_practice_item' hidden>The critiquer will still see and hear you if you turn off their video feed<button class='btn btn-primary' id='toggle_critique_video_audio'>Turn off critiquer video feed</button></div>
-		<div class='critique_session_item' hidden><button id='toggle_video_control' class='btn btn-primary {{#if if_musician}}active{{/if}}'>Toggle video control</button></div>
+		<p><h3>Practice will begin when musician has started recording!</h3>
+		<br>Drop quick reminder notes while the musician is playing, so you guys can talk about it more in-depth after they finish playing! 
+		<br>(They can't see the timeline until they finish playing, so don't worry about distracting them!)</p>
 	</div>
 
-	<div id="waiting_comment-panel">
-		<p>Add comments here once recording has started</p>
-	</div>
 
-	<!-- <div id="comment-panel" class="comment-container">
-		<div id="compliment">
-			<p id="compliment-text">Add compliment</p>
-			<div class= "expanded" id="compliment-expanded" hidden>
-				<textarea rows="4" cols="50" id="compliment-textbox" placeholder="type here..."></textarea>
-				<div class="btn-group btn-group-justified">
-					<div class="btn-group">
-						<button type="button" id="compliment-button" class="submit btn btn-default">submit</button>
-					</div>
-					<div class="btn-group">
-						<button type="button" id="compliment-button" class="cancel btn btn-default">cancel</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="comment">
-			<p id="comment-text">Add comment</p>
-			
-		</div>
-		<div id="suggestion">
-			<p id="suggestion-text">Add suggestion</p>
-			<div class= "expanded" id="suggestion-expanded" hidden>
-				<textarea rows="4" cols="50" id="suggestion-textbox" placeholder="type here..."></textarea>
-				<div class="btn-group btn-group-justified">
-					<div class="btn-group">
-						<button type="button" id="suggestion-button" class="submit btn btn-default">submit</button>
-					</div>
-					<div class="btn-group">
-						<button type="button" id="suggestion-button" class="cancel btn btn-default">cancel</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --> 
-
-    <!-- <div id='waiting_critique'></div>
-	<div id='critiques'></div>
-	<input id="critique_text" type="text" placeholder="say something..">
-
-    <div id="critique-panel">
-    </div> -->
-
-    <!-- <div id="critiques_wrapper">
-	   <div id='critiques'>   
-       </div>
-    </div> -->
-
-
-		<!-- form radio buttons example -->
-		  <!-- <form id="radios" class="form">
-		  	  <p>Choose a comment tag to submit as:</p>
-			  <div id="buttons" class="btn-group btn-toggle" data-toggle="buttons">
-				    <label id ="option1" class="btn btn-success active">
-					      <input type="radio" name="options" value="option1" checked=""> +
-				    </label>
-				    <label id ="option2" class="btn btn-info">
-					      <input type="radio" name="options" value="option2"> neutral
-				    </label>
-				    <label id ="option3" class="btn btn-danger">
-					      <input type="radio" name="options" value="option3" checked=""> -
-				    </label>
-			  </div>
-			  
-		  </form>   -->
-
-        <div id="text-entry">
-            <textarea rows="4" cols="50" id="textbox" type="text" placeholder"type here..."></textarea>
-            <div id="buttons"> <!-- class="btn-group btn-toggle" data-toggle="buttons"> -->
-                <button id = "cancel-button" class="cancel btn btn-sm btn-default">Cancel</button>
-                <span id="span"> </span>
-                <input type="button" class="btn btn-success submit_button" id="compliment-button" value="+">   
-                <input type='button' class="btn btn-info submit_button" id="comment-button" value="Comment">   
-                <input type='button' class="btn btn-danger submit_button" id="suggest-button" value="-">   
-            </div>
-        </div>
+    <div id="buttons"> <!-- class="btn-group btn-toggle" data-toggle="buttons"> -->
+        <input type="button" class="btn btn-success submit_button btn-lg" id="plus-button" value="+">   
+        <input type='button' class="btn btn-danger submit_button btn-lg" id="minus-button" value="-"> 
+        <div id="button-memo">
+        	Leave reminder notes while they're playing!
+        </div>  
+    </div>
             
   
-
     <div id="critiques_wrapper">
        <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
     </div>

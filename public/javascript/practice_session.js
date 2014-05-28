@@ -86,6 +86,7 @@ $(document).ready(function(){
           $("#start_session").val("End Session");
           $('#practice-container').show();
           $(".musician_practice_item").show();
+          $(".memo").hide();
           $("#toggle_critique_video_audio").on('click',function(){
             if(toggle_critique){
               $("#their-audio").stop();
@@ -259,6 +260,7 @@ $(document).ready(function(){
         
           $("#critique-panel").show();
           $("#waiting_comment-panel").fadeOut();
+          $(".memo").hide();
           $("#recording").show();
 
 
@@ -338,37 +340,37 @@ $(document).ready(function(){
 
           // $("#option2").addClass('active');
 
-          $("#textbox").keydown(function(e){
-            if ( e.which == 13 && !e.ctrlKey){ //enter
-              var text = $(this).val();
-              var ending = new Date().getTime();
-              var sent_at = critique_start - time_start; //msec point in video where it starts
-              var duration = ending - critique_start;
-              add_critique_item_db(sent_at, duration, text, "comment");
-              add_critique_item(sent_at, duration, text, "comment");
-              $(this).val("");
-            }else if(e.which == 8 || e.which==46) {//backspace/delete
-              critique_start = new Date().getTime();
-            }else if($(this).val().length == 0){//first character
-              critique_start = new Date().getTime();
-            } 
-          });
+          // $("#textbox").keydown(function(e){
+          //   if ( e.which == 13 && !e.ctrlKey){ //enter
+          //     var text = $(this).val();
+          //     var ending = new Date().getTime();
+          //     var sent_at = critique_start - time_start; //msec point in video where it starts
+          //     var duration = ending - critique_start;
+          //     add_critique_item_db(sent_at, duration, text, "comment");
+          //     add_critique_item(sent_at, duration, text, "comment");
+          //     $(this).val("");
+          //   }else if(e.which == 8 || e.which==46) {//backspace/delete
+          //     critique_start = new Date().getTime();
+          //   }else if($(this).val().length == 0){//first character
+          //     critique_start = new Date().getTime();
+          //   } 
+          // });
 
           $(".submit_button").on("click",function(){
             //check which is active
             var type;
-            if ($(this).attr('id') === 'compliment-button'){
+            var text;
+            if ($(this).attr('id') === 'plus-button'){
               type='comp';
-            }else if ($(this).attr('id') === 'comment-button'){
-              type="comment";
+              text="+";
             }else{
               type="suggest";
+              text="-";
             }
 
-            var ending = new Date().getTime();
-            var text = $("#textbox").val();
-            var sent_at = critique_start - time_start; //msec point in video where it starts
-            var duration = ending - critique_start;
+            var now = new Date().getTime();
+            var sent_at = now - time_start; //msec point in video where it starts
+            var duration = 1000;
             add_critique_item_db(sent_at, duration, text, type);
             add_critique_item(sent_at, duration, text, type);
             $('#textbox').val("");
@@ -548,16 +550,16 @@ $(document).ready(function(){
 
   //called when session begins
   function begin_critique_session(){
-    $('#text-entry').fadeOut();
+    $('#buttons').fadeOut();
     $('#settings').show();
     $('#full-comments').show();
-    $(".memo").hide();
     $(".critique_session_item").show();
     show_critique_items();
     var critique_audio = document.getElementById('critique_audio');
     var critique_video = document.getElementById('critique_video');
     
-    var video_control = if_musician;
+    //video control if you are the critiquer
+    var video_control = !if_musician;
     var counter = 0; //so we can know how many times people switch videos
     
     practice_session.child('video_control').on('value', function(snapshot){

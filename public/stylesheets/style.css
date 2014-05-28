@@ -265,7 +265,7 @@ a {
 	top: 0px;
 	left: 200px;
 	/*width: 400px;*/
-	top: 50px;
+	top: 5px;
 	left: 0px;
 	/*width: 100%;*/
 	height: 450px;
@@ -431,9 +431,21 @@ div#comment-panel p {
 }
 
 #buttons {
-	width: 80%;
-	display: inline-block;
+	position: absolute;
+	width:100%;
+	text-align:center;
 	left:0;
+	margin-left:auto;
+	margin-right:auto;
+	top:380px;
+}
+
+.submit_button{
+	margin:0 20px;
+}
+
+#button-memo{
+	margin:10px;
 }
 
 #submission-options {
@@ -478,7 +490,7 @@ div#comment-panel p {
 	position: absolute;
 	width: 12%;
 	height: 9%;
-	margin-left: 52%;
+	margin-left: 75%;
 	margin-top: 26%;
 }
 
@@ -492,7 +504,7 @@ div#comment-panel p {
 
 #full-comments {
 	position: absolute;
-	width: 40%
+	width: 40%;
 	height: 30%;
 	margin-top: 20%;
 	margin-left: 70%;
@@ -504,6 +516,7 @@ div#comment-panel p {
 	font-size: 18px;
 }
 
+<<<<<<< HEAD
 #home-title {
 	margin-left: auto;
  	margin-right: auto;
@@ -601,3 +614,23 @@ div#comment-panel p {
 	z-index: 1;
 
 }
+.memo{
+	position: relative;
+	width: 620px;
+	padding: 10px 30px;
+	margin-left: auto;
+	margin-right: auto;
+	top: 320px;
+	display: table;
+	text-align: center;
+	height:260px;
+	background-color:rgba(30,30,30,0.9);
+	z-index:8;
+	color:white;
+}
+
+#start_session{
+	z-index:9;
+	top:370px;
+}
+
