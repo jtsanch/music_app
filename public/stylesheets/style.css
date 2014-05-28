@@ -96,7 +96,7 @@ a {
   background-color: #aaaaaa;
   text-align: center;
   background-color:rgba(30,30,30,0.7);
-	z-index:10;
+	z-index:9;
 }
 
 #log_text, #waiting_text{
@@ -437,7 +437,7 @@ div#comment-panel p {
 	left:0;
 	margin-left:auto;
 	margin-right:auto;
-	top:380px;
+	top:390px;
 }
 
 .submit_button{
@@ -632,5 +632,10 @@ div#comment-panel p {
 #start_session{
 	z-index:9;
 	top:370px;
+}
+
+#comment-textbox{
+	height: 40px;
+	width: 300px;
 }
 

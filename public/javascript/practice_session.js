@@ -264,22 +264,7 @@ $(document).ready(function(){
           $("#recording").show();
 
 
-          // $("#comment-textbox").keydown(function(e){
-          //   e = e || event;
-          //   if ( e.which == 13 && !e.ctrlKey){ //enter
-          //     var text = $(this).val();
-          //     var ending = new Date().getTime();
-          //     var sent_at = critique_start - time_start; //msec point in video where it starts
-          //     var duration = ending - critique_start;
-          //     add_critique_item_db(sent_at, duration, text, "comment");
-          //     add_critique_item(sent_at, duration, text, "comment");
-          //     $(this).val("");
-          //   }else if(e.which == 8 || e.which==46) {//backspace/delete
-          //     critique_start = new Date().getTime();
-          //   }else if($(this).val().length == 0){//first character
-          //     critique_start = new Date().getTime();
-          //   } 
-          // });
+
 
           // $("#compliment-textbox").keydown(function(e){
           //   if ( e.which == 13 && !e.ctrlKey){ //enter
@@ -356,29 +341,42 @@ $(document).ready(function(){
           //   } 
           // });
 
-          $(".submit_button").on("click",function(){
-            //check which is active
-            var type;
-            var text;
-            if ($(this).attr('id') === 'plus-button'){
-              type='comp';
-              text="+";
-            }else{
-              type="suggest";
-              text="-";
-            }
+          // $(".submit_button").on("click",function(){
+          //   //check which is active
+          //   var type;
+          //   var text;
+          //   if ($(this).attr('id') === 'plus-button'){
+          //     type='comp';
+          //     text="+";
+          //   }else{
+          //     type="suggest";
+          //     text="-";
+          //   }
 
-            var now = new Date().getTime();
-            var sent_at = now - time_start; //msec point in video where it starts
-            var duration = 1000;
-            add_critique_item_db(sent_at, duration, text, type);
-            add_critique_item(sent_at, duration, text, type);
-            $('#textbox').val("");
-          });
+          //   var now = new Date().getTime();
+          //   var sent_at = now - time_start; //msec point in video where it starts
+          //   var duration = 1000;
+          //   add_critique_item_db(sent_at, duration, text, type);
+          //   add_critique_item(sent_at, duration, text, type);
+          //   $('#textbox').val("");
+          // });
 
-          $(".cancel").on("click",function(){
-            //also close the div
-            $("#textbox").val("");
+          // $(".cancel").on("click",function(){
+          //   //also close the div
+          //   $("#textbox").val("");
+          // });
+
+          $("#comment-textbox").keydown(function(e){
+            e = e || event;
+            if ( e.which == 13 && !e.ctrlKey){ //enter
+              var text = $(this).val();
+              var now = new Date().getTime();
+              var sent_at = now - time_start; //msec point in video where it starts
+              var duration = 1000;
+              add_critique_item_db(sent_at, duration, text, "comment");
+              add_critique_item(sent_at, duration, text, "comment");
+              $(this).val("");
+            } 
           });
 
        //   $("#critique-panel").show();

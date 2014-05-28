@@ -1,6 +1,8 @@
 //used only for login/register pages
 $(document).ready(function() {
     
+  $(".login-panel").fadeIn();
+
   auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
     if (error) {
       console.log('error');
