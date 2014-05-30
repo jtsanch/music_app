@@ -379,8 +379,6 @@ $(document).ready(function(){
             } 
           });
 
-       //   $("#critique-panel").show();
-
           start_recording();
         }
       });
@@ -551,6 +549,7 @@ $(document).ready(function(){
     $('#buttons').fadeOut();
     $('#settings').show();
     $('#full-comments').show();
+    $("#exit_save").fadeIn();
     $(".critique_session_item").show();
     show_critique_items();
     var critique_audio = document.getElementById('critique_audio');

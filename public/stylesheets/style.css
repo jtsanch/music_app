@@ -466,6 +466,11 @@ div#comment-panel p {
 	top: 550px;
 }
 
+#save{
+	position: absolute;
+top: 490px;
+}
+
 #settings {
 	position: absolute;
 	width: 20%;
