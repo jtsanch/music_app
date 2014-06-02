@@ -36,9 +36,12 @@ $(document).ready(function(){
   function makeTimeline(){
     var container = document.getElementById('critiques');
     var options = {
+      autoResize: false,
       end: zeroTime.getTime()+5000,
       start: zeroTime,
       min: zeroTime,
+      showCustomTime: true,
+      stack: false,
       height: '150px',
       showMajorLabels: false,
       zoomMax: 36000000,
@@ -506,7 +509,9 @@ $(document).ready(function(){
     }
        
   }
-
+  $(".timeline").mouseover(function(event){
+    console.log(event);
+  });
   function show_critique_items(){
     console.log("show_critique_items");
     // $("#their-video").css({
@@ -546,68 +551,82 @@ $(document).ready(function(){
 
   //called when session begins
   function begin_critique_session(){
+    
     $('#buttons').fadeOut();
     $('#settings').show();
     $('#full-comments').show();
     $("#exit_save").fadeIn();
     $(".critique_session_item").show();
+    
     show_critique_items();
+    
     var critique_audio = document.getElementById('critique_audio');
     var critique_video = document.getElementById('critique_video');
     
-    //video control if you are the critiquer
-    var video_control = !if_musician;
-    var counter = 0; //so we can know how many times people switch videos
-    
-    practice_session.child('video_control').on('value', function(snapshot){
-      if(snapshot.val() && !video_control){
-        $("#toggle_video_control").class = 'btn btn-primary active';
-        counter += 1;
-        video_control = false;
-      }
-    });
-
-    $("toggle_video_control").on('click', function(){
-      if(!video_control){
-        video_control = true;
-        counter += 1;
-        practice_session.child('video_control').set(counter);
-      }
-    });
-
-    // musician's video will move based on what the critiquer did
     critique_video.addEventListener('loadedmetadata', function() {   
         practice_session.child('critique_video_time').on('value', function(snapshot){
             
-          if(snapshot.val() && !video_control){    
+          if(snapshot.val()){    
             var time = snapshot.val().time;
             critique_video.currentTime = time;
             critique_audio.currentTime = time;
-            if(!snapshot.val().paused){
-              critique_video.play();
-              critique_audio.play(); 
-            } else {
-              critique_video.pause();
-              critique_audio.pause();
-            }
-          }
 
+            critique_video.pause();
+            critique_audio.pause();
+        
+          }
         });
      }, false);
 
+    //
+    $("#playhead").mousedown(function(e1){
+      var parent = $(this).parent();
+      var start_x = e1.pageX - parent.offset().left;
+      var init_start = 
+      $("#timeline_wrapper").mousemove(function(e2){
+         var current_x = e2.pageX - parent.offset().left;
+         var seconds = (current_x / parent.width) * critique_video.duration;
+         critique_video.prop('currentTime', seconds);
+      };
+
+      $("#timeline_wrapper").mouseup(function(e3){
+        var current_x = e3.pageX - parent.offset().left;
+        var seconds = (current_x / parent.width) * critique_video.duration;
+        $("#timeline_wrapper").off('mousemove');
+        $("#timeline_wrapper").off('mouseup');
+
+      });
+    });
+
     $("#critique_video").on('timeupdate', function(){
-      if(video_control){
-        critique_audio.currentTime = critique_video.currentTime;
-        practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
+      critique_audio.currentTime = critique_video.currentTime;
+      practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
 
-        if(critique_video.paused){
-          critique_audio.pause();
-        } else {
-          critique_audio.play();
-        }
+      if(critique_video.paused){
+        critique_audio.pause();
+      } else {
+        critique_audio.play();
+      }
 
+    });
+    
+    var playing = false;
+
+    $("#toggle_video").on('click', function(){
+      
+      if(playing){
+        playing = false;
+        critique_video.pause();
+        critique_audio.pause();
+        practice_session.child('critique_video_paused').set(true);
+      } else {
+        playing = true;
+        critique_video.play();
+        critique_audio.play();
+        practice_session.child('critique_video_paused').set(false);
       }
     });
+
 
     $("#critique_video").on('pause', function(){
       practice_session.child('critique_video_paused').set(true);
