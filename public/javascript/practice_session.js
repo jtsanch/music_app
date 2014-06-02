@@ -706,7 +706,7 @@ $(document).ready(function(){
       start: startTime,
       end: endTime,
       content: text,
-      // type: 'rangeoverflow',
+       type: 'rangeoverflow',
       className: type
     }
     critiqueItems.push(newItem);
