@@ -47,7 +47,8 @@ $(document).ready(function() {
     });
 
      /* begin Profile Page js */
-    $("#invite_asM").on("click", function(){
+    $(".invite_asM").on("click", function(){
+      console.log("invited user");
       if(current_user){
         var request_id = current_user.id;
         var invited_id = $("#clicked_user").val();
