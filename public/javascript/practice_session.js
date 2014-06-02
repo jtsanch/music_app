@@ -19,7 +19,7 @@ $(document).ready(function(){
   var frames = [];
 
   //hide navbar for chatroom
-  $(".navbar").hide();
+  $("#navi").hide();
 
   //instance vars
   var critiqueBarLen = 600;
@@ -42,7 +42,7 @@ $(document).ready(function(){
       height: '150px',
       showMajorLabels: false,
       zoomMax: 36000000,
-      type: 'rangeoverflow'
+      // type: 'rangeoverflow'
     };
     timeline = new vis.Timeline(container, critiqueItems, options);
   }
@@ -81,9 +81,11 @@ $(document).ready(function(){
 
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
-        if($("#start_session").val() == "Start Session") {
+        if($("#start_session").val() == "Start recording") {
           practice_session.child('practice_start').set(new Date().getTime());
-          $("#start_session").val("End Session");
+          $("#start_session").val("End recording");
+          $('#start_session').css({"background-color": "#8A3E55"});
+          $("#recording").fadeTo("slow",1.0);
           $('#practice-container').show();
           $(".musician_practice_item").show();
           $(".memo").hide();
@@ -102,7 +104,8 @@ $(document).ready(function(){
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           stop_recording();
-          $("#start_session").hide();
+          $("#start_session").fadeOut();
+          $("#recording").fadeOut();
           $('#practice-container').hide();
           begin_critique_session();
         }  
@@ -134,6 +137,7 @@ $(document).ready(function(){
         //await the call from the crtiquer. Just chill out in the window
         audio_peer.on('call', function(call){
           if(peers_logged_in == 2){
+            // $(".memo").hide();
             $("#waiting_response").hide();  
             $('#playback-container').show();          
           }
@@ -261,7 +265,12 @@ $(document).ready(function(){
           $("#critique-panel").show();
           $("#waiting_comment-panel").fadeOut();
           $(".memo").hide();
-          $("#recording").show();
+
+
+          // $("#recording").show();
+          console.log("change opacity");
+          $("#recording").fadeTo("slow",1.0);
+          // #("#recording").toggleClass("glow");
 
 
 
@@ -538,7 +547,8 @@ $(document).ready(function(){
       "margin-left": "0px"
     });
   
-    $("#critique_video").show();
+    $("#critique_video_wrapper").show();
+    // $("#critique_video").show();
   }
 
   var control = !if_musician;
@@ -623,8 +633,9 @@ $(document).ready(function(){
       timeline.on('select', function (properties) {
         var itemIndex = properties.items[0];
         var targetItem = critiqueItems[itemIndex];
+        $("#" + targetId).css({"background-color":"black"});
         var startDisplace = targetItem.start - zeroTime.getTime();//displace from start in msec
-        
+
         //set new time for critiquer video in seconds
         critique_video.currentTime = startDisplace/1000;
 
@@ -695,7 +706,7 @@ $(document).ready(function(){
       start: startTime,
       end: endTime,
       content: text,
-      type: 'rangeoverflow',
+      // type: 'rangeoverflow',
       className: type
     }
     critiqueItems.push(newItem);

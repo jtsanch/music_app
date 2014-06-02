@@ -6,11 +6,18 @@
 <input hidden id='practice_end' value={{practice_end}}>
 <div id='body-wrapper'><h1>Enable your webcam and audio above by clicking "Allow" twice!</h1></div>
 
-<video id='critique_video' hidden {{#if if_musician}}{{else}}controls{{/if}}></video>
+<div id="critique_video_wrapper" hidden>
+	<div id="label">
+		<p>Recorded practice<p>
+	</div>
+	<video id='critique_video' {{#if if_musician}}{{else}}controls{{/if}}></video>
+</div>
+
 <div id='active_critique'></div>
 <audio id='critique_audio' hidden></audio>
 
-<div id="playback-container" hidden>
+<div id="playback-container" fixed hidden>
+	<a id="exit" class="btn btn-lg" href="/home">Exit Session</a>
 	{{#if if_musician}}
 		<div class="pure-u-2-3 video-container">
 		    <video class="inner-video" id="my-video" autoplay></video>
@@ -19,8 +26,8 @@
 		</div>
 
 		<!-- blinking record -->
-		<div id="recording" hidden>
-			<p>RECORDING</p>
+		<div id="recording" class="glow">
+				<h3><span class="glyphicon glyphicon-record"></span> recording </h3>
 		</div>
 	{{else}}
 		<div class="psure-u-2-3 video-container">
@@ -30,8 +37,8 @@
 		</div>
 
 		<!-- blinking record -->
-		<div id="recording" hidden>
-			<p>RECORDING</p>
+		<div id="recording" class="glow">
+				<h3><span class="glyphicon glyphicon-record"></span> recording </h3>
 		</div>
 	{{/if}}
 
@@ -57,49 +64,52 @@
 	<p>Read comment here</p>
 </div> -->
 
-{{#if if_musician}}
-	<div id="waiting_response">
-		<div id="waiting_text">Waiting for the critiquer...</div>
-	</div>
+<div id="practice" fixed>
+	{{#if if_musician}}
+		<div id="waiting_response">
+			<div id="waiting_text">Waiting for the critiquer...</div>
+		</div>
 
-	<div class="memo">
-		<p>Click "Start Session" to begin recording your practice. Unclick the record button when you're finished.</p>
-	</div>
+		<!-- <div class="memo">
+			<p id="info">Click "Start Session" to begin recording your practice. Unclick the record button when you're finished.</p>
+		</div> -->
 
-	<div id="#practice_container" hidden>
-        <div id="practice_text">Currently practicing! Click End Session to end.</div>
-    </div>
+		<div id="#practice_container" hidden>
+	        <div id="practice_text">Currently practicing! Click End Session to end.</div>
+	    </div>
 
-    <input type='button' class="btn btn-default btn-lg" id="start_session" value="Start Session">
-    
-    <div id="critiques_wrapper">
-       <div id='critiques' hidden></div>
-    </div>
+	    <input type='button' class="btn btn-lg" id="start_session" value="Start recording">
+	    
+	    <div id="critiques_wrapper">
+	       <div id='critiques' hidden></div>
+	    </div>
 
-{{else}}
+	{{else}}
 
-	<div class="memo">
-		<p><h3>Practice will begin when musician has started recording!</h3>
-		<h4>Drop quick reminder notes while the musician is playing, so you guys can talk about it more in-depth after they finish playing!</h4>
-		<br>(They can't see the timeline until they finish playing, so don't worry about distracting them!)</p>
-	</div>
+		<div class="memo">
+			<p><h3 id="head">Practice will begin when musician has started recording!</h3>
+			<h3>Drop quick reminder notes while the musician is playing, so you guys can talk about it more in-depth after they finish playing!</h3>
+			<br><h4>(They can't see the timeline until they finish playing, so don't worry about distracting them!)</h4></p>
+		</div>
 
 
-    <div id="buttons"> <!-- class="btn-group btn-toggle" data-toggle="buttons"> -->
-        <input id="comment-textbox" type="text" placeholder="Type and hit enter!"><br/>
+	    <div id="buttons"> <!-- class="btn-group btn-toggle" data-toggle="buttons"> -->
+	        <input id="comment-textbox" type="text" placeholder="Type and hit enter!"><br/>
 
-        <div id="button-memo">
-        	(Leave quick reminder notes while they're playing above!) 
-        </div>  
-    </div>
-            
-  
-    <div id="critiques_wrapper">
-       <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
-    </div>
+	        <div id="button-memo">
+	        	(Leave quick reminder notes while they're playing above!) 
+	        </div>  
+	    </div>
+	            
+	  
+	    <div id="critiques_wrapper">
+	       <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
+	    </div>
 
-{{/if}}
+	{{/if}}
+</div>
+
 <div id="exit_save" hidden>
-	<a id="exit" class="btn btn-danger btn-lg" href="/home">Exit Session</a>
-	<a id="save" class="btn btn-default btn-lg" href="#">Save Playback Video</a>
+	<a id="exit" class="btn btn-lg" href="/home">Exit Session</a>
+	<a id="save" class="btn btn-lg" href="#">Save Playback Video</a>
 </div>

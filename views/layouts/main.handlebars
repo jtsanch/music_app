@@ -25,36 +25,43 @@
     <script src="/vis/dist/vis.js"></script>
 </head>
 <body>
-    <!--Top Navbar-->
-    <nav id="navi" class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/home">SoundBoard</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="tab">
-                    <a href="/about">About</a>
-                </li>
-                <li class="tab">
-                    <a href="/help">Help</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li id="login">
-                    <a href="/login">Login</a>
-                </li>
-                <li id="logout">
-                    <a href="#">Logout</a>
-                </li>
-            </ul>
-        </div>  
-      </div>
-    </nav>
+    <div id="navi">
+        <!--Top Navbar-->
+        <a href="/home"><img id="home-logo" src="/images/logo3.png"></a> 
 
+        <nav class="navbar" role="navigation">
+          <div class="container">
+            <!-- <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/home">SoundBoard</a>
+            </div> -->
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="tab">
+                        <h3><a href="/about">about</a></h3>
+                    </li>
+                    <li class="tab">
+                        <h3><a href="/help">help</a></h3>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li id="login">
+                        <a href="/login">Login</a>
+                    </li> -->
+                    <li class="tab" id="profile">
+                        <h3><a href="/profile">profile</a></h3>
+                    </li>
+                    <li class="tab" id="logout">
+                        <h3><a href="#">logout</a></h3>
+                    </li>
+                </ul>
+            </div>  
+          </div>
+        </nav>
+    </div>
     {{{body}}}
 
 </body>
