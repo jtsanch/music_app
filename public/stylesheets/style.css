@@ -1124,6 +1124,7 @@ img {
 	font-family: "Calibri";
 	font-size: 20px;
 	height: 45px;
+	margin: 2px;
 }
 
 .login-credentials .form-control {

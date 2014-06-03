@@ -13,8 +13,8 @@ exports.show = function(req, res) {
 	    	});
 		} else {
 			res.render('users/show', {
-				title: "User doesn't exist!",
-				user: {name:"I don't exist", id:"-1"}
+				title: "Profile",
+				user: {name:"MyName", id:"-1"}
 			});
 		}
 	});
@@ -59,7 +59,8 @@ exports.home = function(req, res){
         {
             res.render('users/home',{
                 title: 'Home',
-                onlineUsers: onlineUsers
+                onlineUsers: onlineUsers,
+                user_id: 
             });
         }
         else
