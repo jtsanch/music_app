@@ -1091,3 +1091,12 @@ img {
 	color: #F5355B;
 }
 
+#playhead {
+	width: 100%;
+	height:65px;
+	background-color:#22221E;
+}	
+
+#playhead:hover{
+	background-color:#A7A7A5;
+}
