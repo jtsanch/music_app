@@ -135,6 +135,13 @@ a {
 .modal-body {
 	text-align: center;
 	margin:0;
+	background-color: #F1F0F0;
+	font-family: "Calibri";
+	font-size: 20px;
+}
+
+#caller_name {
+	font-size: 20px;
 }
 
 .modal-content{
@@ -154,6 +161,10 @@ a {
 	z-index:9;
 }
 
+#waiting_response {
+	font-family: "Calibri";
+}
+
 #log_text, #waiting_text{
   position:absolute;
   left:450px;
@@ -161,6 +172,12 @@ a {
   color:white;
   z-index:11;
   font-size:24px;
+}
+
+#waiting_text {
+	right: 0px;
+	left:0px;
+	font-size: 24px;
 }
 
 .indivCritiques{
@@ -844,6 +861,7 @@ img {
     display: block;
     text-align: center;
     width: 100%;
+    padding-bottom: 35px;
 }
  
 .ch-grid:after,
@@ -1154,3 +1172,35 @@ img {
 .incoming{
 	margin: 10px 0 0 0;
 }
+
+#search_btn {
+	background-color: #54D7CF; 
+	color: #8A3E55;
+	font-family: "Calibri";
+}
+
+#search_btn:hover {
+	background-color: #8A3E55; 
+	color: #54D7CF;
+}
+
+.input-group {
+	font-family: "Calibri";
+}
+
+#stop_waiting {
+	margin-top: 23%;
+	background-color: #54D7CF; 
+	border: 0px;
+}
+
+#stop_waiting a {
+	color: #8A3E55;
+	text-decoration: none;
+}
+
+#stop_waiting:hover {
+	background-color: #F1F0F0; 
+}
+
+
