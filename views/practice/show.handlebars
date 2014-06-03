@@ -10,7 +10,20 @@
 	<div id="label">
 		<p>Recorded practice<p>
 	</div>
-	<video id='critique_video' {{#if if_musician}}{{else}}controls{{/if}}></video>
+	<video id='critique_video'></video>  <!-- {{#if if_musician}}{{else}}controls{{/if}} -->
+	<div id="scrubber">
+	    <div id="progress"></div>
+	</div>
+	{{#if if_musician}}
+		<div class="play_pause nocursor">
+		</div>
+	{{else}}
+		<div class="play_pause">
+	    	<span id="play_icon" class="pp_icon glyphicon glyphicon-play"></span>
+	    	<span id="pause_icon" class="pp_icon glyphicon glyphicon-pause"></span>
+	    </div>
+	{{/if}}
+	
 </div>
 
 <div id='active_critique'></div>
@@ -44,25 +57,7 @@
 
 </div>
 
-<!-- <div id="settings" hidden>
-		<p>Choose your playback settings:</p>
-		<div class="switch">
-			<p>Who is controlling the playback:</p>
-			<div class="control btn-group btn-toggle"> 
-			    <button class="btn btn-default">Them</button>
-			    <button class="btn btn-primary active">Me</button>
-		  	</div>
-		  	<p>Allow for critiquers audio:</p>
-			<div class="btn-group btn-toggle"> 
-			    <button class="btn btn-default">Off</button>
-			    <button class="btn btn-primary active">On</button>
-		  	</div>
-		</div>
-</div>
 
-<div id="full-comments" hidden>
-	<p>Read comment here</p>
-</div> -->
 
 <div id="practice" fixed>
 	{{#if if_musician}}
@@ -70,18 +65,14 @@
 			<div id="waiting_text">Waiting for the critiquer...</div>
 		</div>
 
-		<!-- <div class="memo">
-			<p id="info">Click "Start Session" to begin recording your practice. Unclick the record button when you're finished.</p>
-		</div> -->
-
 		<div id="#practice_container" hidden>
 	        <div id="practice_text">Currently practicing! Click End Session to end.</div>
 	    </div>
 
 	    <input type='button' class="btn btn-lg" id="start_session" value="Start recording">
 	    
-	    <div id="critiques_wrapper">
-	       <div id='critiques' hidden></div>
+	    <div id="critiques_wrapper" class="hidden">
+	       <div id='critiques'></div>
 	    </div>
 
 	{{else}}
@@ -93,7 +84,7 @@
 		</div>
 
 
-	    <div id="buttons"> <!-- class="btn-group btn-toggle" data-toggle="buttons"> -->
+	    <div id="buttons"> 
 	        <input id="comment-textbox" type="text" placeholder="Type and hit enter!"><br/>
 
 	        <div id="button-memo">
@@ -103,7 +94,7 @@
 	            
 	  
 	    <div id="critiques_wrapper">
-	       <div id='critiques' {{#if if_musician}}hidden{{/if}}></div>
+	       <div id='critiques'></div>
 	    </div>
 
 	{{/if}}

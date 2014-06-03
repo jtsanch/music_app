@@ -1,9 +1,9 @@
 @font-face {
-	font-family: "goboldThin";
-	src: url(/gobold_thin.ttf) format(ttf);
+	font-family: goboldThin;
+	src: url('gobold_thin.ttf') format('ttf');
 
 	font-family: "goboldThinLight";
-	src: url(/gobold_thin_light.ttf) format(ttf); 
+	src: url('/fonts/gobold_thin_light.ttf') format('ttf'); 
 }
 
 p {
@@ -13,11 +13,11 @@ p {
 body {
   padding: 50px;
   /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
-  font-family: "goboldThin";
+  font-family: goboldThin;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: "goboldThin";
+	font-family: goboldThin;
 	/*letter-spacing:2px*/
 }
 
@@ -133,8 +133,12 @@ a {
 }
 
 .modal-body {
-	margin-left: 100px;
-   	margin-right: auto;
+	text-align: center;
+	margin:0;
+}
+
+.modal-content{
+	text-align: center;
 }
 
 
@@ -173,36 +177,17 @@ a {
 	border-radius: 2px;
 }
 
-/*.vis.timeline .item.comp{
-	background-color: green;
-}*/
 
-.vis.timeline .item.comment{
+.vis.timeline .item.comment, .vis.timeline .item.comment.selected{
 	background-color: #54D7CF;
+	border-color: #006C64;
+	cursor: pointer;
 }
 
-/*.vis.timeline .item.suggest{
-	background-color: red;
-}*/
 
 .vis.timeline .item.content {
 	font-family: "Calibri";
 	color: #34373F;
-}
-
-
-#critiques{
-	margin:0 auto;
-	bottom: 0px;
-	width: 600px;
-}
-
-#critiques_wrapper{
-	bottom: 10px;
-	margin: 0 auto;
-	position: fixed;
-	width: 100%;
-	left: 0;
 }
 
 #critique_text{
@@ -257,9 +242,9 @@ a {
 #label {
 	font-size: 26px;
 	color: #34373F;
-	margin-left: 280px;
 	z-index: 20;
 	position: absolute;
+	left:340px;
 	top:0px;
 	background-color: #54D7CF;
 	width: 600px;	
@@ -318,15 +303,58 @@ a {
 
 #critique_video {
 	position: absolute;
-	top: 0px;
-	left: 200px;
-	/*width: 400px;*/
 	top: 5px;
-	left: 0px;
-	/*width: 100%;*/
 	height: 450px;
-	left: 50%;
-	margin-left: -300px;
+	/*left: 50%;
+	margin-left: -300px;*/
+	left: 340px;
+}
+
+#scrubber {
+    position: absolute;
+    top: 455px;
+	left: 400px;
+    width: 540px;
+    height: 20px;
+    background-color: #F4F4F4;
+}
+
+.play_pause{
+	position:absolute;
+	top:455px;
+	left:340px;
+	height:120px;
+	width:60px;
+	background-color: #54D7CF;
+	cursor:pointer;
+}
+
+.play_pause.nocursor{
+	cursor:default;
+}
+
+.pp_icon{
+	font-size: 40px;
+	left: 10px;
+	top:35px;
+}
+
+/*no display initailly*/
+#pause_icon{
+	display: none;
+}
+
+#progress {
+    width: 0;
+    height: 20px;
+    background-color: #8A3E55;
+}
+
+#critiques_wrapper{
+	top: 475px;
+	position: absolute;
+	width: 540px;
+	left: 370px;
 }
 
 
@@ -399,18 +427,6 @@ div#comment-panel p {
 	margin-left: -5px;
 }
 
-/*#option1, #option1:hover {
-	background-color: green;
-}
-
-#option2 {
-	background-color: #BFEFFF;
-}
-
-#option3 {
-	background-color: red;
-}*/
-
 .expanded textarea{
 	background: transparent;
 	border: none;
@@ -440,14 +456,6 @@ div#comment-panel p {
 	margin-left: 7%;
 	margin-top: 20%;
 }
-
-/*#text-entry {
-	position: absolute;
-	right: 1.5%;
-	width: 30%;
-	top: 5%;
-	text-align:center;
-}*/
 
 #text-entry{
 	position: absolute;
@@ -898,6 +906,12 @@ img {
     background-image: url(/images/voice.png);
 }
 
+.ch-img-cello { 
+    background-image: url(/images/cello.png);
+}
+
+
+
 .ch-info {
     position: absolute;
     background: rgba(138, 62, 85, 0.85); 
@@ -1062,6 +1076,14 @@ img {
 	margin-top: 70px;
 }
 
+#register-box{
+	width: 100%;
+	background-color: #F1F0F0;
+	height: 600px;
+	position: absolute;
+	margin-top: 70px;
+}
+
 .login_credentials {
 	height: 280px;
 	position: absolute;
@@ -1088,7 +1110,7 @@ img {
 	padding-bottom: 10px;
 }
 
-#login_user, #create_account {
+#login_user, #create_account, #register_user {
 	margin: auto;
 	border-radius: 50px;
 	font-family: goboldThin;
@@ -1099,13 +1121,13 @@ img {
 }
 
 
-#login_user {
+#login_user, #register_user {
 	color: #34373F;
 	background-color: #54D7CF;
 
 }
 
-#login_user:hover {
+#login_user:hover, #register_user:hover {
 	color: #54D7CF;
 	background-color: #34373F;
 }
@@ -1124,12 +1146,11 @@ img {
 	color: #F5355B;
 }
 
-#playhead {
-	width: 100%;
-	height:65px;
-	background-color:#22221E;
-}	
+#caller_name{
+	font-size: 16px;
+	color: #8A3E55;
+}
 
-#playhead:hover{
-	background-color:#A7A7A5;
+.incoming{
+	margin: 10px 0 0 0;
 }

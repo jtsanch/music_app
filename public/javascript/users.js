@@ -42,6 +42,7 @@ $(document).ready(function() {
           var password = $("#reg_password").val();
           var userName = $("#reg_userName").val();
           var name     = $("#reg_userName").val();
+          var instrument = $("#reg_instrument").val();
           auth.createUser(email, password, function(error, user){
             if(!error){
               var now = new Date().getTime();
@@ -52,7 +53,8 @@ $(document).ready(function() {
                   created_at: now, 
                   peer_id: peer_id,
                   id: user.user.id,
-                  name: name 
+                  name: name,
+                  instrument: instrument
                   });
               auth.login('password',{
                 email: email,
