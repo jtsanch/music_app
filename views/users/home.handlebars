@@ -15,7 +15,7 @@
       <div class="input-group">
         <input type="text" class="form-control" placeholder="search for users by name or username..." id="query" name="query" value>
         <div class="input-group-btn">
-          <button type="submit" class="btn btn-success">
+          <button id="search_btn" type="submit" class="btn">
             <span class="glyphicon glyphicon-search"></span>
           </button>
         </div>
@@ -23,27 +23,14 @@
     </div>
   </div>
 
-  <!-- <div id="online-friends">
-    <h2>my friends online: </h2>
-    {{#each onlineUsers}}
-      <div class="row">
-        <div class="col-sm-4 col-md-4">
-            <div class="caption thumbnail">
-              <a href="#" class="user_thumbs" id="{{id}}" data-toggle="modal" data-target="#profile_view">
-              <h3>{{user_name}}</h3>
-              <h5>My instrument: {{instrument}}</h5></a>
-            </div>
-        </div>
-      </div>
-    {{/each}}
-  </div> -->
-
   <div id="online-friends">
     <h2>my friends online: </h2>
     <ul class="ch-grid">
       {{#each onlineUsers}}
           <li>
-            <div class="ch-item ch-img1">
+            <p id="usr_name">{{name}}</p>
+
+            <div class="ch-item ch-img-{{instrument}}">
                 <div class="ch-info">
                   <h3><a id="{{id}}" data-toggle="modal" href="#" class="invite_asM user_thumbs" >Invite to watch me rehearse</a></h3>
                   <p>
@@ -60,38 +47,6 @@
       {{/each}}
     </ul>
   </div>
-
-
-  <!-- <div class="circle">Hello</div> -->
-
-  <!-- from demo -->
-  <!-- <ul class="ch-grid">
-    <li>
-        <div class="ch-item ch-img-1">
-            <div class="ch-info">
-                <h3><a id="invite_asM" href="">Invite to watch me rehearse</a></h3>
-                <p id="profile_link">Name<a href="/profile">See profile<span class="glyphicon glyphicon glyphicon-user"></span></a></p>
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="ch-item ch-img-2">
-            <div class="ch-info">
-                <h3>Common Causes of Stains</h3>
-                <p>by Antonio F. Mondragon <a href="http://drbl.in/eKMi">View on Dribbble</a></p>
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="ch-item ch-img-3">
-            <div class="ch-info">
-                <h3>Pink Lightning</h3>
-                <p>by Charlie Wagers <a href="http://drbl.in/ekhp">View on Dribbble</a></p>
-            </div>
-        </div>
-    </li>
-  </ul>
- -->
 
   <div id="profile_view" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">

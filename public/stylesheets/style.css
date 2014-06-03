@@ -23,8 +23,14 @@ h1, h2, h3, h4, h5, h6 {
 
 #online-friends h2 {
 	font-family: "goboldThinLight";
-	padding: 15px;
 	letter-spacing: 1px;
+}
+
+#usr_name {
+	color: #F1F0F0;
+	font-size: 28px;
+	font-family: goboldThin;
+	padding-bottom: 5px;
 }
 
 a {
@@ -129,6 +135,13 @@ a {
 .modal-body {
 	text-align: center;
 	margin:0;
+	background-color: #F1F0F0;
+	font-family: "Calibri";
+	font-size: 20px;
+}
+
+#caller_name {
+	font-size: 20px;
 }
 
 .modal-content{
@@ -148,6 +161,10 @@ a {
 	z-index:9;
 }
 
+#waiting_response {
+	font-family: "Calibri";
+}
+
 #log_text, #waiting_text{
   position:absolute;
   left:450px;
@@ -155,6 +172,12 @@ a {
   color:white;
   z-index:11;
   font-size:24px;
+}
+
+#waiting_text {
+	right: 0px;
+	left:0px;
+	font-size: 24px;
 }
 
 .indivCritiques{
@@ -838,6 +861,7 @@ img {
     display: block;
     text-align: center;
     width: 100%;
+    padding-bottom: 35px;
 }
  
 .ch-grid:after,
@@ -868,30 +892,62 @@ img {
         inset 0 0 0 16px rgba(255,255,255,0.6),
         0 1px 2px rgba(0,0,0,0.1);
     transition: all 0.4s ease-in-out;
+    /*background-image: url(/images/drum.png); */
 }
 
-.ch-img-1 { 
-    background-image: url(/images/1.jpg);
+.blurb-item {
+	width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+}
+
+.ch-img-drum { 
+    background-image: url(/images/drum.png);
 }
  
-.ch-img-2 { 
-    background-image: url(../images/2.jpg);
+.ch-img-guitar { 
+    background-image: url(/images/guitar.png);
 }
  
-.ch-img-3 { 
-    background-image: url(../images/3.jpg);
+.ch-img-piano { 
+    background-image: url(/images/piano.png);
 }
+
+.ch-img-violin { 
+    background-image: url(/images/violin.png);
+}
+
+.ch-img-voice { 
+    background-image: url(/images/voice.png);
+}
+
+.ch-img-cello { 
+    background-image: url(/images/cello.png);
+}
+
+
 
 .ch-info {
     position: absolute;
-    background: rgba(138, 62, 85, 0.8); 
+    background: rgba(138, 62, 85, 0.85); 
     width: inherit;
     height: inherit;
     border-radius: 50%;
     overflow: hidden;
     opacity: 0;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.3s ease-in-out;
     transform: scale(0);
+}
+
+.blurb-info {
+	position: absolute;
+	width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .ch-info h3 {
@@ -931,10 +987,11 @@ img {
     color: #F1F0F0;
     padding: 10px 5px;
     /*font-style: italic;*/
-    letter-spacing: 1px;
-    margin: 0 30px;
-    font-size: 20px;
-    border-top: 1px solid rgba(255,255,255,0.5);
+    /*letter-spacing: 1px;*/
+    /*margin: 0 30px;*/
+    margin: 0;
+    font-size: 17px;
+    /*border-top: 1px solid rgba(255,255,255,0.5);*/
     opacity: 0;
     transition: all 1s ease-in-out 0.4s;
 }
@@ -998,7 +1055,7 @@ img {
 }
 
 .tutorial {
-	margin-top: 40%;
+	margin-top: 500px;
 }
 
 #login-welcome {
@@ -1116,3 +1173,35 @@ img {
 .incoming{
 	margin: 10px 0 0 0;
 }
+
+#search_btn {
+	background-color: #54D7CF; 
+	color: #8A3E55;
+	font-family: "Calibri";
+}
+
+#search_btn:hover {
+	background-color: #8A3E55; 
+	color: #54D7CF;
+}
+
+.input-group {
+	font-family: "Calibri";
+}
+
+#stop_waiting {
+	margin-top: 23%;
+	background-color: #54D7CF; 
+	border: 0px;
+}
+
+#stop_waiting a {
+	color: #8A3E55;
+	text-decoration: none;
+}
+
+#stop_waiting:hover {
+	background-color: #F1F0F0; 
+}
+
+
