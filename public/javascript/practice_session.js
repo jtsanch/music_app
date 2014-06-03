@@ -372,28 +372,36 @@ $(document).ready(function(){
     }
 
     //initialize value
-    $("#play_pause").val("play");
+    $("#play_pause").val("paused");
 
     //toggle on click
     $("#play_pause").on('click', function(){
-      if ($(this).val()==="play"){ //play the video and show pause
-        $("#play_icon").hide();
-        $("#pause_icon").show();
-        $(this).val("pause");
-
-        critique_video.play();
-        critique_audio.play();
+      if ($(this).val()==="paused"){ //play the video and show pause
+        playPlayback();
       }else{ //pause the video and show the play button
-        $("#play_icon").show();
-        $("#pause_icon").hide();
-        $(this).val("play");
-
-        critique_video.pause();
-        critique_audio.pause();
+       pausePlayback();
       }
     });
   }
 
+  function playPlayback(){
+    $("#play_icon").hide();
+        $("#pause_icon").show();
+        $(this).val("playing");
+
+        critique_video.play();
+        critique_audio.play();
+  }
+  
+  function pausePlayback(){
+     $("#play_icon").show();
+      $("#pause_icon").hide();
+      $(this).val("paused");
+
+      critique_video.pause();
+      critique_audio.pause();
+  }
+  
   var control = !if_musician;
   
   //called when session begins
@@ -468,16 +476,14 @@ $(document).ready(function(){
     });
 
     timeline.on('select', function (properties) {
-      console.log("selected");
       var itemIndex = properties.items[0];
       var targetItem = critiqueItems[itemIndex];
-      console.log(targetItem);
       $("#" + targetItem.id).css({"background-color":"black"});
       var startDisplace = targetItem.start - zeroTime.getTime();//displace from start in msec
-      console.log(startDisplace);
       //set new time for critiquer video in seconds
       critique_video.currentTime = startDisplace/1000;
-
+  
+      pausePlayback();
     });
     
     //make the dictionary for jumping to places
