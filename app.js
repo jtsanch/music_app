@@ -86,8 +86,8 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
-var port = process.env.PORT || 3000;
-var server = http.createServer(app).listen(port);
+
+var server = http.createServer(app).listen(3000);
 
 //var io = require('socket.io').listen(server);
 
