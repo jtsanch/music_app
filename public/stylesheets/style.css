@@ -351,6 +351,9 @@ a {
 	left: 370px;
 }
 
+#body-wrapper{
+	z-index: 100000;
+}
 
 #active_critique{
 	background: white;
