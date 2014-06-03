@@ -65,6 +65,10 @@ a {
 	color: #54D7CF;
 }
 
+.nav li h3 a:hover {
+	text-decoration: none;
+}
+
 .side-nav {
 	padding-top: 30px;
 	width: 120px;
@@ -965,7 +969,13 @@ img {
  	text-shadow:0px 0px 20px #00c6ff; 
 }
 
+#profile-content {
+	margin-top: 13%;
+}
 
+#profile-content h1 {
+	color: white;
+}
 
 
 

@@ -38,6 +38,7 @@
 
   <h1 id="home-title">welcome back, <span id="username"></span>!</h1>
   <input type="hidden" id="clicked_user">
+  <input type="hidden" id="hover_user">
 
   <!-- search bar -->
    <div class="search-bar row-fluid">
@@ -76,7 +77,10 @@
             <div class="ch-item ch-img1">
                 <div class="ch-info">
                   <h3><a id="{{id}}" data-toggle="modal" href="#" class="invite_asM user_thumbs" >Invite to watch me rehearse</a></h3>
-                  <p id="profile_link">{{user_name}}<a href="/profile">See profile<span class="glyphicon glyphicon glyphicon-user"></span></a></p>
+                  <p>
+                    {{user_name}}
+                    <a id="profile_link">See profile<span class="glyphicon glyphicon glyphicon-user"></span></a>
+                  </p>
 
                   <!-- <a href="#" class="user_thumbs" id="{{id}}" data-toggle="modal" data-target="#profile_view">
                   <h3>{{user_name}}</h3>
