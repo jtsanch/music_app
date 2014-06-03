@@ -371,12 +371,10 @@ $(document).ready(function(){
         video.currentTime = percent * video.duration;
     }
 
-    //initialize value
-    $("#play_pause").val("paused");
 
     //toggle on click
     $("#play_pause").on('click', function(){
-      if ($(this).val()==="paused"){ //play the video and show pause
+      if ($("#pp_status").val()==="paused"){ //play the video and show pause
         playPlayback();
       }else{ //pause the video and show the play button
        pausePlayback();
@@ -387,7 +385,7 @@ $(document).ready(function(){
   function playPlayback(){
     $("#play_icon").hide();
         $("#pause_icon").show();
-        $(this).val("playing");
+        $($("#pp_status")).val("playing");
 
         critique_video.play();
         critique_audio.play();
@@ -396,7 +394,7 @@ $(document).ready(function(){
   function pausePlayback(){
      $("#play_icon").show();
       $("#pause_icon").hide();
-      $(this).val("paused");
+      $($("#pp_status")).val("paused");
 
       critique_video.pause();
       critique_audio.pause();

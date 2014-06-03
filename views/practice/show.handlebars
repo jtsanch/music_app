@@ -15,13 +15,14 @@
 	    <div id="progress"></div>
 	</div>
 	{{#if if_musician}}
-		<div class="play_pause nocursor">
+		<div id="play_pause_nocursor">
 		</div>
 	{{else}}
-		<div class="play_pause">
+		<div id="play_pause">
 	    	<span id="play_icon" class="pp_icon glyphicon glyphicon-play"></span>
 	    	<span id="pause_icon" class="pp_icon glyphicon glyphicon-pause"></span>
 	    </div>
+	    <input type="hidden" id="pp_status" value="paused">
 	{{/if}}
 	
 </div>
