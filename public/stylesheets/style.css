@@ -236,9 +236,9 @@ a {
 #label {
 	font-size: 26px;
 	color: #34373F;
-	margin-left: 280px;
 	z-index: 20;
 	position: absolute;
+	left:340px;
 	top:0px;
 	background-color: #54D7CF;
 	width: 600px;	
@@ -313,7 +313,7 @@ a {
     background-color: #F4F4F4;
 }
 
-#play_pause{
+.play_pause{
 	position:absolute;
 	top:455px;
 	left:340px;
@@ -321,6 +321,10 @@ a {
 	width:60px;
 	background-color: #54D7CF;
 	cursor:pointer;
+}
+
+.play_pause.nocursor{
+	cursor:default;
 }
 
 .pp_icon{
@@ -1033,6 +1037,14 @@ img {
 	margin-top: 70px;
 }
 
+#register-box{
+	width: 100%;
+	background-color: #F1F0F0;
+	height: 600px;
+	position: absolute;
+	margin-top: 70px;
+}
+
 .login_credentials {
 	height: 280px;
 	position: absolute;
@@ -1059,7 +1071,7 @@ img {
 	padding-bottom: 10px;
 }
 
-#login_user, #create_account {
+#login_user, #create_account, #register_user {
 	margin: auto;
 	border-radius: 50px;
 	font-family: goboldThin;
@@ -1070,13 +1082,13 @@ img {
 }
 
 
-#login_user {
+#login_user, #register_user {
 	color: #34373F;
 	background-color: #54D7CF;
 
 }
 
-#login_user:hover {
+#login_user:hover, #register_user:hover {
 	color: #54D7CF;
 	background-color: #34373F;
 }

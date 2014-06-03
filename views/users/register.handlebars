@@ -1,13 +1,22 @@
 <script src='javascript/users.js'></script>
-<h1>Please Create an Account</h1>
-<div class="register login-panel">
-        <input type="text" class="form-control" id="reg_userName" placeholder="Username">
-        <input type="email" class="form-control" id="reg_email" placeholder="Email">
-        <input type="password" class="form-control" id="reg_password" placeholder="Password">
-        <input type="password" class="form-control" id="reg_password_conf" placeholder="Confirm your password">
-        <button id="register_user">Create Account</button>
+ 
+<div id="login-content" class="container-fluid">
 
-        <a href="/login">Already have an account? Login here.</a>
+  <div id="login-top">
+    <img id="logo" src="/images/logo3.png">
+    <div class="login_credentials">
+       <input type="text" class="login-field form-control" id="reg_userName" placeholder="Username">
+        <input type="email" class="login-field form-control" id="reg_email" placeholder="Email">
+        <input type="password" class="login-field form-control" id="reg_password" placeholder="Password">
+        <input type="password" class="login-field form-control" id="reg_password_conf" placeholder="Confirm your password">
+        <input type="text" class="login-field form-control" id="reg_instrument" placeholder="Instrument you play (e.g. voice, piano, violin, etc.)">
+        <button class="btn btn-lg" id="register_user">Register</button>
+
+        <p id="create_account"><a href="/login">Already have an account? Login here.</a></p>
+    </div>
+    <div id="register-box"></div>
+  </div>
+
 </div>
 
 <script type='text/javascript'
