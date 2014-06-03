@@ -399,18 +399,6 @@ div#comment-panel p {
 	margin-left: -5px;
 }
 
-/*#option1, #option1:hover {
-	background-color: green;
-}
-
-#option2 {
-	background-color: #BFEFFF;
-}
-
-#option3 {
-	background-color: red;
-}*/
-
 .expanded textarea{
 	background: transparent;
 	border: none;
@@ -440,14 +428,6 @@ div#comment-panel p {
 	margin-left: 7%;
 	margin-top: 20%;
 }
-
-/*#text-entry {
-	position: absolute;
-	right: 1.5%;
-	width: 30%;
-	top: 5%;
-	text-align:center;
-}*/
 
 #text-entry{
 	position: absolute;
@@ -985,4 +965,12 @@ img {
 	color: white;
 }
 
+#playhead {
+	width: 100%;
+	height:65px;
+	background-color:#22221E;
+}	
 
+#playhead:hover{
+	background-color:#A7A7A5;
+}
