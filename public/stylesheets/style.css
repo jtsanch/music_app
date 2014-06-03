@@ -23,8 +23,14 @@ h1, h2, h3, h4, h5, h6 {
 
 #online-friends h2 {
 	font-family: "goboldThinLight";
-	padding: 15px;
 	letter-spacing: 1px;
+}
+
+#usr_name {
+	color: #F1F0F0;
+	font-size: 28px;
+	font-family: goboldThin;
+	padding-bottom: 5px;
 }
 
 a {
@@ -860,30 +866,56 @@ img {
         inset 0 0 0 16px rgba(255,255,255,0.6),
         0 1px 2px rgba(0,0,0,0.1);
     transition: all 0.4s ease-in-out;
+    /*background-image: url(/images/drum.png); */
 }
 
-.ch-img-1 { 
-    background-image: url(/images/1.jpg);
+.blurb-item {
+	width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+}
+
+.ch-img-drum { 
+    background-image: url(/images/drum.png);
 }
  
-.ch-img-2 { 
-    background-image: url(../images/2.jpg);
+.ch-img-guitar { 
+    background-image: url(/images/guitar.png);
 }
  
-.ch-img-3 { 
-    background-image: url(../images/3.jpg);
+.ch-img-piano { 
+    background-image: url(/images/piano.png);
+}
+
+.ch-img-violin { 
+    background-image: url(/images/violin.png);
+}
+
+.ch-img-voice { 
+    background-image: url(/images/voice.png);
 }
 
 .ch-info {
     position: absolute;
-    background: rgba(138, 62, 85, 0.8); 
+    background: rgba(138, 62, 85, 0.85); 
     width: inherit;
     height: inherit;
     border-radius: 50%;
     overflow: hidden;
     opacity: 0;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.3s ease-in-out;
     transform: scale(0);
+}
+
+.blurb-info {
+	position: absolute;
+	width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .ch-info h3 {
@@ -923,10 +955,11 @@ img {
     color: #F1F0F0;
     padding: 10px 5px;
     /*font-style: italic;*/
-    letter-spacing: 1px;
-    margin: 0 30px;
-    font-size: 20px;
-    border-top: 1px solid rgba(255,255,255,0.5);
+    /*letter-spacing: 1px;*/
+    /*margin: 0 30px;*/
+    margin: 0;
+    font-size: 17px;
+    /*border-top: 1px solid rgba(255,255,255,0.5);*/
     opacity: 0;
     transition: all 1s ease-in-out 0.4s;
 }
@@ -990,7 +1023,7 @@ img {
 }
 
 .tutorial {
-	margin-top: 40%;
+	margin-top: 500px;
 }
 
 #login-welcome {

@@ -74,7 +74,15 @@
     <ul class="ch-grid">
       {{#each onlineUsers}}
           <li>
-            <div class="ch-item ch-img1">
+            <!-- <div class="blurb-item">
+              <div class="blurb-info">
+                  <p>Name</p>
+              </div>
+            </div> -->
+
+            <p id="usr_name">{{name}}</p>
+            
+            <div class="ch-item ch-img-violin">
                 <div class="ch-info">
                   <h3><a id="{{id}}" data-toggle="modal" href="#" class="invite_asM user_thumbs" >Invite to watch me rehearse</a></h3>
                   <p>
@@ -91,38 +99,6 @@
       {{/each}}
     </ul>
   </div>
-
-
-  <!-- <div class="circle">Hello</div> -->
-
-  <!-- from demo -->
-  <!-- <ul class="ch-grid">
-    <li>
-        <div class="ch-item ch-img-1">
-            <div class="ch-info">
-                <h3><a id="invite_asM" href="">Invite to watch me rehearse</a></h3>
-                <p id="profile_link">Name<a href="/profile">See profile<span class="glyphicon glyphicon glyphicon-user"></span></a></p>
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="ch-item ch-img-2">
-            <div class="ch-info">
-                <h3>Common Causes of Stains</h3>
-                <p>by Antonio F. Mondragon <a href="http://drbl.in/eKMi">View on Dribbble</a></p>
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="ch-item ch-img-3">
-            <div class="ch-info">
-                <h3>Pink Lightning</h3>
-                <p>by Charlie Wagers <a href="http://drbl.in/ekhp">View on Dribbble</a></p>
-            </div>
-        </div>
-    </li>
-  </ul>
- -->
 
   <div id="profile_view" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
