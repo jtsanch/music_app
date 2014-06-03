@@ -83,6 +83,7 @@ $(document).ready(function(){
 
       $("#start_session").on("click", function(snapshot){
         //on first button click, toggle to stop
+        var audio = document.getElementById("their-audio");
         if($("#start_session").val() == "Start recording") {
           practice_session.child('practice_start').set(new Date().getTime());
           $("#start_session").val("End recording");
@@ -92,12 +93,12 @@ $(document).ready(function(){
           $(".musician_practice_item").show();
           $(".memo").hide();
           
-          $("#their-audio").prop("muted");
+          audio.muted = true;
           start_recording();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           stop_recording();
-          $("#their-audio").removeProp("muted");
+          audio.muted = false;
           $("#start_session").fadeOut();
           $("#recording").fadeOut();
           $('#practice-container').hide();
