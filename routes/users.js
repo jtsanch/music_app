@@ -60,7 +60,7 @@ exports.home = function(req, res){
             res.render('users/home',{
                 title: 'Home',
                 onlineUsers: onlineUsers,
-                user_id: 
+                user_id: 10
             });
         }
         else
