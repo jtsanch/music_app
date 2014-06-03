@@ -37,17 +37,14 @@ $(document).ready(function(){
     var container = document.getElementById('critiques');
     var options = {
       autoResize: false,
-      align: "left",
       end: zeroTime.getTime()+5000,
       start: zeroTime,
       min: zeroTime,
-      showCustomTime: true,
-      stack: false,
-      height: '150px',
+      height: '100px',
       showMajorLabels: false,
       showMinorLabels: false,
       zoomMax: 5000,
-      // type: 'rangeoverflow'
+      orientation: 'top'
     };
     timeline = new vis.Timeline(container, critiqueItems, options);
   }
@@ -94,21 +91,13 @@ $(document).ready(function(){
           $('#practice-container').show();
           $(".musician_practice_item").show();
           $(".memo").hide();
-          $("#toggle_critique_video_audio").on('click',function(){
-            if(toggle_critique){
-              $("#their-audio").stop();
-              $("#their-video").stop();           
-              document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary active';
-            } else {
-               $("#their-audio").start();
-               $("#their-video").start();           
-              document.getElementById('toggle_critique_video_audio').className = 'btn btn-primary';
-            }
-          });
+          
+          $("#their-audio").prop("muted");
           start_recording();
         } else {
           practice_session.child('practice_end').set(new Date().getTime());
           stop_recording();
+          $("#their-audio").removeProp("muted");
           $("#start_session").fadeOut();
           $("#recording").fadeOut();
           $('#practice-container').hide();
@@ -318,9 +307,7 @@ $(document).ready(function(){
     }
        
   }
-  $(".timeline").mouseover(function(event){
-    console.log(event);
-  });
+
   function show_critique_items(){
     
     console.log("num their-videos:" + $("#their-video").length);
@@ -348,130 +335,179 @@ $(document).ready(function(){
     // $("#critique_video").show();
   }
 
+//modified from http://html5etc.wordpress.com/2011/11/27/a-basic-html5-video-scrub-bar-using-jquery/
+  function setup_scrubber(){
+    var critique_audio = document.getElementById('critique_audio');
+    var critique_video = document.getElementById('critique_video');
+    var $video = $("#critique_video");
+    var $scrubber = $("#scrubber");
+    var $progress = $("#progress");
+    
+    //only give control if critiquer
+    $video.bind("timeupdate", videoTimeUpdateHandler);
+    if (!if_musician){
+      $scrubber.bind("mousedown", scrubberMouseDownHandler);
+    };
+    
+    function videoTimeUpdateHandler(e) {
+        var video = $video.get(0);
+        var percent = video.currentTime / video.duration;
+        updateWidth(percent);
+    }
+    
+    function scrubberMouseDownHandler(e) {
+        var x = e.pageX - $(this).offset().left;
+        var percent = x / $(this).width();
+        updateWidth(percent);
+        updateTime(percent);
+    }
+    
+    function updateWidth(percent) {
+        $progress.width((percent * 100) + "%");
+    }
+    
+    function updateTime(percent) {
+        var video = $video.get(0);
+        video.currentTime = percent * video.duration;
+    }
+
+    //initialize value
+    $("#play_pause").val("play");
+
+    //toggle on click
+    $("#play_pause").on('click', function(){
+      if ($(this).val()==="play"){ //play the video and show pause
+        $("#play_icon").hide();
+        $("#pause_icon").show();
+        $(this).val("pause");
+
+        critique_video.play();
+        critique_audio.play();
+      }else{ //pause the video and show the play button
+        $("#play_icon").show();
+        $("#pause_icon").hide();
+        $(this).val("play");
+
+        critique_video.pause();
+        critique_audio.pause();
+      }
+    });
+  }
+
   var control = !if_musician;
   
   //called when session begins
   function begin_critique_session(){
-    
     $('#buttons').fadeOut();
     $('#settings').show();
     $('#full-comments').show();
     $("#exit_save").fadeIn();
     $(".critique_session_item").show();
-    
     show_critique_items();
-    
+    setup_scrubber();
     var critique_audio = document.getElementById('critique_audio');
     var critique_video = document.getElementById('critique_video');
     
+    //video control if you are the critiquer
+    var video_control = !if_musician;
+    var counter = 0; //so we can know how many times people switch videos
+    
+    practice_session.child('video_control').on('value', function(snapshot){
+      if(snapshot.val() && !video_control){
+        $("#toggle_video_control").class = 'btn btn-primary active';
+        counter += 1;
+        video_control = false;
+      }
+    });
+
+    $("toggle_video_control").on('click', function(){
+      if(!video_control){
+        video_control = true;
+        counter += 1;
+        practice_session.child('video_control').set(counter);
+      }
+    });
+
+    // musician's video will move based on what the critiquer did
     critique_video.addEventListener('loadedmetadata', function() {   
         practice_session.child('critique_video_time').on('value', function(snapshot){
             
-          if(snapshot.val()){    
+          if(snapshot.val() && !video_control){    
             var time = snapshot.val().time;
             critique_video.currentTime = time;
             critique_audio.currentTime = time;
-
-            critique_video.pause();
-            critique_audio.pause();
-        
+            if(!snapshot.val().paused){
+              critique_video.play();
+              critique_audio.play(); 
+            } else {
+              critique_video.pause();
+              critique_audio.pause();
+            }
           }
+
         });
      }, false);
 
-    //
-    $("#playhead").mousedown(function(e1){
-
-      var parent = $(this).parent();
-      var start_x = e1.pageX - parent.offset().left;
-      
-      $("#timeline_wrapper").mousemove(function(e2){
-         var current_x = e2.pageX - parent.offset().left;
-         var seconds = (current_x / parent.width) * critique_video.duration;
-         critique_video.prop('currentTime', seconds);
-      });
-
-      $("#timeline_wrapper").mouseup(function(e3){
-        var current_x = e3.pageX - parent.offset().left;
-        var seconds = (current_x / parent.width) * critique_video.duration;
-        $("#timeline_wrapper").off('mousemove');
-        $("#timeline_wrapper").off('mouseup');
-
-      });
-
-    });
-
     $("#critique_video").on('timeupdate', function(){
-      
-      critique_audio.currentTime = critique_video.currentTime;
-      practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
-      
-      var custom = new Date((critique_video.currentTime + zeroTime.getTime()));//displace from start in msec
-      console.log(custom);
+      if(video_control){
+        critique_audio.currentTime = critique_video.currentTime;
+        practice_session.child('critique_video_time').set( {time:critique_video.currentTime, paused: critique_video.paused });
 
-      timeline.setCustomTime(custom);
+        if(critique_video.paused){
+          critique_audio.pause();
+        } else {
+          critique_audio.play();
+        }
 
-      if(critique_video.paused){
-        critique_audio.pause();
-      } else {
-        critique_audio.play();
-      }
-
-    });
-    
-    var playing = false;
-
-    $("#toggle_video").on('click', function(){
-      
-      if(playing){
-        playing = false;
-        critique_video.pause();
-        critique_audio.pause();
-        practice_session.child('critique_video_paused').set(true);
-        $("#playhead_icon").css('glyphicon glyphicon-pause');
-      } else {
-        playing = true;
-        critique_video.play();
-        critique_audio.play();
-        practice_session.child('critique_video_paused').set(false);
-        $("#playhead_icon").css('glyphicon glyphicon-play');
       }
     });
-
 
     $("#critique_video").on('pause', function(){
       practice_session.child('critique_video_paused').set(true);
       critique_audio.pause();
     });
 
-      timeline.on('select', function (properties) {
-        var itemIndex = properties.items[0];
-        var targetItem = critiqueItems[itemIndex];
-        $("#" + targetId).css({"background-color":"black"});
-        var startDisplace = targetItem.start - zeroTime.getTime();//displace from start in msec
+    timeline.on('select', function (properties) {
+      console.log("selected");
+      var itemIndex = properties.items[0];
+      var targetItem = critiqueItems[itemIndex];
+      console.log(targetItem);
+      $("#" + targetItem.id).css({"background-color":"black"});
+      var startDisplace = targetItem.start - zeroTime.getTime();//displace from start in msec
+      console.log(startDisplace);
+      //set new time for critiquer video in seconds
+      critique_video.currentTime = startDisplace/1000;
 
-        //set new time for critiquer video in seconds
-        critique_video.currentTime = startDisplace/1000;
-
-      });
+    });
     
     //make the dictionary for jumping to places
     render_critique();
 
+    //dummy save button
+    $("#save").on('mousedown', function(e){
+      e.preventDefault();
+      $(this).text("Coming Soon!");
+    });
+    $("#save").on('mouseup', function(e){
+      e.preventDefault();
+      $(this).text("Save Playback Video");
+    });
   }
 
-  function makeMusicianTimeline(){
+  function makeCritiqueTimeline(){
+    $("#critiques_wrapper").css({
+        "left": "400px"
+      });
     if (if_musician){
+      $("#critiques_wrapper").removeClass("hidden");
       timeline.setOptions({
         end: zeroTime.getTime()+recordDuration
       });
     }
   }
+
   //renders the critique for critique session
   function render_critique(){
-
-    makeMusicianTimeline();
-
     //create dictionary of [sent time of critique] -> text of critique
     var critiques = [];
     practice_session.child('critiques').on('value', function(snapshot){
@@ -498,6 +534,7 @@ $(document).ready(function(){
     },500);
 
     //show the thing
+    makeCritiqueTimeline();
     $("#critiques").show();
   }
 

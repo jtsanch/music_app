@@ -125,8 +125,12 @@ a {
 }
 
 .modal-body {
-	margin-left: 100px;
-   	margin-right: auto;
+	text-align: center;
+	margin:0;
+}
+
+.modal-content{
+	text-align: center;
 }
 
 
@@ -165,36 +169,17 @@ a {
 	border-radius: 2px;
 }
 
-/*.vis.timeline .item.comp{
-	background-color: green;
-}*/
 
-.vis.timeline .item.comment{
+.vis.timeline .item.comment, .vis.timeline .item.comment.selected{
 	background-color: #54D7CF;
+	border-color: #006C64;
+	cursor: pointer;
 }
 
-/*.vis.timeline .item.suggest{
-	background-color: red;
-}*/
 
 .vis.timeline .item.content {
 	font-family: "Calibri";
 	color: #34373F;
-}
-
-
-#critiques{
-	margin:0 auto;
-	bottom: 0px;
-	width: 600px;
-}
-
-#critiques_wrapper{
-	bottom: 10px;
-	margin: 0 auto;
-	position: fixed;
-	width: 100%;
-	left: 0;
 }
 
 #critique_text{
@@ -312,21 +297,52 @@ a {
 	position: absolute;
 	top: 5px;
 	height: 450px;
-	left: 50%;
-	margin-left: -300px;
+	/*left: 50%;
+	margin-left: -300px;*/
+	left: 340px;
 }
 
 #scrubber {
-    position: relative;
-    width: 600px;
-    height: 100px;
-    background-color: black;
+    position: absolute;
+    top: 455px;
+	left: 400px;
+    width: 540px;
+    height: 20px;
+    background-color: #F4F4F4;
+}
+
+#play_pause{
+	position:absolute;
+	top:455px;
+	left:340px;
+	height:120px;
+	width:60px;
+	background-color: #54D7CF;
+	cursor:pointer;
+}
+
+.pp_icon{
+	font-size: 40px;
+	left: 10px;
+	top:35px;
+}
+
+/*no display initailly*/
+#pause_icon{
+	display: none;
 }
 
 #progress {
     width: 0;
-    height: 100px;
-    background-color: red;
+    height: 20px;
+    background-color: #8A3E55;
+}
+
+#critiques_wrapper{
+	top: 475px;
+	position: absolute;
+	width: 540px;
+	left: 370px;
 }
 
 
@@ -973,4 +989,13 @@ img {
 
 #playhead:hover{
 	background-color:#A7A7A5;
+}
+
+#caller_name{
+	font-size: 16px;
+	color: #8A3E55;
+}
+
+.incoming{
+	margin: 10px 0 0 0;
 }
