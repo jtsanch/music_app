@@ -46,8 +46,10 @@ $(document).ready(function() {
        auth_logout.logout();
     });
 
+        //original
      /* begin Profile Page js */
-    $("#invite_asM").on("click", function(){
+    $(".invite_asM").on("click", function(){
+      console.log("invited user");
       if(current_user){
         var request_id = current_user.id;
         var invited_id = $("#clicked_user").val();
@@ -59,13 +61,40 @@ $(document).ready(function() {
         window.location.replace(redirect);
       }
     });
+
     $(".user_thumbs").on('click', function(){
       $("#clicked_user").val($(this).attr('id'));
     })
-    $("#profile_link").on("click", function(){
+    $(".profile_link").on("click", function(){
       var user_id = $("#clicked_user").val();
       window.location.replace("/users/"+user_id);
     });
+
+	//modified
+    // $(".ch-info").on('click', function(){
+    //   console.log("clicked thumbnail");
+    //   $("#clicked_user").val($(this).attr('id'));
+
+    //   $(".invite_asM").on("click", function(){
+	   //    console.log("invited user");
+	   //    if(current_user){
+	   //      var request_id = current_user.id;
+	   //      var invited_id = $("#clicked_user").val();
+	   //      //Make sure to ping the clicked_user
+	   //      var pushRef = fb_instance.child("practice_sessions").push();
+	   //      pushRef.set({musician_id: request_id, critiquer_id: invited_id});
+	   //      fb_instance.child('users').child(invited_id).child('ping').set(pushRef.name());
+	   //      var redirect = "/practice/" + pushRef.name() + "/true";
+	   //      window.location.replace(redirect);
+	   //    }
+    //    });
+
+    //   $(".profile_link").on("click", function(){
+    //   	  console.log("clicked profile");
+	   //    var user_id = $("#clicked_user").val();
+	   //    window.location.replace("/users/"+user_id);
+	   // });
+    // })
 
     //If there is a user, and if this user is being pinged, display the invite prompt
     if(current_user){ 
