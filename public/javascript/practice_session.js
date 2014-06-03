@@ -43,6 +43,7 @@ $(document).ready(function(){
       min: zeroTime,
       height: '150px',
       showMajorLabels: false,
+      showMinorLabels: false,
       zoomMax: 5000,
       // type: 'rangeoverflow'
     };
@@ -154,110 +155,7 @@ $(document).ready(function(){
   //init critique items
   function initialize_critiquer(video_peer, audio_peer){
 
-      // //complimenting
-      // $("#compliment-text").click(function() {
-      //     console.log("compliment clicked");
-
-      //     $("#compliment").animate({
-      //       height: "200%"
-      //     })
-
-      //     $("#compliment-text").hide();
-      //     $("#compliment-expanded").show();
-      //     console.log("set bool to 1");
-      // });
-
-      // $("#compliment-button.submit").click(function() {
-      //   console.log("compliment submitted");
-      //   //if textarea has text - submit comment to database + add to timeline
-      //   $("#compliment").animate({
-      //     height: "100%"
-      //   })
-      //   $(':input[id="compliment-textbox"]').val(null);
-      //   $("#compliment-expanded").hide();
-      //   $("#compliment-text").show();
-
-      // });
-
-      // $("#compliment-button.cancel").click(function() {
-      //   console.log("compliment cancelled");
-      //   $("#compliment").animate({
-      //     height: "100%"
-      //   })
-      //   $(':input[id="compliment-textbox"]').val(null);
-      //   $("#compliment-expanded").hide();
-      //   $("#compliment-text").show();
-      // });
-
-      // //commenting
-      // $("#comment-text").click(function() {
-      //     console.log("comment clicked");
-
-      //     $("#comment").animate({
-      //       height: "200%"
-      //     })
-      //     $("#comment-text").hide();
-      //     console.log("comment text found: " + $("#comment-text").length);
-      //     console.log("comment expanded found: " + $("#comment-expanded").length);
-      //     $("#comment-expanded").show();
-      //     console.log("expanded comment");
-      // });
-
-      // $("#comment-button.submit").click(function() {
-      //   console.log("comment submitted");
-      //   //if textarea has text - submit to database + add to timeline
-      //   $("#comment").animate({
-      //     height: "100%"
-      //   })
-      //   $(':input[id="comment-textbox"]').val(null);
-      //   $("#comment-expanded").hide();
-      //   $("#comment-text").show();
-
-      // });
-
-      // $("#comment-button.cancel").click(function() {
-      //   console.log("comment cancelled");
-      //   $("#comment").animate({
-      //     height: "100%"
-      //   })
-      //   $(':input[id="comment-textbox"]').val(null);
-      //   $("#comment-expanded").hide();
-      //   $("#comment-text").show();
-      // });
-
-      // //suggestion
-      // $("#suggestion-text").click(function() {
-      //     console.log("suggestion clicked");
-
-      //     $("#suggestion").animate({
-      //       height: "200%"
-      //     })
-
-      //     $("#suggestion-text").hide();
-      //     $("#suggestion-expanded").show();
-      // });
-
-      // $("#suggestion-button.submit").click(function() {
-      //   console.log("suggestion submitted");
-      //   //if textarea has text - submit to database + add to timeline
-      //   $("#suggestion").animate({
-      //     height: "100%"
-      //   })
-      //   $(':input[id="suggestion-textbox"]').val(null);
-      //   $("#suggestion-expanded").hide();
-      //   $("#suggestion-text").show();
-
-      // });
-
-      // $("#suggestion-button.cancel").click(function() {
-      //   console.log("suggestion cancelled");
-      //   $("#suggestion").animate({
-      //     height: "100%"
-      //   })
-      //   $(':input[id="suggestion-textbox"]').val(null);
-      //   $("#suggestion-expanded").hide();
-      //   $("#suggestion-text").show();
-      // });
+     
 
       practice_session.child('practice_start').on('value', function(snapshot){
         if(snapshot.val()){
@@ -274,120 +172,19 @@ $(document).ready(function(){
           $("#recording").fadeTo("slow",1.0);
           // #("#recording").toggleClass("glow");
 
-
-
-
-          // $("#compliment-textbox").keydown(function(e){
-          //   if ( e.which == 13 && !e.ctrlKey){ //enter
-          //     var text = $(this).val();
-          //     var ending = new Date().getTime();
-          //     var sent_at = critique_start - time_start; //msec point in video where it starts
-          //     var duration = ending - critique_start;
-          //     add_critique_item_db(sent_at, duration, text, "comp");
-          //     add_critique_item(sent_at, duration, text, "comp");
-          //     $(this).val("");
-          //   }else if(e.which == 8 || e.which==46) {//backspace/delete
-          //     critique_start = new Date().getTime();
-          //   }else if($(this).val().length == 0){//first character
-          //     critique_start = new Date().getTime();
-          //   } 
-          // });
-
-          // $("#suggestion-textbox").keydown(function(e){
-          //   if ( e.which == 13 && !e.ctrlKey){ //enter
-          //     var text = $(this).val();
-          //     var ending = new Date().getTime();
-          //     var sent_at = critique_start - time_start; //msec point in video where it starts
-          //     var duration = ending - critique_start;
-          //     add_critique_item_db(sent_at, duration, text, "suggest");
-          //     add_critique_item(sent_at, duration, text, "suggest");
-          //     $(this).val("");
-          //   }else if(e.which == 8 || e.which==46) {//backspace/delete
-          //     critique_start = new Date().getTime();
-          //   }else if($(this).val().length == 0){//first character
-          //     critique_start = new Date().getTime();
-          //   } 
-          // });
-
-          // $(".submit").on("click",function(){
-          //   var type;
-          //   if ($(this).attr('id') === 'compliment-button'){
-          //     type='comp';
-          //   }else if ($(this).attr('id') === 'comment-button'){
-          //     type="comment";
-          //   }else{
-          //     type="suggest";
-          //   }
-
-          //   var ending = new Date().getTime();
-          //   var text = $(this).val();
-          //   var sent_at = critique_start - time_start; //msec point in video where it starts
-          //   var duration = ending - critique_start;
-          //   add_critique_item_db(sent_at, duration, text, type);
-          //   add_critique_item(sent_at, duration, text, type);
-          //   $(this).val("");
-          // });
-
-          // $(".cancel").on("click",function(){
-          //   $(this).val("");
-          //   //also close the div
-          // });
-          // //makiko's end
-
-          // $("#option2").addClass('active');
-
-          // $("#textbox").keydown(function(e){
-          //   if ( e.which == 13 && !e.ctrlKey){ //enter
-          //     var text = $(this).val();
-          //     var ending = new Date().getTime();
-          //     var sent_at = critique_start - time_start; //msec point in video where it starts
-          //     var duration = ending - critique_start;
-          //     add_critique_item_db(sent_at, duration, text, "comment");
-          //     add_critique_item(sent_at, duration, text, "comment");
-          //     $(this).val("");
-          //   }else if(e.which == 8 || e.which==46) {//backspace/delete
-          //     critique_start = new Date().getTime();
-          //   }else if($(this).val().length == 0){//first character
-          //     critique_start = new Date().getTime();
-          //   } 
-          // });
-
-          // $(".submit_button").on("click",function(){
-          //   //check which is active
-          //   var type;
-          //   var text;
-          //   if ($(this).attr('id') === 'plus-button'){
-          //     type='comp';
-          //     text="+";
-          //   }else{
-          //     type="suggest";
-          //     text="-";
-          //   }
-
-          //   var now = new Date().getTime();
-          //   var sent_at = now - time_start; //msec point in video where it starts
-          //   var duration = 1000;
-          //   add_critique_item_db(sent_at, duration, text, type);
-          //   add_critique_item(sent_at, duration, text, type);
-          //   $('#textbox').val("");
-          // });
-
-          // $(".cancel").on("click",function(){
-          //   //also close the div
-          //   $("#textbox").val("");
-          // });
-
           $("#comment-textbox").keydown(function(e){
             e = e || event;
             if ( e.which == 13 && !e.ctrlKey){ //enter
               var text = $(this).val();
               var now = new Date().getTime();
-              var sent_at = now - time_start; //msec point in video where it starts
+              var sent_at = critique_start - time_start; //msec point in video where it starts
               var duration = 1000;
               add_critique_item_db(sent_at, duration, text, "comment");
               add_critique_item(sent_at, duration, text, "comment");
               $(this).val("");
-            } 
+            } else if($(this).val().length == 0){//first character
+              critique_start = new Date().getTime();
+            }
           });
 
           start_recording();
@@ -476,7 +273,6 @@ $(document).ready(function(){
         }
       },500);
     }
-
   } 
 
 
@@ -522,15 +318,7 @@ $(document).ready(function(){
   }
 
   function show_critique_items(){
-    console.log("show_critique_items");
-    // $("#their-video").css({
-    //   "right": "20px",
-    //   "width": "200px",
-    //   "position": "absolute",
-    //   "top": "50px",
-    //   "height": "initial",
-    //   "left": "initial"
-    // });
+    
     console.log("num their-videos:" + $("#their-video").length);
     $("#their-video").css({
       "position": "absolute",
@@ -558,7 +346,6 @@ $(document).ready(function(){
 
   var control = !if_musician;
   
-
   //called when session begins
   function begin_critique_session(){
     $('#buttons').fadeOut();
@@ -629,12 +416,6 @@ $(document).ready(function(){
       critique_audio.pause();
     });
 
-      //when you click, it will take you to that place in the video
-      //IDs are zero indexed of the item list
-      //TRAVIS!
-      //Right now it's only set so that the critiquer can click on things and jump 
-      //places in the video since there's only one event listener. If we're going to 
-      //toggle it, could you implement it?
       timeline.on('select', function (properties) {
         var itemIndex = properties.items[0];
         var targetItem = critiqueItems[itemIndex];
@@ -684,11 +465,6 @@ $(document).ready(function(){
     setInterval( function(){
       var time = Math.round($("#critique_video").prop('currentTime'));
       if( critiques[time] ){
-        // var scroll_to = $("#critique_at_"+time);
-        // scroll_to.className = 'active_critique';
-        // $("#critiques").animate({
-        //   scrollTop: scroll_to.offset().top - container.offset().top + container.scrollTop()
-        // });
         $("#active_critique").html(critiques[time]);
       }
     },500);
