@@ -24,6 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 #online-friends h2 {
 	font-family: "goboldThinLight";
 	padding: 15px;
+	letter-spacing: 1px;
 }
 
 a {
@@ -58,6 +59,7 @@ a {
 	margin-left: auto;
 	/*margin-right: auto;*/
 	width: 50%;
+	letter-spacing: 2px;
 }
 
 
@@ -610,6 +612,7 @@ div#comment-panel p {
  	display: table;
  	padding-top: 20px;
  	text-align: center;
+ 	letter-spacing: 2px;
 }
 
 .search-bar {
@@ -706,9 +709,15 @@ div#comment-panel p {
 	margin-top: 13%;
 }
 
-#help-content {
+#login-content {
 	position: absolute;
-	margin-top: 13%;
+	width: 100%;
+	left: 0px;
+}
+
+#login-content h1 {
+	text-align: center;
+	color: #F5355B;
 }
 
 #home-body {
@@ -809,21 +818,14 @@ img {
 }
 
 .circle {
-	width:100px;
-	height:100px;
+	width:80px;
+	height:80px;
 	border-radius:50px;
 	font-size:20px;
-	color:#fff;
-	line-height:100px;
+	line-height:70px;
 	text-align:center;
-	background:#000
+	padding-bottom: 10px;
 }
-
-
-
-
-
-
 
 .ch-grid {
     margin: 20px 0 0 0;
@@ -981,14 +983,116 @@ img {
 	color: white;
 }
 
-#playhead {
-	width: 100%;
-	height:65px;
-	background-color:#22221E;
-}	
+.tutorial .col-lg-4 {
+	margin-bottom: 20px;
+	text-align: center;
+}
 
-#playhead:hover{
-	background-color:#A7A7A5;
+.tutorial p {
+	font-size: 20px;
+	color: #54D7CF;
+}
+
+.tutorial {
+	margin-top: 40%;
+}
+
+#login-welcome {
+	text-align: center;
+	color: #F1F0F0;
+	font-family: goboldThin;
+	letter-spacing: 2px;
+	font-size: 42px;
+	padding-bottom: 12px;
+}
+
+#login-content #logo {
+	width: 230px;
+	display: block;
+	position: absolute;
+	z-index: 20;
+	margin: auto;
+	left: 0px;
+	right: 0px;
+	top: -42px;
+}
+
+.login_credentials {
+	height: 280px;
+	position: absolute;
+	z-index: 30;
+	margin-left: 43%;
+	margin-top: 19%;
+}
+
+#login-box {
+	width: 100%;
+	background-color: #F1F0F0;
+	height: 400px;
+	position: absolute;
+	margin-top: 70px;
+}
+
+.login_credentials {
+	height: 280px;
+	position: absolute;
+	z-index: 30;
+	margin: auto;
+	right: 0px;
+	left: 0px;
+	width: 36%;
+	top: 208px;
+	padding: 10px;
+}
+
+.login-field {
+	border-radius: 50px;
+	background-color: #8A3E55;
+	color: #F1F0F0; 
+	font-family: "Calibri";
+	font-size: 20px;
+	height: 45px;
+}
+
+.login-credentials .form-control {
+	color: red;
+	padding-bottom: 10px;
+}
+
+#login_user, #create_account {
+	margin: auto;
+	border-radius: 50px;
+	font-family: goboldThin;
+	display: table;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 18px;
+}
+
+
+#login_user {
+	color: #34373F;
+	background-color: #54D7CF;
+
+}
+
+#login_user:hover {
+	color: #54D7CF;
+	background-color: #34373F;
+}
+
+#create_account {
+	font-family: "Calibri";
+	font-size: 24px;
+}
+
+#register {
+	color: #54D7CF;
+}
+
+#register:hover {
+	text-decoration: none;
+	color: #F5355B;
 }
 
 #caller_name{

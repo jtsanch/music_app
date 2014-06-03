@@ -16,15 +16,44 @@
     </div>
   </div> -->
  
-<div id="help-content" class="container">
-  <h1>Welcome to SoundBoard!</h1>
-  <div class="login_credentials">
-          <input type="email" class="form-control" id="login_email" placeholder="Email">
-          <input type="password" class="form-control" id="login_password" placeholder="Password">
-          <button id="login_user">Login</button>
+<div id="login-content" class="container-fluid">
 
-          <a href="/register">Create Account</a>
+  <div id="login-top">
+    <img id="logo" src="/images/logo3.png">
+    <div class="login_credentials">
+      <input type="email" class="login-field form-control" id="login_email" placeholder="Email">
+      <input type="password" class="login-field form-control" id="login_password" placeholder="Password">
+      <button class="circle btn" id="login_user">Login</button>
+
+      <p id="create_account">Don't have an account? Create one <a id="register" href="/register"><strong>here!</strong></a></p>
+      
+    </div>
+    <div id="login-box"></div>
   </div>
+
+  <!-- tutuorial -->
+  <div class="tutorial container">
+      <p id="login-welcome">Why you'll love SoundBoard:</p>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="img-circle" src="/images/1.jpg">
+          <h1>play</h1>
+          <p>Practice and record the latest thing you've been working on<p>
+        </div>
+        <div class="col-lg-4">
+          <img class="img-circle" src="/images/1.jpg">
+          <h1>critique</h1>
+          <p>Give your feedback to other musicians on their progress<p>
+        </div>
+        <div class="col-lg-4">
+          <img class="img-circle" src="/images/1.jpg">
+          <h1>reflect</h1>
+          <p>Talk with other musicians and learn from one each other<p>
+        </div>
+      </div>
+  </div>
+
 </div>
 
 <script type='text/javascript'

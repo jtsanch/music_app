@@ -1,6 +1,8 @@
 //used only for login/register pages
 $(document).ready(function() {
     
+  $("#navi").hide();
+  console.log("nav hidden");
   $(".login-panel").fadeIn();
 
   auth = new FirebaseSimpleLogin(fb_instance, function(error, user) {
