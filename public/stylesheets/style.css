@@ -336,7 +336,7 @@ a {
     background-color: #F4F4F4;
 }
 
-.play_pause{
+#play_pause{
 	position:absolute;
 	top:455px;
 	left:340px;
@@ -346,7 +346,13 @@ a {
 	cursor:pointer;
 }
 
-.play_pause.nocursor{
+#play_pause_nocursor{
+	position:absolute;
+	top:455px;
+	left:340px;
+	height:120px;
+	width:60px;
+	background-color: #54D7CF;
 	cursor:default;
 }
 
@@ -374,6 +380,10 @@ a {
 	left: 370px;
 }
 
+#body-wrapper{
+	z-index: 100000;
+	color: #F1F0F0;
+}
 
 #active_critique{
 	background: white;
