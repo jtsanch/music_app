@@ -36,12 +36,14 @@ $(document).ready(function(){
   function makeTimeline(){
     var container = document.getElementById('critiques');
     var options = {
+      autoResize: false,
+      align: "left",
       end: zeroTime.getTime()+5000,
       start: zeroTime,
       min: zeroTime,
       height: '150px',
       showMajorLabels: false,
-      zoomMax: 36000000,
+      zoomMax: 5000,
       // type: 'rangeoverflow'
     };
     timeline = new vis.Timeline(container, critiqueItems, options);
@@ -466,7 +468,10 @@ $(document).ready(function(){
         if (currently_recording){
           var timeElapsed = now - time_start;
           if (timeElapsed > 10000){
-            timeline.setOptions({end:zeroTime.getTime()+timeElapsed});
+            timeline.setOptions({
+              end:zeroTime.getTime()+timeElapsed,
+              zoomMax: timeElapsed
+            });
           }
         }
       },500);
@@ -706,7 +711,7 @@ $(document).ready(function(){
       start: startTime,
       end: endTime,
       content: text,
-       type: 'rangeoverflow',
+      type: 'box',
       className: type
     }
     critiqueItems.push(newItem);

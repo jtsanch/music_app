@@ -1,9 +1,9 @@
 @font-face {
-	font-family: "goboldThin";
-	src: url(/gobold_thin.ttf) format(ttf);
+	font-family: goboldThin;
+	src: url('gobold_thin.ttf') format('ttf');
 
 	font-family: "goboldThinLight";
-	src: url(/gobold_thin_light.ttf) format(ttf); 
+	src: url('/fonts/gobold_thin_light.ttf') format('ttf'); 
 }
 
 p {
@@ -13,11 +13,11 @@ p {
 body {
   padding: 50px;
   /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
-  font-family: "goboldThin";
+  font-family: goboldThin;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: "goboldThin";
+	font-family: goboldThin;
 	/*letter-spacing:2px*/
 }
 
