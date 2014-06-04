@@ -39,10 +39,6 @@
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
 
-		<!-- blinking record -->
-		<div id="recording" class="glow">
-				<h3><span class="glyphicon glyphicon-record"></span> recording </h3>
-		</div>
 	{{else}}
 		<div class="psure-u-2-3 video-container">
 		    <video class="inner-video" id="my-video" autoplay></video>
@@ -50,11 +46,14 @@
 		    <audio id='their-audio' hidden autoplay></audio>
 		</div>
 
-		<!-- blinking record -->
-		<div id="recording" class="glow">
-				<h3><span class="glyphicon glyphicon-record"></span> recording </h3>
-		</div>
 	{{/if}}
+	<!-- blinking record -->
+	<div id="standby" class="glow">
+			<h3><span class="glyphicon glyphicon-record"></span> standby </h3>
+	</div>
+	<div id="recording" class="glow">
+			<h3><span class="glyphicon glyphicon-record"></span> recording </h3>
+	</div>
 
 </div>
 

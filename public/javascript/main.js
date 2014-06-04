@@ -14,17 +14,6 @@ $(document).ready(function() {
     initPage();
     login_user();
 
-    // //if not logged in, display blur and hide navi and home-content
-    // $("#login_user").on("click", function(){
-    // 	console.log("login clicked");
-    // 	$("#splash").fadeOut();
-    // 	// $("#navi").show();
-    // 	// $("#home-content").show();
-    // 	setTimeout(function(){$("#navi").fadeIn()}, 400);
-    // 	setTimeout(function(){$("#home-content").fadeIn()}, 400);
-    // 	// $("#navi").fadeIn();
-    // 	// $("#home-content").fadeIn();
-    // });
   
     $("#logout").on("click", function(){
        var current

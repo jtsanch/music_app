@@ -92,6 +92,7 @@ $(document).ready(function(){
           $('#practice-container').show();
           $(".musician_practice_item").show();
           $(".memo").hide();
+          $("#standby").hide();
           
           audio.muted = true;
           start_recording();
@@ -145,9 +146,7 @@ $(document).ready(function(){
   }
 
   //init critique items
-  function initialize_critiquer(video_peer, audio_peer){
-
-     
+  function initialize_critiquer(video_peer, audio_peer){     
 
       practice_session.child('practice_start').on('value', function(snapshot){
         if(snapshot.val()){
@@ -157,7 +156,7 @@ $(document).ready(function(){
           $("#critique-panel").show();
           $("#waiting_comment-panel").fadeOut();
           $(".memo").hide();
-
+          $("#standby").hide();
 
           // $("#recording").show();
           console.log("change opacity");
@@ -354,6 +353,12 @@ $(document).ready(function(){
         var video = $video.get(0);
         var percent = video.currentTime / video.duration;
         updateWidth(percent);
+        console.log(critique_video.currentTime);
+        console.log(critique_video.duration);
+        if(critique_video.currentTime===critique_video.duration){
+          critique_video.currentTime=0;
+          pausePlayback();
+        }
     }
     
     function scrubberMouseDownHandler(e) {
@@ -363,13 +368,13 @@ $(document).ready(function(){
         updateTime(percent);
     }
     
-    function updateWidth(percent) {
-        $progress.width((percent * 100) + "%");
-    }
-    
     function updateTime(percent) {
         var video = $video.get(0);
         video.currentTime = percent * video.duration;
+    }
+
+    function updateWidth(percent) {
+        $progress.width((percent * 100) + "%");
     }
 
 
@@ -381,6 +386,8 @@ $(document).ready(function(){
        pausePlayback();
       }
     });
+
+    //pause if it gets to the end
   }
 
   function playPlayback(){
@@ -499,18 +506,6 @@ $(document).ready(function(){
     });
   }
 
-  function makeCritiqueTimeline(){
-    $("#critiques_wrapper").css({
-        "left": "400px"
-      });
-    if (if_musician){
-      $("#critiques_wrapper").removeClass("hidden");
-      timeline.setOptions({
-        end: zeroTime.getTime()+recordDuration
-      });
-    }
-  }
-
   //renders the critique for critique session
   function render_critique(){
     //create dictionary of [sent time of critique] -> text of critique
@@ -527,6 +522,15 @@ $(document).ready(function(){
           if(if_musician)
             add_critique_item(critique.sent, critique.duration, critique.text, critique.type);
         }
+
+        //draw timeline
+
+        if (if_musician){
+          timeline.setItems(critiqueItems);
+          timeline.setOptions({
+            end: zeroTime.getTime()+recordDuration
+          });
+        }
       }
     });
 
@@ -537,10 +541,12 @@ $(document).ready(function(){
         $("#active_critique").html(critiques[time]);
       }
     },500);
-
-    //show the thing
-    makeCritiqueTimeline();
-    $("#critiques").show();
+   
+   //show things
+    $("#critiques_wrapper").css({
+      "left": "400px"
+    });
+     $("#critiques_wrapper").removeClass("hidden");
   }
 
   //render the critique item in the list
