@@ -52,8 +52,8 @@ $(document).ready(function(){
   function start_conversation(){
     $("#body-wrapper").hide();
 
-    var video_peer = new Peer({key: 'ewdyikcaj7nwmi'});
-    var audio_peer = new Peer({key: 'ewdyikcaj7nwmi'});
+    var video_peer = new Peer({key: '57jf1vutabvjkyb9'});
+    var audio_peer = new Peer({key: '57jf1vutabvjkyb9'});
      
     //musician
     if(if_musician){

@@ -777,20 +777,21 @@ left: 0px;
 	z-index: 1;
 }
 .memo{
-	position: relative;
+	position: absolute;
 	width: 620px;
 	padding: 10px 30px;
 	margin-left: auto;
 	margin-right: auto;
-	top: 229px;
+	top: 370px;
 	display: table;
 	text-align: center;
-	height:260px;
-	background-color:rgba(138,62,85,0.9);
-	z-index:8;
-	color:white;
+	height: 260px;
+	background-color: rgba(138,62,85,0.9);
+	z-index: 8;
+	color: white;
 	font-family: "Calibri", sans-serif;
 	font-size: 18px;
+	left: 25%;
 }
 
 p.memo {
