@@ -157,8 +157,6 @@ $(document).ready(function(){
           $(".memo").hide();
           $("#standby").hide();
 
-          // $("#recording").show();
-          console.log("change opacity");
           $("#recording").fadeTo("slow",1.0);
           // #("#recording").toggleClass("glow");
 
@@ -309,7 +307,6 @@ $(document).ready(function(){
 
   function show_critique_items(){
     
-    console.log("num their-videos:" + $("#their-video").length);
     $("#their-video").css({
       "position": "absolute",
       "top": "0px",
@@ -352,8 +349,6 @@ $(document).ready(function(){
         var video = $video.get(0);
         var percent = video.currentTime / video.duration;
         updateWidth(percent);
-        console.log(critique_video.currentTime);
-        console.log(critique_video.duration);
         if(critique_video.currentTime===critique_video.duration){
           critique_video.currentTime=0;
           pausePlayback();
