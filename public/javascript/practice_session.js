@@ -36,7 +36,6 @@ $(document).ready(function(){
   function makeTimeline(){
     var container = document.getElementById('critiques');
     var options = {
-      autoResize: false,
       end: zeroTime.getTime()+5000,
       start: zeroTime,
       min: zeroTime,
@@ -524,23 +523,15 @@ $(document).ready(function(){
         }
 
         //draw timeline
-
         if (if_musician){
           timeline.setItems(critiqueItems);
           timeline.setOptions({
-            end: zeroTime.getTime()+recordDuration
+            end: zeroTime.getTime()+recordDuration,
+            zoomMax: recordDuration
           });
         }
       }
     });
-
-    //set it so that the right critique highlights at the right moment
-    setInterval( function(){
-      var time = Math.round($("#critique_video").prop('currentTime'));
-      if( critiques[time] ){
-        $("#active_critique").html(critiques[time]);
-      }
-    },500);
    
    //show things
     $("#critiques_wrapper").css({

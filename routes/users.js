@@ -13,8 +13,8 @@ exports.show = function(req, res) {
 	    	});
 		} else {
 			res.render('users/show', {
-				title: "Profile",
-				user: {name:"MyName", id:"-1"}
+				title: "User Not Found",
+				error: true
 			});
 		}
 	});

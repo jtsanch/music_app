@@ -1229,4 +1229,8 @@ img {
 	background-color: #F1F0F0; 
 }
 
-
+#user_info{
+	font-size: 18px;
+	color: #F1F0F0;
+	padding: 20px 15px;
+}

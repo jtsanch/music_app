@@ -183,6 +183,10 @@ function begin_app(){
    $("#logging_in").hide();
    $(".container").show();
 
+   $("#profile").on("click", function(){
+        window.location.replace('/users/'+current_user.id);
+    });
+
    fb_instance.child('online_users').on('value', function(snapshot){
     if(snapshot){
       console.log(snapshot.val());
